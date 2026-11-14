@@ -44,3 +44,54 @@ export async function reverseGeocode(lat: number, lng: number): Promise<string> 
   // Fallback if nominatim fails or times out
   return `GPS Pin (${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E)`;
 }
+
+export interface IpLocationResult {
+  lat: number;
+  lng: number;
+  city: string;
+  region: string;
+  country: string;
+  formattedAddress: string;
+}
+
+export async function fetchIpLocation(): Promise<IpLocationResult | null> {
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.latitude && data.longitude) {
+        return {
+          lat: data.latitude,
+          lng: data.longitude,
+          city: data.city || '',
+          region: data.region || '',
+          country: data.country_name || 'India',
+          formattedAddress: [data.city, data.region, data.country_name].filter(Boolean).join(', ')
+        };
+      }
+    }
+  } catch {
+    // Try secondary provider
+  }
+
+  try {
+    const res = await fetch('https://ipwho.is/');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.latitude && data.longitude) {
+        return {
+          lat: data.latitude,
+          lng: data.longitude,
+          city: data.city || '',
+          region: data.region || '',
+          country: data.country || 'India',
+          formattedAddress: [data.city, data.region, data.country].filter(Boolean).join(', ')
+        };
+      }
+    }
+  } catch {
+    // Both failed
+  }
+
+  return null;
+}

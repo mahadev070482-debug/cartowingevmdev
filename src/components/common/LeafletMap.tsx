@@ -184,7 +184,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       const bounds = L.latLngBounds(latLngList);
       map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
     } else if (latLngList.length === 1) {
-      map.setView(latLngList[0], Math.max(map.getZoom(), 14));
+      map.flyTo(latLngList[0] as [number, number], 15, { duration: 0.8 });
     }
   }, [markers, showRoute, onMarkerDragEnd]);
 

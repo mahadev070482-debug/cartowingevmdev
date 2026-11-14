@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { store } from '../../services/store';
-import { reverseGeocode } from '../../services/geocoding';
+import { reverseGeocode, fetchIpLocation } from '../../services/geocoding';
 import { EV_MODELS, COMMON_EV_DROPOFFS } from '../../data/seedData';
 import { LeafletMap } from '../common/LeafletMap';
 import { TowRequest, IssueType } from '../../types';
@@ -52,56 +52,66 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Handle GPS One-Click (100% Free - Zero API Key Required)
-  const handleGetLiveGPS = () => {
-    if (!navigator.geolocation) {
-      setErrorMsg('Browser geolocation is unavailable on this device. You can drag the red map pin directly to your location.');
-      return;
-    }
-
-    setIsLocating(true);
+  // Dual-tier location detector: High-Accuracy GPS with Instant Network/IP Fallback
+  const detectCurrentLocation = (silent: boolean = false) => {
+    if (!silent) setIsLocating(true);
     setErrorMsg('');
 
-    const onPosSuccess = async (position: GeolocationPosition) => {
-      const { latitude, longitude } = position.coords;
-      setPickupLat(latitude);
-      setPickupLng(longitude);
+    const applyCoords = async (lat: number, lng: number, fallbackLabel?: string) => {
+      setPickupLat(lat);
+      setPickupLng(lng);
       setLocationSuccess(true);
-
-      const readableAddress = await reverseGeocode(latitude, longitude);
-      setPickupAddress(readableAddress);
       setIsLocating(false);
+
+      const readableAddress = await reverseGeocode(lat, lng);
+      setPickupAddress(readableAddress || fallbackLabel || `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`);
     };
 
-    const tryLowAccuracy = () => {
+    const fallbackToIp = async () => {
+      try {
+        const ipLoc = await fetchIpLocation();
+        if (ipLoc && ipLoc.lat && ipLoc.lng) {
+          await applyCoords(ipLoc.lat, ipLoc.lng, ipLoc.formattedAddress);
+          return;
+        }
+      } catch {
+        // Fallback failed
+      }
+
+      setIsLocating(false);
+      if (!silent) {
+        setErrorMsg('Could not detect exact GPS coordinates. Please drag the red map pin to your location.');
+      }
+    };
+
+    if (typeof window !== 'undefined' && 'geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
-        onPosSuccess,
-        (_fallbackErr) => {
-          setIsLocating(false);
-          setLocationSuccess(true);
-          setErrorMsg('No GPS satellite signal detected (common on desktop/laptops). You can freely drag the red map pin or enter your landmark below. (No API key required)');
+        (pos) => {
+          applyCoords(pos.coords.latitude, pos.coords.longitude);
+        },
+        (_err) => {
+          // If browser GPS is blocked, unavailable, or on desktop PC without GPS, automatically fall back to IP location!
+          fallbackToIp();
         },
         {
-          enableHighAccuracy: false,
-          timeout: 5000,
-          maximumAge: 30000
+          enableHighAccuracy: true,
+          timeout: 8000,
+          maximumAge: 10000
         }
       );
-    };
+    } else {
+      fallbackToIp();
+    }
+  };
 
-    // First try high accuracy with 4s timeout
-    navigator.geolocation.getCurrentPosition(
-      onPosSuccess,
-      () => {
-        // High accuracy failed or timed out, retry with standard network/cell location
-        tryLowAccuracy();
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 4000,
-        maximumAge: 0
-      }
-    );
+  // Automatically detect user location on page load
+  useEffect(() => {
+    detectCurrentLocation(true);
+  }, []);
+
+  // Handle GPS One-Click Button
+  const handleGetLiveGPS = () => {
+    detectCurrentLocation(false);
   };
 
   const handleMarkerDragEnd = async (newLat: number, newLng: number) => {
