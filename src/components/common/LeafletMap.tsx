@@ -111,7 +111,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       zoomControl: interactive,
       dragging: interactive,
       scrollWheelZoom: interactive ? 'center' : false,
-      doubleClickZoom: interactive,
+      doubleClickZoom: onMapClick ? false : interactive,
       attributionControl: false
     });
 
@@ -201,12 +201,13 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       routeLayerRef.current = polyline;
     }
 
-    // Auto-fit bounds
+    // Auto-fit bounds or pan to single marker
     if (latLngList.length > 1) {
       const bounds = L.latLngBounds(latLngList);
       map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
     } else if (latLngList.length === 1) {
-      map.flyTo(latLngList[0] as [number, number], 15, { duration: 0.8 });
+      // PRESERVE user's current zoom level so tapping/clicking on mobile NEVER zooms out!
+      map.panTo(latLngList[0] as [number, number], { animate: true, duration: 0.3 });
     }
   }, [markers, showRoute, onMarkerDragEnd]);
 
