@@ -1,6 +1,6 @@
 import React from 'react';
 import { TowTruck } from '../../types';
-import { Truck, CheckCircle2, Navigation, Phone, ShieldCheck, Activity } from 'lucide-react';
+import { Truck, Activity } from 'lucide-react';
 
 interface FleetMonitorProps {
   trucks: TowTruck[];
@@ -9,13 +9,13 @@ interface FleetMonitorProps {
 
 export const FleetMonitor: React.FC<FleetMonitorProps> = ({ trucks, onOpenDriverPortal }) => {
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-cyan-400" />
-          <h3 className="font-bold text-white text-base">EV Flatbed Fleet Telemetry</h3>
+          <Activity className="w-5 h-5 text-sky-600" />
+          <h3 className="font-bold text-slate-900 text-base">Fleet Live Status</h3>
         </div>
-        <span className="text-xs text-slate-400">2 Trucks in Fleet (Active GPS)</span>
+        <span className="text-xs text-slate-500">2 Trucks in Active Fleet</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -25,58 +25,54 @@ export const FleetMonitor: React.FC<FleetMonitorProps> = ({ trucks, onOpenDriver
           return (
             <div
               key={truck.id}
-              className={`p-4 rounded-2xl border transition-all ${
-                isIdle
-                  ? 'bg-slate-950/60 border-slate-800'
-                  : 'bg-gradient-to-br from-cyan-950/30 via-slate-950 to-slate-900 border-cyan-500/40'
-              }`}
+              className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3"
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold">
+                  <div className="w-9 h-9 rounded-lg bg-sky-100 text-sky-800 flex items-center justify-center font-bold">
                     <Truck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white text-sm">{truck.callSign}: {truck.name}</h4>
-                    <span className="text-xs font-mono text-cyan-400 font-semibold">{truck.plateNumber}</span>
+                    <h4 className="font-bold text-slate-900 text-sm">{truck.callSign}: {truck.name}</h4>
+                    <span className="text-xs font-mono text-slate-600">{truck.plateNumber}</span>
                   </div>
                 </div>
 
                 <span
-                  className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
                     isIdle
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                      : 'bg-cyan-500/10 text-cyan-300 border-cyan-400/30 animate-pulse'
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : 'bg-amber-50 text-amber-800 border-amber-200'
                   }`}
                 >
-                  {isIdle ? 'IDLE / READY' : `ON JOB (${truck.activeJobId || 'Active'})`}
+                  {isIdle ? 'Ready / Idle' : `Active (${truck.activeJobId || 'Job'})`}
                 </span>
               </div>
 
-              <div className="space-y-1.5 text-xs text-slate-300 py-2 border-y border-slate-800/80">
+              <div className="space-y-1 text-xs text-slate-700 py-2 border-y border-slate-200/80">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Assigned Driver:</span>
-                  <span className="font-bold text-white">{truck.driverName}</span>
+                  <span className="text-slate-500">Driver:</span>
+                  <span className="font-semibold text-slate-900">{truck.driverName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Driver Phone:</span>
-                  <a href={`tel:${truck.driverPhone}`} className="text-cyan-400 font-mono hover:underline">
+                  <span className="text-slate-500">Phone:</span>
+                  <a href={`tel:${truck.driverPhone}`} className="text-sky-700 font-mono hover:underline">
                     {truck.driverPhone}
                   </a>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Live GPS Coordinates:</span>
-                  <span className="text-slate-300 font-mono text-[11px]">
+                  <span className="text-slate-500">Live GPS:</span>
+                  <span className="text-slate-600 font-mono text-[11px]">
                     {truck.currentLocation.lat.toFixed(4)}°N, {truck.currentLocation.lng.toFixed(4)}°E
                   </span>
                 </div>
               </div>
 
               {/* Specs & Driver Console shortcut */}
-              <div className="pt-3 flex items-center justify-between">
+              <div className="flex items-center justify-between pt-1">
                 <div className="flex gap-1 flex-wrap">
                   {truck.features.slice(0, 2).map((feat, i) => (
-                    <span key={i} className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">
+                    <span key={i} className="text-[10px] bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded">
                       {feat}
                     </span>
                   ))}
@@ -85,7 +81,7 @@ export const FleetMonitor: React.FC<FleetMonitorProps> = ({ trucks, onOpenDriver
                 {onOpenDriverPortal && (
                   <button
                     onClick={() => onOpenDriverPortal(truck.id)}
-                    className="text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 font-semibold px-2.5 py-1 rounded-lg transition"
+                    className="text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium px-2.5 py-1 rounded transition border border-slate-200"
                   >
                     Open Console
                   </button>

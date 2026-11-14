@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TowRequest, TowTruck } from '../../types';
 import { store } from '../../services/store';
-import { CheckCircle2, Truck, DollarSign, FileText, X, AlertCircle } from 'lucide-react';
+import { CheckCircle2, X } from 'lucide-react';
 
 interface ApproveModalProps {
   request: TowRequest;
@@ -19,7 +19,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
   const [agreedPrice, setAgreedPrice] = useState<number>(2500);
   const [selectedTruckId, setSelectedTruckId] = useState<string>(trucks[0]?.id || 'TRUCK-01');
   const [dispatchNotes, setDispatchNotes] = useState<string>(
-    `Spoke with ${request.customerName}. Vehicle is safely parked. Requires flatbed with soft rim straps.`
+    `Spoke with customer on call. Safe location. Flatbed dispatch requested.`
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,39 +39,37 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-5 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-white border border-slate-200 rounded-xl p-6 max-w-lg w-full shadow-xl space-y-4">
         
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-          <div className="flex items-center gap-2 text-emerald-400">
-            <CheckCircle2 className="w-5 h-5" />
-            <h3 className="font-bold text-white text-base">
-              Approve Request & Dispatch Truck
-            </h3>
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+            <h3>Approve Request & Dispatch Truck</h3>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Customer Quick Summary */}
-        <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-xs space-y-1">
+        <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs space-y-1 text-slate-700">
           <div className="flex justify-between">
-            <span className="text-slate-400">Customer:</span>
-            <span className="text-white font-bold">{request.customerName} ({request.customerPhone})</span>
+            <span className="text-slate-500">Customer:</span>
+            <span className="text-slate-900 font-semibold">{request.customerName} ({request.customerPhone})</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">EV Model:</span>
-            <span className="text-cyan-400 font-semibold">{request.vehicle.makeModel}</span>
+            <span className="text-slate-500">EV Model:</span>
+            <span className="text-sky-800 font-medium">{request.vehicle.makeModel}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Issue:</span>
-            <span className="text-amber-400 font-semibold">{request.issueType}</span>
+            <span className="text-slate-500">Issue:</span>
+            <span className="text-amber-800 font-medium">{request.issueType}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Pickup:</span>
-            <span className="text-slate-300 truncate max-w-[240px]">{request.pickupLocation.address}</span>
+            <span className="text-slate-500">Pickup:</span>
+            <span className="text-slate-800 truncate max-w-[240px]">{request.pickupLocation.address}</span>
           </div>
         </div>
 
@@ -79,11 +77,11 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
           
           {/* Agreed Price Input */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Agreed Verbal Quote (₹ INR) <span className="text-emerald-400">*</span>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Agreed Quote (₹ INR) <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-3 text-sm text-slate-400 font-bold">₹</span>
+              <span className="absolute left-3 top-2 text-sm text-slate-500 font-bold">₹</span>
               <input
                 type="number"
                 required
@@ -92,27 +90,27 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
                 step={100}
                 value={agreedPrice}
                 onChange={(e) => setAgreedPrice(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-700 focus:border-emerald-400 rounded-xl pl-9 pr-4 py-2.5 text-sm font-mono font-bold text-emerald-300 focus:outline-none"
+                className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg pl-8 pr-3 py-2 text-sm font-mono font-bold text-slate-900 focus:outline-none"
               />
             </div>
-            <p className="text-[11px] text-slate-400 mt-1">
-              Confirmed with customer on call. Shows directly on customer tracking & driver console.
+            <p className="text-[11px] text-slate-500 mt-1">
+              Confirmed verbally with the driver on call.
             </p>
           </div>
 
           {/* Select Tow Truck */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Assign Tow Truck & Driver <span className="text-emerald-400">*</span>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Assign Tow Truck <span className="text-red-500">*</span>
             </label>
             <div className="space-y-2">
               {trucks.map((truck) => (
                 <label
                   key={truck.id}
-                  className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition ${
+                  className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition ${
                     selectedTruckId === truck.id
-                      ? 'bg-emerald-500/10 border-emerald-400 text-white'
-                      : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
+                      ? 'bg-sky-50 border-sky-500 ring-1 ring-sky-500 text-slate-900'
+                      : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -122,27 +120,27 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
                       value={truck.id}
                       checked={selectedTruckId === truck.id}
                       onChange={() => setSelectedTruckId(truck.id)}
-                      className="text-emerald-500 focus:ring-emerald-400 bg-slate-900 border-slate-700"
+                      className="text-sky-600 focus:ring-sky-500 border-slate-300"
                     />
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-xs">{truck.callSign}: {truck.name}</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.2 bg-slate-800 rounded text-cyan-300">
+                        <span className="font-semibold text-xs text-slate-900">{truck.callSign}: {truck.name}</span>
+                        <span className="text-[10px] font-mono px-1.5 py-0.2 bg-slate-100 rounded text-slate-600">
                           {truck.plateNumber}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-400">Driver: {truck.driverName} ({truck.driverPhone})</p>
+                      <p className="text-[11px] text-slate-500">Driver: {truck.driverName} ({truck.driverPhone})</p>
                     </div>
                   </div>
 
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                       truck.status === 'idle'
-                        ? 'bg-emerald-500/20 text-emerald-300'
-                        : 'bg-amber-500/20 text-amber-300'
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-amber-50 text-amber-700 border border-amber-200'
                     }`}
                   >
-                    {truck.status === 'idle' ? 'Available' : 'Active on Job'}
+                    {truck.status === 'idle' ? 'Ready' : 'On Job'}
                   </span>
                 </label>
               ))}
@@ -151,31 +149,31 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
 
           {/* Dispatcher Notes */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Call Notes / Driver Instructions
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Driver Instructions / Call Notes
             </label>
             <textarea
               rows={2}
               value={dispatchNotes}
               onChange={(e) => setDispatchNotes(e.target.value)}
               placeholder="e.g. Bring Go-Jack wheel skates. Customer's battery is at 0% and gear is locked."
-              className="w-full bg-slate-950 border border-slate-700 focus:border-emerald-400 rounded-xl p-2.5 text-xs text-white focus:outline-none resize-none"
+              className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg p-2 text-xs text-slate-900 focus:outline-none resize-none"
             />
           </div>
 
           {/* Modal Actions */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white"
+              className="px-3.5 py-2 rounded-lg text-xs text-slate-600 hover:bg-slate-100"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg transition"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Confirm & Push to Driver Screen</span>

@@ -20,18 +20,18 @@ interface LeafletMapProps {
   interactive?: boolean;
 }
 
-// Custom icons using clean inline SVG HTML for Leaflet DivIcon
-const createCustomIcon = (type: MapMarker['type'], title: string) => {
+// Clean custom icons with crisp white border and natural shadows
+const createCustomIcon = (type: MapMarker['type'], _title: string) => {
   let iconHtml = '';
   let className = '';
 
   if (type === 'pickup') {
     iconHtml = `
       <div class="relative flex items-center justify-center">
-        <div class="absolute -inset-2 bg-red-500/30 rounded-full animate-ping"></div>
-        <div class="w-10 h-10 bg-gradient-to-tr from-red-600 to-rose-400 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        <div class="absolute -inset-1.5 bg-red-500/20 rounded-full animate-ping"></div>
+        <div class="w-9 h-9 bg-red-600 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
           </svg>
         </div>
       </div>
@@ -40,9 +40,9 @@ const createCustomIcon = (type: MapMarker['type'], title: string) => {
   } else if (type === 'truck') {
     iconHtml = `
       <div class="relative flex items-center justify-center">
-        <div class="absolute -inset-3 bg-cyan-400/30 rounded-full animate-pulse"></div>
-        <div class="w-11 h-11 bg-gradient-to-tr from-cyan-600 to-sky-400 rounded-full flex items-center justify-center text-slate-950 shadow-xl border-2 border-cyan-200">
-          <svg class="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="absolute -inset-2 bg-sky-500/20 rounded-full animate-pulse"></div>
+        <div class="w-10 h-10 bg-sky-600 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7h8m-8 4h5m4 0h3a1 1 0 011 1v6a1 1 0 01-1 1h-2m-9 0H7m0 0a2 2 0 100-4 2 2 0 000 4zm10 0a2 2 0 100-4 2 2 0 000 4zM3 13V6a1 1 0 011-1h7a1 1 0 011 1v7m-9 0h9"/>
           </svg>
         </div>
@@ -51,16 +51,16 @@ const createCustomIcon = (type: MapMarker['type'], title: string) => {
     className = 'truck-marker';
   } else if (type === 'dropoff') {
     iconHtml = `
-      <div class="w-9 h-9 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      <div class="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
         </svg>
       </div>
     `;
     className = 'dropoff-marker';
   } else {
     iconHtml = `
-      <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white">
+      <div class="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-white shadow-sm border-2 border-white">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
         </svg>
@@ -108,11 +108,11 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       attributionControl: false
     });
 
-    // Dark sleek OpenStreetMap tiles (CartoDB Dark Matter)
+    // Clean, high-legibility daylight map tiles
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       maxZoom: 19,
       subdomains: 'abcd',
-      attribution: '&copy; OpenStreetMap & CartoDB'
+      attribution: '&copy; OpenStreetMap'
     }).addTo(map);
 
     const markersGroup = L.layerGroup().addTo(map);
@@ -149,10 +149,10 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       });
 
       marker.bindPopup(`
-        <div style="font-family: Inter, sans-serif; padding: 4px;">
-          <div style="font-weight: 700; font-size: 13px; color: #00D2FF; margin-bottom: 2px;">${m.title}</div>
-          ${m.subtitle ? `<div style="font-size: 11px; color: #94a3b8;">${m.subtitle}</div>` : ''}
-          <div style="font-size: 10px; color: #64748b; margin-top: 4px;">Lat: ${m.lat.toFixed(4)}, Lng: ${m.lng.toFixed(4)}</div>
+        <div style="font-family: Inter, sans-serif; padding: 2px;">
+          <div style="font-weight: 700; font-size: 13px; color: #0f172a; margin-bottom: 2px;">${m.title}</div>
+          ${m.subtitle ? `<div style="font-size: 11px; color: #475569;">${m.subtitle}</div>` : ''}
+          <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Lat: ${m.lat.toFixed(4)}, Lng: ${m.lng.toFixed(4)}</div>
         </div>
       `);
 
@@ -170,10 +170,10 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
     // Draw route line if requested and >= 2 markers
     if (showRoute && latLngList.length >= 2) {
       const polyline = L.polyline(latLngList, {
-        color: '#00D2FF',
-        weight: 4,
-        opacity: 0.8,
-        dashArray: '8, 8',
+        color: '#0284c7',
+        weight: 3.5,
+        opacity: 0.85,
+        dashArray: '6, 6',
         lineCap: 'round'
       }).addTo(map);
       routeLayerRef.current = polyline;
@@ -189,13 +189,13 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
   }, [markers, showRoute, onMarkerDragEnd]);
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl border border-slate-700/60 shadow-xl ${className}`}>
-      <div ref={containerRef} className="w-full h-full min-h-[280px]" />
+    <div className={`relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ${className}`}>
+      <div ref={containerRef} className="w-full h-full min-h-[260px]" />
       
       {/* Visual Overlay Accent */}
-      <div className="absolute top-2 left-2 z-[400] bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono text-cyan-300 border border-slate-700/60 flex items-center gap-1.5 shadow-sm">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        Live GPS Map (OSM / VoltGIS™)
+      <div className="absolute top-2.5 left-2.5 z-[400] bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm">
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Live GPS Map
       </div>
     </div>
   );

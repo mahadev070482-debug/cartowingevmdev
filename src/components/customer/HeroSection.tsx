@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, ShieldCheck, Clock, MapPin, Search, ArrowRight, CheckCircle2, AlertTriangle, PhoneCall } from 'lucide-react';
+import { Search, ArrowRight, CheckCircle2, AlertTriangle, PhoneCall } from 'lucide-react';
 import { BASE_GARAGE } from '../../data/seedData';
 
 interface HeroSectionProps {
@@ -23,71 +23,63 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 pt-8 pb-16 lg:pt-14 lg:pb-24 border-b border-slate-800">
-      
-      {/* Background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute top-10 right-10 w-72 h-72 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <section className="bg-slate-50 border-b border-slate-200 pt-8 pb-14 lg:pt-12 lg:pb-18">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Hero Content (7 Cols) */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
             
             {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 bg-cyan-500/15 border border-cyan-400/30 px-3.5 py-1.5 rounded-full text-cyan-300 text-xs sm:text-sm font-semibold shadow-glow-sm">
-              <Zap className="w-4 h-4 text-cyan-400 fill-cyan-400 animate-pulse" />
-              <span>Specialized EV & Hybrid Flatbed Roadside Assistance</span>
+            <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3 py-1 rounded-full text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-sky-600"></span>
+              <span>Certified Electric Vehicle Roadside Assistance</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
-              Stranded in an EV? <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-teal-300 bg-clip-text text-transparent">
-                Zero-Drag Flatbed Towing
-              </span> <br />
-              In Under 25 Minutes.
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              Fast, Safe Flatbed Towing <br className="hidden sm:inline" />
+              <span className="text-sky-600">Specially Equipped for EVs.</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Standard tow trucks can ruin your EV’s motor and void your battery warranty. 
-              We use <strong className="text-cyan-300">100% full-hydraulic flatbeds and wheel skates</strong> to protect your high-voltage drive unit.
+            <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Standard tow trucks can overheat EV motors and damage sensitive battery enclosures. 
+              Our fleet uses full-hydraulic flatbeds and soft wheel skates so your vehicle is loaded with zero motor drag and zero underbody contact.
             </p>
 
-            {/* Fast Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
               <button
                 onClick={onScrollToBooking}
-                className="w-full sm:w-auto bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-black text-base px-8 py-4 rounded-xl shadow-glow-blue transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm px-6 py-3.5 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
               >
-                <span>Request EV Tow Now</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <span>Request EV Flatbed</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
 
               <a
                 href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`}
-                className="w-full sm:w-auto bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-white font-bold text-base px-6 py-4 rounded-xl transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 font-semibold text-sm px-5 py-3.5 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
               >
-                <PhoneCall className="w-5 h-5 text-emerald-400" />
-                <span>Call Owner Directly</span>
+                <PhoneCall className="w-4 h-4 text-emerald-600" />
+                <span>Call Dispatch: {BASE_GARAGE.phone}</span>
               </a>
             </div>
 
             {/* Trust Highlights Checklist */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 text-xs sm:text-sm text-slate-300">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>No Drag / No Gearbox Burn</span>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 text-xs text-slate-600">
+              <div className="flex items-center gap-2 justify-center lg:justify-start">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Zero motor drag guaranteed</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>2-Min Call Verification</span>
+              <div className="flex items-center gap-2 justify-center lg:justify-start">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>2-minute call verification</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Live GPS Map Tracking</span>
+              <div className="flex items-center gap-2 justify-center lg:justify-start">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Live truck map tracking</span>
               </div>
             </div>
 
@@ -96,45 +88,41 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Right Hero Card: Quick Track & EV Safety Callout (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
             
-            {/* Quick Track My Tow Card */}
-            <div className="bg-slate-900/90 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-bl-full pointer-events-none" />
-
-              <div className="flex items-center gap-2 mb-2">
-                <div className="p-2 rounded-lg bg-cyan-500/20 text-cyan-400">
+            {/* Quick Track Card */}
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <div className="flex items-center gap-2.5 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center">
                   <Search className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-white text-base">Track Existing Tow Request</h3>
+                <h2 className="font-bold text-slate-900 text-base">Track Active Tow Request</h2>
               </div>
 
-              <p className="text-xs text-slate-400 mb-4">
-                Already booked with us? Enter your Tracking ID (e.g. <span className="text-cyan-400 font-mono">VT-8492</span>) or 10-digit mobile number for real-time truck location:
+              <p className="text-xs text-slate-500 mb-4">
+                Already submitted a request? Check live truck status and location by Tracking ID (e.g. <strong className="text-slate-800">VT-8492</strong>) or phone:
               </p>
 
               <form onSubmit={handleTrackSubmit} className="space-y-3">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Enter VT-XXXX or Mobile (0000000000)"
-                    value={trackQuery}
-                    onChange={(e) => setTrackQuery(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition font-medium"
-                  />
-                </div>
+                <input
+                  type="text"
+                  placeholder="Enter VT-XXXX or Mobile (0000000000)"
+                  value={trackQuery}
+                  onChange={(e) => setTrackQuery(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-sky-500 focus:bg-white rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition"
+                />
 
                 <div className="flex items-center gap-2">
                   <button
                     type="submit"
-                    className="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 rounded-xl text-sm transition shadow-glow-sm flex items-center justify-center gap-2"
+                    className="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-sm flex items-center justify-center gap-2"
                   >
                     <Search className="w-4 h-4" />
-                    <span>Track Status & Map</span>
+                    <span>Track Status</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => onTrackSearch('VT-3108')}
-                    className="bg-slate-800 hover:bg-slate-700 text-cyan-400 font-mono text-xs px-3 py-3 rounded-xl border border-slate-700 transition"
+                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-medium px-3 py-2.5 rounded-lg border border-slate-200 transition"
                     title="Load Active Demo Request"
                   >
                     Demo #VT-3108
@@ -144,20 +132,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* EV Safety Callout Box */}
-            <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-2xl p-4 flex items-start gap-3 text-xs">
-              <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+            <div className="bg-amber-50/80 border border-amber-200 rounded-xl p-4 flex items-start gap-3 text-xs text-amber-900">
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold text-amber-300">
-                  CRITICAL: Never tow an EV with wheels on the ground!
-                </p>
-                <p className="text-slate-300 mt-1 leading-relaxed">
-                  Permanent magnet motors spin inside when wheels rotate, creating back-EMF voltage that can ignite the battery pack or burn the inverter.
+                <p className="font-bold">Important note for electric vehicle owners:</p>
+                <p className="text-slate-600 mt-0.5 leading-relaxed">
+                  Never tow an EV with wheels rolling on the pavement. We load your entire vehicle onto our hydraulic deck so the motors remain stationary.
                 </p>
                 <button
                   onClick={onOpenWhyFlatbed}
-                  className="mt-2 text-cyan-400 hover:text-cyan-300 font-semibold underline flex items-center gap-1"
+                  className="mt-1.5 text-sky-700 hover:underline font-semibold flex items-center gap-1"
                 >
-                  <span>Learn how our zero-drag flatbed prevents this</span>
+                  <span>Learn how flatbed towing protects your warranty</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>

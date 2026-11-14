@@ -6,17 +6,13 @@ import { OrdersTable } from './OrdersTable';
 import { FleetMonitor } from './FleetMonitor';
 import { ReviewModeration } from './ReviewModeration';
 import { 
-  ShieldCheck, 
   Lock, 
-  Unlock, 
   PhoneCall, 
   Truck, 
   CheckCircle2, 
-  Clock, 
   AlertTriangle, 
   LogOut,
   RefreshCw,
-  Search,
   Activity,
   Layers,
   MessageSquare
@@ -82,38 +78,38 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
   // If not authenticated, show PIN entry modal / screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-[75vh] flex items-center justify-center px-4 py-16">
-        <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6">
-          <div className="w-16 h-16 bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20 border border-emerald-500/40 rounded-2xl flex items-center justify-center mx-auto text-emerald-400">
-            <Lock className="w-8 h-8" />
+      <div className="min-h-[75vh] flex items-center justify-center px-4 py-16 bg-slate-50">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 max-w-sm w-full shadow-sm text-center space-y-5">
+          <div className="w-14 h-14 bg-sky-50 border border-sky-200 rounded-xl flex items-center justify-center mx-auto text-sky-700">
+            <Lock className="w-7 h-7" />
           </div>
 
           <div>
-            <h2 className="text-xl font-black text-white">Owner & Dispatch Portal</h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Please enter your 4-digit security PIN to access the call verification queue and fleet controls.
+            <h2 className="text-lg font-bold text-slate-900">Owner & Dispatch Portal</h2>
+            <p className="text-xs text-slate-500 mt-1">
+              Enter your 4-digit security PIN to access the call queue and dispatch controls.
             </p>
           </div>
 
-          <form onSubmit={handlePinSubmit} className="space-y-4">
+          <form onSubmit={handlePinSubmit} className="space-y-3.5">
             <div>
               <input
                 type="password"
                 maxLength={4}
                 required
-                placeholder="Enter PIN (Demo: 1234)"
+                placeholder="PIN: 1234"
                 value={pinInput}
                 onChange={(e) => {
                   setPinInput(e.target.value);
                   setPinError(false);
                 }}
-                className={`w-full bg-slate-950 border ${
-                  pinError ? 'border-rose-500 ring-2 ring-rose-500/20' : 'border-slate-700 focus:border-cyan-400'
-                } rounded-xl px-4 py-3 text-center text-xl font-mono tracking-widest text-white focus:outline-none transition`}
+                className={`w-full bg-slate-50 border ${
+                  pinError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-300 focus:border-sky-600 focus:bg-white'
+                } rounded-lg px-4 py-2.5 text-center text-xl font-mono tracking-widest text-slate-900 focus:outline-none transition`}
                 autoFocus
               />
               {pinError && (
-                <p className="text-xs text-rose-400 mt-1.5 font-medium">
+                <p className="text-xs text-red-600 mt-1.5 font-medium">
                   Invalid PIN. Please use demo PIN: <strong>1234</strong>
                 </p>
               )}
@@ -121,15 +117,15 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black py-3 rounded-xl text-sm shadow-lg transition"
+              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 rounded-lg text-sm shadow-sm transition"
             >
               Unlock Dashboard
             </button>
           </form>
 
-          <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-            <span>Demo PIN is: </span>
-            <span className="font-mono font-bold text-cyan-400">1234</span>
+          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-500">
+            <span>Demo PIN: </span>
+            <span className="font-mono font-bold text-slate-800">1234</span>
           </div>
         </div>
       </div>
@@ -146,37 +142,37 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
   const availableTrucksCount = trucks.filter((t) => t.status === 'idle').length;
 
   return (
-    <div className="py-8 lg:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div className="py-8 lg:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       
       {/* Top Header & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-black text-white tracking-tight">
-              Owner / Dispatcher Control Tower
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Dispatcher Control Dashboard
             </h1>
-            <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] font-bold px-2 py-0.5 rounded-full">
-              LIVE UNLOCKED
+            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+              Logged In
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Call-First Verification Workflow, Fleet Routing, and Customer Order Moderation
+          <p className="text-xs text-slate-500 mt-0.5">
+            Call Verification, Tow Approvals, and Fleet Management
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={handleRefresh}
-            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs flex items-center gap-1.5 transition"
-            title="Refresh Store"
+            className="p-2 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-lg text-xs flex items-center gap-1.5 transition shadow-sm"
+            title="Refresh Data"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Sync Data</span>
+            <span className="hidden sm:inline">Refresh</span>
           </button>
 
           <button
             onClick={handleLogout}
-            className="bg-slate-800 hover:bg-rose-950/60 hover:text-rose-400 text-slate-300 font-semibold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition border border-slate-700"
+            className="bg-white hover:bg-red-50 text-slate-700 hover:text-red-700 font-medium px-3 py-2 rounded-lg text-xs flex items-center gap-1.5 transition border border-slate-200 shadow-sm"
             title="Lock Dashboard"
           >
             <LogOut className="w-3.5 h-3.5" />
@@ -186,109 +182,109 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
       </div>
 
       {/* KPI Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
         {/* Card 1: Pending Calls */}
         <div
           onClick={() => setActiveTab('queue')}
-          className={`p-4 rounded-2xl border cursor-pointer transition-all ${
+          className={`p-4 rounded-xl border cursor-pointer transition ${
             activeTab === 'queue'
-              ? 'bg-amber-500/10 border-amber-500/60 ring-2 ring-amber-500/20'
-              : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+              ? 'bg-amber-50/80 border-amber-300 ring-1 ring-amber-300'
+              : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
           }`}
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400 font-semibold">Pending Calls</span>
-            <div className={`p-1.5 rounded-lg ${pendingCallsCount > 0 ? 'bg-amber-500 text-slate-950 animate-bounce' : 'bg-slate-800 text-slate-400'}`}>
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs text-slate-600 font-semibold">Pending Calls</span>
+            <div className={`p-1.5 rounded-md ${pendingCallsCount > 0 ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
               <PhoneCall className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-black text-amber-400 font-mono">{pendingCallsCount}</div>
-          <span className="text-[10px] text-amber-300/80">Requires verification call</span>
+          <div className="text-2xl font-bold text-slate-900 font-mono">{pendingCallsCount}</div>
+          <span className="text-[11px] text-amber-700">Requires phone check</span>
         </div>
 
         {/* Card 2: Active on Road */}
         <div
           onClick={() => setActiveTab('orders')}
-          className={`p-4 rounded-2xl border cursor-pointer transition-all ${
+          className={`p-4 rounded-xl border cursor-pointer transition ${
             activeTab === 'orders'
-              ? 'bg-cyan-500/10 border-cyan-500/60 ring-2 ring-cyan-500/20'
-              : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+              ? 'bg-sky-50/80 border-sky-300 ring-1 ring-sky-300'
+              : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
           }`}
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400 font-semibold">Active Rescues</span>
-            <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs text-slate-600 font-semibold">Active Rescues</span>
+            <div className="p-1.5 rounded-md bg-sky-100 text-sky-700">
               <Truck className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-black text-cyan-400 font-mono">{activeJobsCount}</div>
-          <span className="text-[10px] text-cyan-300/80">Approved & in motion</span>
+          <div className="text-2xl font-bold text-slate-900 font-mono">{activeJobsCount}</div>
+          <span className="text-[11px] text-sky-700">Approved & in progress</span>
         </div>
 
         {/* Card 3: Trucks Available */}
         <div
           onClick={() => setActiveTab('fleet')}
-          className={`p-4 rounded-2xl border cursor-pointer transition-all ${
+          className={`p-4 rounded-xl border cursor-pointer transition ${
             activeTab === 'fleet'
-              ? 'bg-emerald-500/10 border-emerald-500/60 ring-2 ring-emerald-500/20'
-              : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+              ? 'bg-emerald-50/80 border-emerald-300 ring-1 ring-emerald-300'
+              : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
           }`}
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400 font-semibold">Ready Trucks</span>
-            <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs text-slate-600 font-semibold">Ready Trucks</span>
+            <div className="p-1.5 rounded-md bg-emerald-100 text-emerald-700">
               <Activity className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-black text-emerald-400 font-mono">{availableTrucksCount} / {trucks.length}</div>
-          <span className="text-[10px] text-emerald-300/80">Idle at base depot</span>
+          <div className="text-2xl font-bold text-slate-900 font-mono">{availableTrucksCount} / {trucks.length}</div>
+          <span className="text-[11px] text-emerald-700">Idle at base</span>
         </div>
 
         {/* Card 4: Completed */}
         <div
           onClick={() => setActiveTab('orders')}
-          className="p-4 rounded-2xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700 transition"
+          className="p-4 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-slate-300 transition shadow-sm"
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400 font-semibold">Completed</span>
-            <div className="p-1.5 rounded-lg bg-slate-800 text-emerald-400">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs text-slate-600 font-semibold">Completed</span>
+            <div className="p-1.5 rounded-md bg-slate-100 text-emerald-600">
               <CheckCircle2 className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-black text-white font-mono">{completedCount}</div>
-          <span className="text-[10px] text-slate-400">Delivered successfully</span>
+          <div className="text-2xl font-bold text-slate-900 font-mono">{completedCount}</div>
+          <span className="text-[11px] text-slate-500">Delivered successfully</span>
         </div>
 
         {/* Card 5: Rejected */}
         <div
           onClick={() => setActiveTab('orders')}
-          className="p-4 rounded-2xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700 transition"
+          className="p-4 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-slate-300 transition shadow-sm"
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400 font-semibold">Rejected / Spam</span>
-            <div className="p-1.5 rounded-lg bg-slate-800 text-rose-400">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs text-slate-600 font-semibold">Declined</span>
+            <div className="p-1.5 rounded-md bg-slate-100 text-red-600">
               <AlertTriangle className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-black text-rose-400 font-mono">{rejectedCount}</div>
-          <span className="text-[10px] text-slate-400">Cancelled / Out of area</span>
+          <div className="text-2xl font-bold text-slate-900 font-mono">{rejectedCount}</div>
+          <span className="text-[11px] text-slate-500">Cancelled / Out of area</span>
         </div>
       </div>
 
       {/* Main Section Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-3 text-xs sm:text-sm font-semibold">
+      <div className="flex items-center gap-1.5 border-b border-slate-200 pb-2 text-xs sm:text-sm font-medium">
         <button
           onClick={() => setActiveTab('queue')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition ${
             activeTab === 'queue'
-              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-amber-100 text-amber-900 font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <PhoneCall className="w-4 h-4" />
+          <PhoneCall className="w-4 h-4 text-amber-600" />
           <span>Call Verification Queue</span>
           {pendingCallsCount > 0 && (
-            <span className="bg-amber-500 text-slate-950 text-[10px] font-black px-1.5 py-0.2 rounded-full">
+            <span className="bg-amber-600 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">
               {pendingCallsCount}
             </span>
           )}
@@ -296,38 +292,38 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
         <button
           onClick={() => setActiveTab('orders')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition ${
             activeTab === 'orders'
-              ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-sm'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-sky-100 text-sky-900 font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <Layers className="w-4 h-4" />
-          <span>All Orders & Sorting</span>
+          <Layers className="w-4 h-4 text-sky-600" />
+          <span>All Orders & History</span>
           <span className="text-[11px] text-slate-500">({requests.length})</span>
         </button>
 
         <button
           onClick={() => setActiveTab('fleet')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition ${
             activeTab === 'fleet'
-              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 shadow-sm'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-emerald-100 text-emerald-900 font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <Truck className="w-4 h-4" />
-          <span>Fleet Live Telemetry</span>
+          <Truck className="w-4 h-4 text-emerald-600" />
+          <span>Fleet Overview</span>
         </button>
 
         <button
           onClick={() => setActiveTab('reviews')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition ${
             activeTab === 'reviews'
-              ? 'bg-purple-500/20 text-purple-300 border border-purple-400/40 shadow-sm'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-purple-100 text-purple-900 font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <MessageSquare className="w-4 h-4" />
+          <MessageSquare className="w-4 h-4 text-purple-600" />
           <span>Review Moderation</span>
         </button>
       </div>

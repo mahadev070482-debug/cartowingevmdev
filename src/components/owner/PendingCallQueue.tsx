@@ -9,13 +9,11 @@ import {
   Check, 
   CheckCircle2, 
   XCircle, 
-  Clock, 
   MapPin, 
   Car, 
   AlertTriangle, 
-  Navigation,
-  PhoneForwarded,
-  ShieldAlert
+  Navigation, 
+  ShieldAlert 
 } from 'lucide-react';
 
 interface PendingCallQueueProps {
@@ -41,13 +39,13 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
 
   if (pendingRequests.length === 0) {
     return (
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center space-y-3">
-        <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-center mx-auto text-emerald-400">
+      <div className="bg-white border border-slate-200 rounded-xl p-8 text-center space-y-3 shadow-sm">
+        <div className="w-12 h-12 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center justify-center mx-auto text-emerald-600">
           <CheckCircle2 className="w-6 h-6" />
         </div>
-        <h3 className="text-white font-bold text-base">All Incoming Requests Verified</h3>
-        <p className="text-xs text-slate-400 max-w-md mx-auto">
-          There are currently no new unverified tow requests in the phone verification queue. Any newly submitted booking will appear here instantly with sound/badge.
+        <h3 className="text-slate-900 font-bold text-base">All Incoming Requests Verified</h3>
+        <p className="text-xs text-slate-500 max-w-md mx-auto">
+          There are currently no pending requests in the call verification queue. Any newly submitted booking will appear here immediately.
         </p>
       </div>
     );
@@ -57,13 +55,13 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
-          <h3 className="font-bold text-white text-base">
-            Pending Call Verification Queue ({pendingRequests.length})
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+          <h3 className="font-bold text-slate-900 text-base">
+            Pending Phone Verification ({pendingRequests.length})
           </h3>
         </div>
-        <span className="text-xs text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-full font-semibold">
-          ⚡ Call within 2 minutes of submission
+        <span className="text-xs text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full font-medium">
+          Call driver within 2 minutes of booking
         </span>
       </div>
 
@@ -79,35 +77,35 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
           return (
             <div
               key={req.id}
-              className={`bg-slate-900 border-2 rounded-3xl p-5 sm:p-6 transition-all duration-200 shadow-xl ${
+              className={`bg-white border rounded-xl p-5 sm:p-6 shadow-sm transition ${
                 req.callMade
-                  ? 'border-cyan-500/40 bg-slate-900/95'
-                  : 'border-amber-500/50 bg-slate-900 shadow-amber-500/5'
+                  ? 'border-sky-300 ring-1 ring-sky-200'
+                  : 'border-amber-300'
               }`}
             >
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                 
                 {/* Customer Identity */}
                 <div className="flex items-start sm:items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center font-bold text-slate-950 text-base shadow-md shrink-0">
-                    <PhoneForwarded className="w-6 h-6" />
+                  <div className="w-11 h-11 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm shrink-0">
+                    <PhoneCall className="w-5 h-5" />
                   </div>
 
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-base font-black text-white">{req.customerName}</h4>
-                      <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-800 text-cyan-300 font-bold border border-slate-700">
+                      <h4 className="text-base font-bold text-slate-900">{req.customerName}</h4>
+                      <span className="font-mono text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold border border-slate-200">
                         {req.id}
                       </span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">
                         {req.urgency}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-3 text-xs text-slate-400 mt-1">
+                    <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
                       <span>Submitted: {new Date(req.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       <span>•</span>
-                      <span className="text-cyan-400 font-semibold">{distFromBase} km from Base Garage</span>
+                      <span className="text-slate-700 font-medium">{distFromBase} km from Base Garage</span>
                     </div>
                   </div>
                 </div>
@@ -117,23 +115,23 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                   {/* One-Tap Click-to-Call button */}
                   <a
                     href={`tel:${req.customerPhone.replace(/\s+/g, '')}`}
-                    className="flex-1 sm:flex-none bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
+                    className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition"
                   >
-                    <PhoneCall className="w-4 h-4 animate-bounce" />
-                    <span>Call Customer ({req.customerPhone})</span>
+                    <PhoneCall className="w-4 h-4" />
+                    <span>Call Driver ({req.customerPhone})</span>
                   </a>
 
                   {/* "Call Made" Toggle Badge */}
                   <button
                     onClick={() => handleToggleCallMade(req.id)}
-                    className={`px-3 py-2.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 transition ${
+                    className={`px-3 py-2 rounded-lg text-xs font-medium border flex items-center gap-1.5 transition ${
                       req.callMade
-                        ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300'
-                        : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-white hover:border-slate-600'
+                        ? 'bg-sky-50 border-sky-300 text-sky-800'
+                        : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-50'
                     }`}
                     title="Toggle whether you have dialed and spoken to this driver"
                   >
-                    <Check className={`w-3.5 h-3.5 ${req.callMade ? 'text-cyan-400' : 'text-slate-500'}`} />
+                    <Check className={`w-3.5 h-3.5 ${req.callMade ? 'text-sky-600' : 'text-slate-400'}`} />
                     <span>{req.callMade ? 'Call Made: YES' : 'Call Made: NO'}</span>
                   </button>
                 </div>
@@ -141,20 +139,20 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
               </div>
 
               {/* Middle: Details Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 text-xs text-slate-700">
                 {/* Vehicle Specs */}
                 <div className="space-y-1">
-                  <span className="text-slate-500 font-medium block">EV Vehicle:</span>
-                  <div className="font-bold text-white flex items-center gap-1.5">
-                    <Car className="w-4 h-4 text-cyan-400" />
+                  <span className="text-slate-400 font-medium block">EV Vehicle:</span>
+                  <div className="font-semibold text-slate-900 flex items-center gap-1.5">
+                    <Car className="w-4 h-4 text-sky-600" />
                     <span>{req.vehicle.makeModel}</span>
                   </div>
                   {req.vehicle.regNumber && (
-                    <span className="text-slate-400 font-mono block">{req.vehicle.regNumber}</span>
+                    <span className="text-slate-500 font-mono block">{req.vehicle.regNumber}</span>
                   )}
                   {req.vehicle.hasWheelLock && (
-                    <span className="inline-flex items-center gap-1 text-[10px] text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-semibold">
-                      <ShieldAlert className="w-3 h-3" />
+                    <span className="inline-flex items-center gap-1 text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 font-medium">
+                      <ShieldAlert className="w-3 h-3 text-amber-600" />
                       Drive Wheels Locked (Needs Wheel Skates)
                     </span>
                   )}
@@ -162,40 +160,40 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
 
                 {/* Issue Type */}
                 <div className="space-y-1">
-                  <span className="text-slate-500 font-medium block">Reported Breakdown:</span>
-                  <div className="font-bold text-amber-400 flex items-center gap-1.5">
-                    <AlertTriangle className="w-4 h-4 text-amber-400" />
+                  <span className="text-slate-400 font-medium block">Reported Breakdown:</span>
+                  <div className="font-semibold text-amber-800 flex items-center gap-1.5">
+                    <AlertTriangle className="w-4 h-4 text-amber-600" />
                     <span>{req.issueType}</span>
                   </div>
                   {req.issueDescription && (
-                    <p className="text-slate-300 line-clamp-2">{req.issueDescription}</p>
+                    <p className="text-slate-600 line-clamp-2">{req.issueDescription}</p>
                   )}
                 </div>
 
                 {/* Location Points */}
                 <div className="space-y-1">
-                  <span className="text-slate-500 font-medium block">Locations:</span>
-                  <p className="text-slate-300 flex items-start gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
+                  <span className="text-slate-400 font-medium block">Locations:</span>
+                  <p className="text-slate-800 flex items-start gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
                     <span>Pickup: {req.pickupLocation.address}</span>
                   </p>
-                  <p className="text-slate-400 flex items-start gap-1">
-                    <Navigation className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <p className="text-slate-600 flex items-start gap-1">
+                    <Navigation className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span>Drop-off: {req.dropoffLocation.name}</span>
                   </p>
                 </div>
               </div>
 
               {/* Bottom: The 2 Core Decision Buttons (Approve & Assign vs Reject) */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-800">
-                <div className="text-xs text-slate-400">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3.5 border-t border-slate-100">
+                <div className="text-xs text-slate-500">
                   {req.callMade ? (
-                    <span className="text-cyan-400 font-medium flex items-center gap-1">
-                      ✓ Phone call recorded. Proceed to quote approval or cancellation.
+                    <span className="text-emerald-700 font-medium flex items-center gap-1">
+                      ✓ Call recorded. Ready for quote approval & truck dispatch.
                     </span>
                   ) : (
-                    <span className="text-amber-400 flex items-center gap-1">
-                      ⚠️ Recommendation: Dial customer before approving to confirm vehicle state.
+                    <span className="text-amber-700 flex items-center gap-1">
+                      Recommendation: Dial customer to confirm vehicle status before dispatching.
                     </span>
                   )}
                 </div>
@@ -204,16 +202,16 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                   {/* Reject / Cancel Request */}
                   <button
                     onClick={() => setActiveRejectReq(req)}
-                    className="flex-1 sm:flex-none bg-rose-950/60 hover:bg-rose-900/80 border border-rose-500/50 text-rose-300 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition"
+                    className="flex-1 sm:flex-none bg-white hover:bg-red-50 border border-slate-300 text-slate-700 hover:text-red-700 font-medium px-3.5 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 transition"
                   >
-                    <XCircle className="w-4 h-4 text-rose-400" />
-                    <span>Reject / Cancel Request</span>
+                    <XCircle className="w-4 h-4 text-red-500" />
+                    <span>Decline / Cancel</span>
                   </button>
 
                   {/* Approve & Assign Truck */}
                   <button
                     onClick={() => setActiveApproveReq(req)}
-                    className="flex-1 sm:flex-none bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition active:scale-95"
+                    className="flex-1 sm:flex-none bg-sky-600 hover:bg-sky-700 text-white font-semibold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 shadow-sm transition"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     <span>Approve & Assign Truck</span>

@@ -1,97 +1,97 @@
 import React from 'react';
-import { AlertTriangle, ShieldCheck, Zap, XCircle, CheckCircle2, Cpu } from 'lucide-react';
+import { AlertTriangle, XCircle, CheckCircle2 } from 'lucide-react';
 
 export const EVWhyFlatbed: React.FC = () => {
   return (
-    <section id="why-flatbed" className="py-16 lg:py-24 bg-slate-900/50 border-t border-slate-800">
+    <section id="why-flatbed" className="py-12 lg:py-16 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
-            <AlertTriangle className="w-4 h-4" />
-            <span>EV Engineering & Battery Protection</span>
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+          <div className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-semibold">
+            <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+            <span>EV Engineering & Safety</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Why Standard Tow Trucks Will Void Your EV Warranty
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            Why EVs Require 100% Flatbed Towing
           </h2>
-          <p className="text-sm sm:text-base text-slate-300">
-            Electric vehicles have permanent-magnet electric motors permanently geared to the drive wheels without a true mechanical neutral clutch.
+          <p className="text-sm text-slate-600">
+            Electric cars use permanent-magnet synchronous motors without a physical mechanical clutch. Rotating the wheels during a tow causes serious electrical hazards.
           </p>
         </div>
 
         {/* Comparison: Standard Tow vs VoltRescue Zero-Drag Flatbed */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           
           {/* Wrong Way: Standard Wheel-Lift / Dragging */}
-          <div className="bg-rose-950/20 border-2 border-rose-500/40 rounded-3xl p-6 sm:p-8 space-y-5 relative overflow-hidden">
-            <div className="flex items-center justify-between pb-4 border-b border-rose-900/40">
-              <div className="flex items-center gap-2 text-rose-400 font-bold text-base">
-                <XCircle className="w-5 h-5 shrink-0" />
-                <span>Ordinary Tow Truck (DANGEROUS)</span>
+          <div className="bg-red-50/60 border border-red-200 rounded-xl p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-red-200/80">
+              <div className="flex items-center gap-2 text-red-700 font-bold text-sm">
+                <XCircle className="w-4 h-4 shrink-0 text-red-600" />
+                <span>Ordinary Wheel-Lift / Dolly Tow (Risk)</span>
               </div>
-              <span className="text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full">
-                DO NOT USE
+              <span className="text-[10px] font-semibold bg-red-100 text-red-800 px-2.5 py-0.5 rounded-full border border-red-200">
+                Not Recommended
               </span>
             </div>
 
-            <ul className="space-y-3.5 text-xs sm:text-sm text-slate-300">
+            <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
               <li className="flex items-start gap-2.5">
-                <span className="text-rose-400 font-black mt-0.5">✕</span>
+                <span className="text-red-600 font-bold mt-0.5">✕</span>
                 <span>
-                  <strong className="text-white block font-semibold">Inverter & Motor Burnout:</strong>
-                  Spinning the wheels forces the permanent magnet rotor to act as a 400V–800V generator. Without active battery cooling, the inverter semiconductor switches overheat and melt.
+                  <strong className="text-slate-900 block font-semibold">Inverter & Motor Burnout:</strong>
+                  Spinning the wheels forces the motor to act as an unregulated high-voltage generator. Without active cooling, this can destroy delicate power electronics.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-rose-400 font-black mt-0.5">✕</span>
+                <span className="text-red-600 font-bold mt-0.5">✕</span>
                 <span>
-                  <strong className="text-white block font-semibold">Tire Scraping & Differential Destruction:</strong>
-                  On AWD or dual-motor EVs (e.g. Ioniq 5 AWD, BYD Seal), lifting two wheels still leaves the other axle dragging on the asphalt.
+                  <strong className="text-slate-900 block font-semibold">Differential & Gear Damage:</strong>
+                  On all-wheel drive or dual-motor EVs, lifting one axle still causes the other drive unit to spin and overheat.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-rose-400 font-black mt-0.5">✕</span>
+                <span className="text-red-600 font-bold mt-0.5">✕</span>
                 <span>
-                  <strong className="text-white block font-semibold">Underbody Battery Puncture:</strong>
-                  Ordinary hook chains and winch cables can catch the exposed underside lithium battery casing, causing thermal runaway hazards.
+                  <strong className="text-slate-900 block font-semibold">Battery Tray Puncture Hazards:</strong>
+                  Standard tow hooks can snag the low-hanging lithium-ion battery enclosure on road undulations.
                 </span>
               </li>
             </ul>
           </div>
 
           {/* Right Way: VOLTRESCUE Certified Flatbed */}
-          <div className="bg-gradient-to-br from-cyan-950/40 via-slate-900 to-slate-950 border-2 border-cyan-400/60 rounded-3xl p-6 sm:p-8 space-y-5 shadow-glow-sm relative overflow-hidden">
-            <div className="flex items-center justify-between pb-4 border-b border-cyan-900/40">
-              <div className="flex items-center gap-2 text-cyan-300 font-bold text-base">
-                <CheckCircle2 className="w-5 h-5 shrink-0 text-cyan-400" />
-                <span>VOLTRESCUE 100% Flatbed (APPROVED)</span>
+          <div className="bg-sky-50/60 border border-sky-200 rounded-xl p-6 space-y-4 shadow-sm">
+            <div className="flex items-center justify-between pb-3 border-b border-sky-200/80">
+              <div className="flex items-center gap-2 text-sky-800 font-bold text-sm">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-sky-600" />
+                <span>VoltRescue Dedicated Flatbed (OEM Safe)</span>
               </div>
-              <span className="text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 px-2.5 py-0.5 rounded-full border border-cyan-400/40">
-                OEM CERTIFIED
+              <span className="text-[10px] font-semibold bg-sky-100 text-sky-800 px-2.5 py-0.5 rounded-full border border-sky-200">
+                Recommended by EV Makers
               </span>
             </div>
 
-            <ul className="space-y-3.5 text-xs sm:text-sm text-slate-200">
+            <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
               <li className="flex items-start gap-2.5">
-                <span className="text-cyan-400 font-black mt-0.5">✓</span>
+                <span className="text-sky-600 font-bold mt-0.5">✓</span>
                 <span>
-                  <strong className="text-white block font-semibold">100% Zero-Drag Flatbed:</strong>
-                  The entire vehicle rests securely on the hydraulic deck with zero ground contact. All 4 wheels remain stationary throughout transport.
+                  <strong className="text-slate-900 block font-semibold">Zero Ground Friction:</strong>
+                  Your car rests completely stationary on the truck deck. Wheels never rotate during transit, preserving manufacturer warranties.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-cyan-400 font-black mt-0.5">✓</span>
+                <span className="text-sky-600 font-bold mt-0.5">✓</span>
                 <span>
-                  <strong className="text-white block font-semibold">Go-Jack Wheel Skates for Locked Wheels:</strong>
-                  If your EV is at 0% battery or stuck in &apos;Park&apos;, our hydraulic dollies lift all 4 tires off the ground so the car rolls smoothly onto the bed without transmission resistance.
+                  <strong className="text-slate-900 block font-semibold">Wheel Skates for Frozen Brakes:</strong>
+                  If the battery is at 0% or the electronic parking brake is locked, our hydraulic dollies roll the vehicle safely onto the bed.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="text-cyan-400 font-black mt-0.5">✓</span>
+                <span className="text-sky-600 font-bold mt-0.5">✓</span>
                 <span>
-                  <strong className="text-white block font-semibold">Synthetic Rim-Only Straps:</strong>
-                  We never hook suspension arms or battery trays. Specially engineered wheel basket netting locks directly around the tire rubber.
+                  <strong className="text-slate-900 block font-semibold">Tire-Only Soft Straps:</strong>
+                  We use soft wheel nets that touch only tire rubber — never touching suspension components or the high-voltage pack.
                 </span>
               </li>
             </ul>

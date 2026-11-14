@@ -32,13 +32,13 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer id="contact-section" className="bg-slate-950 border-t border-slate-800 text-slate-300 pt-16 pb-12">
+    <footer id="contact-section" className="bg-slate-900 border-t border-slate-800 text-slate-300 pt-12 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pb-10 border-b border-slate-800">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <div className="p-2 rounded-lg bg-slate-800 text-sky-400">
               <Clock className="w-5 h-5" />
             </div>
             <div>
@@ -48,17 +48,17 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <div className="p-2 rounded-lg bg-slate-800 text-emerald-400">
               <Award className="w-5 h-5" />
             </div>
             <div>
               <h4 className="text-white font-bold text-sm">100% Zero-Drag Flatbed</h4>
-              <p className="text-xs text-slate-400 mt-0.5">Wheels never roll on pavement. Prevents permanent EV motor burnout.</p>
+              <p className="text-xs text-slate-400 mt-0.5">Wheels never roll on pavement. Prevents motor & inverter burnout.</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+            <div className="p-2 rounded-lg bg-slate-800 text-amber-400">
               <ShieldAlert className="w-5 h-5" />
             </div>
             <div>
@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+            <div className="p-2 rounded-lg bg-slate-800 text-sky-400">
               <Zap className="w-5 h-5" />
             </div>
             <div>
@@ -79,22 +79,21 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Main Footer Info Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 py-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-10 border-b border-slate-800">
           
           {/* Brand & Garage Headquarters (5 Cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="lg:col-span-5 space-y-3.5">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-slate-950 fill-cyan-200" />
+              <div className="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center">
+                <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-black tracking-tight text-white">
-                VOLT<span className="text-cyan-400">RESCUE</span>
+              <span className="text-lg font-bold tracking-tight text-white">
+                Volt<span className="text-sky-400">Rescue</span>
               </span>
             </div>
 
-            <p className="text-sm text-slate-400 leading-relaxed">
-              India&apos;s dedicated Electric Vehicle roadside assistance and specialized flatbed recovery service. 
-              Engineering-grade equipment designed to safeguard low-slung lithium-ion battery packs and delicate dual-motor gearboxes.
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Specialized Electric Vehicle flatbed roadside assistance. Engineering-grade equipment designed to safeguard low-slung lithium-ion battery packs and dual-motor electric drivetrains.
             </p>
 
             <div className="space-y-2.5 pt-2 text-xs sm:text-sm">
