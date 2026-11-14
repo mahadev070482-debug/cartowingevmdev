@@ -1,5 +1,6 @@
 import { TowRequest, TowTruck, Review, RequestStatus } from '../types';
 import { INITIAL_REQUESTS, INITIAL_TRUCKS, INITIAL_REVIEWS, BASE_GARAGE } from '../data/seedData';
+import { cloudDb } from './db';
 
 const STORAGE_KEY = 'voltrescue_state_v1';
 const REVIEW_TOKENS_KEY = 'voltrescue_my_author_tokens';
@@ -187,6 +188,7 @@ class StoreService {
     this.state = { ...this.state, requests: updatedRequests };
     this.saveState(this.state);
     this.notify();
+    cloudDb.syncTowRequest(newRequest);
     return newRequest;
   }
 
@@ -271,6 +273,9 @@ class StoreService {
     };
     this.saveState(this.state);
     this.notify();
+
+    const targetReq = updatedRequests.find((r) => r.id === requestId);
+    if (targetReq) cloudDb.syncTowRequest(targetReq);
   }
 
   public rejectRequest(
@@ -312,6 +317,9 @@ class StoreService {
     };
     this.saveState(this.state);
     this.notify();
+
+    const targetReq = updatedRequests.find((r) => r.id === requestId);
+    if (targetReq) cloudDb.syncTowRequest(targetReq);
   }
 
   public acceptJobByDriver(requestId: string, truckId: string): void {
@@ -344,6 +352,9 @@ class StoreService {
     };
     this.saveState(this.state);
     this.notify();
+
+    const targetReq = updatedRequests.find((r) => r.id === requestId);
+    if (targetReq) cloudDb.syncTowRequest(targetReq);
   }
 
   public advanceDriverStatus(requestId: string): void {
@@ -409,6 +420,9 @@ class StoreService {
     };
     this.saveState(this.state);
     this.notify();
+
+    const targetReq = updatedRequests.find((r) => r.id === requestId);
+    if (targetReq) cloudDb.syncTowRequest(targetReq);
   }
 
   public updateDriverLocation(
@@ -471,6 +485,12 @@ class StoreService {
     };
     this.saveState(this.state);
     this.notify();
+
+    cloudDb.broadcastDriverLocation(truckId, lat, lng, heading, speed);
+    if (truck && truck.activeJobId) {
+      const activeReq = updatedRequests.find((r) => r.id === truck.activeJobId);
+      if (activeReq) cloudDb.syncTowRequest(activeReq);
+    }
   }
 
   // --- REVIEWS ---
@@ -510,6 +530,7 @@ class StoreService {
     this.state = { ...this.state, reviews: updatedReviews };
     this.saveState(this.state);
     this.notify();
+    cloudDb.syncReview(newReview);
     return newReview;
   }
 

@@ -10,6 +10,7 @@ import { BookingForm } from './components/customer/BookingForm';
 import { TrackingView } from './components/customer/TrackingView';
 import { ReviewsSection } from './components/customer/ReviewsSection';
 import { EVWhyFlatbed } from './components/customer/EVWhyFlatbed';
+import { RescueGallery } from './components/customer/RescueGallery';
 import { OwnerDashboard } from './components/owner/OwnerDashboard';
 import { DriverPortal } from './components/driver/DriverPortal';
 
@@ -114,6 +115,8 @@ export function App() {
                 />
 
                 <EVWhyFlatbed />
+
+                <RescueGallery onSelectBookNow={handleScrollToBooking} />
 
                 <BookingForm onBookingSuccess={handleBookingSuccess} />
 
