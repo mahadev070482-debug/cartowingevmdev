@@ -52,35 +52,53 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Handle GPS One-Click
+  // Handle GPS One-Click (100% Free - Zero API Key Required)
   const handleGetLiveGPS = () => {
     if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser.');
+      setErrorMsg('Browser geolocation is unavailable on this device. You can drag the red map pin directly to your location.');
       return;
     }
 
     setIsLocating(true);
     setErrorMsg('');
 
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-        setPickupLat(latitude);
-        setPickupLng(longitude);
-        setLocationSuccess(true);
+    const onPosSuccess = async (position: GeolocationPosition) => {
+      const { latitude, longitude } = position.coords;
+      setPickupLat(latitude);
+      setPickupLng(longitude);
+      setLocationSuccess(true);
 
-        const readableAddress = await reverseGeocode(latitude, longitude);
-        setPickupAddress(readableAddress);
-        setIsLocating(false);
-      },
-      (error) => {
-        console.warn('Geolocation error or permission denied:', error.message);
-        setIsLocating(false);
-        setErrorMsg('Location permission was denied. You can drag the red map pin or enter your address manually.');
+      const readableAddress = await reverseGeocode(latitude, longitude);
+      setPickupAddress(readableAddress);
+      setIsLocating(false);
+    };
+
+    const tryLowAccuracy = () => {
+      navigator.geolocation.getCurrentPosition(
+        onPosSuccess,
+        (_fallbackErr) => {
+          setIsLocating(false);
+          setLocationSuccess(true);
+          setErrorMsg('No GPS satellite signal detected (common on desktop/laptops). You can freely drag the red map pin or enter your landmark below. (No API key required)');
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 30000
+        }
+      );
+    };
+
+    // First try high accuracy with 4s timeout
+    navigator.geolocation.getCurrentPosition(
+      onPosSuccess,
+      () => {
+        // High accuracy failed or timed out, retry with standard network/cell location
+        tryLowAccuracy();
       },
       {
         enableHighAccuracy: true,
-        timeout: 10000,
+        timeout: 4000,
         maximumAge: 0
       }
     );
@@ -250,10 +268,15 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
             {/* Step 2: One-Click GPS Location & Interactive Map */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
-                <h3 className="text-slate-900 font-bold text-sm sm:text-base flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">2</span>
-                  <span>Pickup Location (Live GPS)</span>
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-slate-900 font-bold text-sm sm:text-base flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+                    <span>Pickup Location (Live GPS)</span>
+                  </h3>
+                  <span className="hidden sm:inline-block text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded font-medium">
+                    Free • No API Required
+                  </span>
+                </div>
 
                 {/* GPS button */}
                 <button

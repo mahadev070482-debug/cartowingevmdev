@@ -85,7 +85,7 @@ export const DriverGPSControls: React.FC<DriverGPSControlsProps> = ({ request, t
     };
   }, [gpsEnabled, request.status, truck.id]);
 
-  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${request.pickupLocation.lat},${request.pickupLocation.lng}`;
+  const googleMapsUrl = `https://www.google.com/maps/dir/?destination=${request.pickupLocation.lat},${request.pickupLocation.lng}`;
 
   return (
     <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
