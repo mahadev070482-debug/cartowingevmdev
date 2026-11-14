@@ -108,11 +108,11 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       attributionControl: false
     });
 
-    // Clean, high-legibility daylight map tiles
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // 100% Free OpenStreetMap tile server - Zero API Key required
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      subdomains: 'abcd',
-      attribution: '&copy; OpenStreetMap'
+      subdomains: ['a', 'b', 'c'],
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
     const markersGroup = L.layerGroup().addTo(map);
