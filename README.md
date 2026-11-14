@@ -18,7 +18,7 @@ A modern, responsive, full-stack web application designed specifically for **Ele
 ## 🚀 Key Features by View
 
 ### 1. Customer View
-- **Sticky Emergency Bar:** Always-visible click-to-call (`+91 98765 43210`), WhatsApp live chat (`wa.me`), and 24/7 Dispatch Live badge.
+- **Sticky Emergency Bar:** Always-visible click-to-call (`+91 00000 00000`), WhatsApp live chat (`wa.me`), and 24/7 Dispatch Live badge.
 - **Zero-Friction Booking (No Login Required):**
   - Customer name & 10-digit mobile number (`+91`) with a 2-minute call verification note.
   - **One-Click Live GPS Sharing:** Browser `navigator.geolocation` with `enableHighAccuracy: true` + reverse geocoding to automatically resolve street addresses.
@@ -83,8 +83,8 @@ The application comes pre-populated with:
 2. **Demo Request 2 (`VT-3108`):** In `verified_approved` (Assigned to `Truck #01`)
    - Test the driver flow: click **Driver** -> `Truck #01`, click **Accept Tow Request**, and step through the progression while watching the customer tracking view!
 3. **2 Tow Trucks:**
-   - `Truck #01` (Driver: Rajesh Kumar, Plate: `KA-01-EV-2024`)
-   - `Truck #02` (Driver: Vikram Rathore, Plate: `KA-05-EV-8842`)
+   - `Truck #01` (Driver: Rajesh Kumar, Plate: `XX-00-EV-0001`)
+   - `Truck #02` (Driver: Vikram Rathore, Plate: `XX-00-EV-0002`)
 4. **4 Verified Customer Reviews** (Tata Nexon EV, MG ZS EV, Mahindra XUV400, Hyundai Ioniq 5).
 5. **Reset Seed Button:** Use the "Reset Seed" button on the floating switcher at any time to re-run the demo from scratch.
 

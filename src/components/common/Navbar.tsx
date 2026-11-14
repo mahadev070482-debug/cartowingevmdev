@@ -267,14 +267,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <label className="text-xs text-slate-300 block mb-1">
                   Enter Tracking ID or 10-Digit Mobile:
                 </label>
-                <input
-                  type="text"
-                  placeholder="e.g. VT-8492 or 9876511223"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-950 border border-cyan-500/50 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                  autoFocus
-                />
+                  <input
+                    type="text"
+                    placeholder="e.g. VT-8492 or 0000000000"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-slate-950 border border-cyan-500/50 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                    autoFocus
+                  />
               </div>
               <button
                 type="submit"

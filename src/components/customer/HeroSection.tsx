@@ -115,7 +115,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Enter VT-XXXX or Mobile (+91)"
+                    placeholder="Enter VT-XXXX or Mobile (0000000000)"
                     value={trackQuery}
                     onChange={(e) => setTrackQuery(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition font-medium"

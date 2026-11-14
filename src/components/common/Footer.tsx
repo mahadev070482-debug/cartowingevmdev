@@ -20,15 +20,15 @@ export const Footer: React.FC = () => {
   };
 
   const coverageAreas = [
-    "Outer Ring Road (Silk Board to Hebbal)",
-    "Whitefield & ITPL Tech Corridor",
-    "Electronic City & Hosur Highway",
-    "Indiranagar & MG Road Central",
-    "Koramangala & HSR Layout",
-    "Kempegowda Airport Expressway",
-    "NICE Ring Road & Peripheral Expressway",
-    "Sarjapur & Bellandur Lake Zone",
-    "Yeshwanthpur & Tumkur Road"
+    "Expressway Corridor Sector XX - Sector XX",
+    "Outer Ring Highway Bypass - Mile Marker XX",
+    "Central Tech Park Zone & Sector XX",
+    "Metro Link Corridor - Junction XX",
+    "Industrial Estate Phase XX - Zone XX",
+    "Airport Highway Transit - Terminal Link XX",
+    "Peripheral Expressway - Exit 00 to 10",
+    "Commercial Boulevard - Sector XX",
+    "North-South Transit Link - Sector XX"
   ];
 
   return (
@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
                   <strong className="text-white font-medium">Helpline (24/7): </strong>
                   <a href={`tel:${BASE_GARAGE.phone}`} className="text-cyan-400 hover:underline">{BASE_GARAGE.phone}</a>
                   {' '}|{' '}
-                  <a href="tel:180038737283" className="text-cyan-400 hover:underline">1800-EV-RESCUE</a>
+                  <a href="tel:0000000000" className="text-cyan-400 hover:underline">1800-000-0000</a>
                 </span>
               </div>
 
@@ -165,7 +165,7 @@ export const Footer: React.FC = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Arun Kumar"
+                    placeholder="e.g. Driver XXXXXX"
                     value={callbackName}
                     onChange={(e) => setCallbackName(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
@@ -177,7 +177,7 @@ export const Footer: React.FC = () => {
                     type="tel"
                     required
                     maxLength={10}
-                    placeholder="9876543210"
+                    placeholder="0000000000"
                     value={callbackPhone}
                     onChange={(e) => setCallbackPhone(e.target.value.replace(/[^0-9]/g, ''))}
                     className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
@@ -202,7 +202,7 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-4">
             <span className="text-slate-400">Zero-Drag EV Towing Specialist</span>
             <span>•</span>
-            <span className="text-slate-400">Owner Helpline: +91 98765 43210</span>
+            <span className="text-slate-400">Owner Helpline: +91 00000 00000</span>
           </div>
         </div>
 

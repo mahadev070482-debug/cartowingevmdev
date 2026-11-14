@@ -38,7 +38,7 @@ export interface EVVehicle {
 export interface TowRequest {
   id: string; // e.g. "VT-8492"
   customerName: string;
-  customerPhone: string; // "+91 98765 43210"
+  customerPhone: string; // "+91 00000 00000"
   pickupLocation: LocationPoint;
   dropoffLocation: DropoffLocation;
   vehicle: EVVehicle;

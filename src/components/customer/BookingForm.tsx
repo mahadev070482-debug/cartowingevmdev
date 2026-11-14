@@ -31,7 +31,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
   const [customerPhone, setCustomerPhone] = useState('');
   
   // Location
-  const [pickupAddress, setPickupAddress] = useState('Outer Ring Road near Marathahalli, Bengaluru');
+  const [pickupAddress, setPickupAddress] = useState('Sector XX, Main Highway Road, City - XXXXXX');
   const [pickupLat, setPickupLat] = useState(12.9538);
   const [pickupLng, setPickupLng] = useState(77.6980);
   const [landmark, setLandmark] = useState('');
@@ -40,7 +40,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
 
   // Dropoff
   const [dropoffName, setDropoffName] = useState('Nearest Authorized EV Fast Charger Hub');
-  const [dropoffAddress, setDropoffAddress] = useState('Tata.ev Mega Hub, Sarjapur Road');
+  const [dropoffAddress, setDropoffAddress] = useState('EV Fast Charging Hub, Sector XX, City - XXXXXX');
   const [dropoffType, setDropoffType] = useState<'service_center' | 'fast_charger' | 'home' | 'custom'>('fast_charger');
 
   // Vehicle & Issue
@@ -225,7 +225,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Siddharth Rao"
+                    placeholder="e.g. Driver XXXXXX"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition"
@@ -242,7 +242,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                       type="tel"
                       required
                       maxLength={10}
-                      placeholder="98765 11223"
+                      placeholder="00000 00000"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value.replace(/[^0-9]/g, ''))}
                       className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl pl-14 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none transition font-mono"
@@ -299,7 +299,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Outer Ring Road, opposite Ecospace Tech Park"
+                    placeholder="e.g. Highway Exit XX, Near Landmark XXXX, Sector XX"
                     value={pickupAddress}
                     onChange={(e) => setPickupAddress(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition"
@@ -312,7 +312,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Near Pillar 45"
+                    placeholder="e.g. Near Pillar XXX / Exit XX"
                     value={landmark}
                     onChange={(e) => setLandmark(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition"
@@ -454,7 +454,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. KA-01-EV-1234"
+                    placeholder="e.g. XX-00-EV-XXXX"
                     value={regNumber}
                     onChange={(e) => setRegNumber(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition uppercase"
