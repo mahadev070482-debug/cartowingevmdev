@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
+import { RotateCcw, MapPin, LocateFixed } from 'lucide-react';
 
 interface MapMarker {
   lat: number;
@@ -16,6 +17,9 @@ interface LeafletMapProps {
   zoom?: number;
   className?: string;
   onMarkerDragEnd?: (lat: number, lng: number) => void;
+  onMapClick?: (lat: number, lng: number) => void;
+  onRefreshLocation?: () => void;
+  isRefreshing?: boolean;
   showRoute?: boolean;
   interactive?: boolean;
 }
@@ -84,6 +88,9 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
   zoom = 13,
   className = 'h-[360px] w-full',
   onMarkerDragEnd,
+  onMapClick,
+  onRefreshLocation,
+  isRefreshing = false,
   showRoute = true,
   interactive = true,
 }) => {
@@ -124,6 +131,21 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       mapRef.current = null;
     };
   }, []);
+
+  // Handle map click for point dropping
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !onMapClick) return;
+
+    const handleClick = (e: L.LeafletMouseEvent) => {
+      onMapClick(e.latlng.lat, e.latlng.lng);
+    };
+
+    map.on('click', handleClick);
+    return () => {
+      map.off('click', handleClick);
+    };
+  }, [onMapClick]);
 
   // Update markers and route lines when markers change
   useEffect(() => {
@@ -190,13 +212,38 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
 
   return (
     <div className={`relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ${className}`}>
-      <div ref={containerRef} className="w-full h-full min-h-[260px]" />
+      <div ref={containerRef} className={`w-full h-full min-h-[260px] ${onMapClick ? 'cursor-crosshair' : ''}`} />
       
-      {/* Visual Overlay Accent */}
+      {/* Live GPS Map Badge */}
       <div className="absolute top-2.5 left-2.5 z-[400] bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        Live GPS Map
+        <span>Live GPS Map</span>
       </div>
+
+      {/* Re-center / Refresh Location button */}
+      {onRefreshLocation && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRefreshLocation();
+          }}
+          disabled={isRefreshing}
+          className="absolute top-2.5 right-2.5 z-[400] bg-white/95 hover:bg-white text-slate-700 hover:text-sky-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition disabled:opacity-60"
+          title="Refresh GPS Location"
+        >
+          <RotateCcw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-sky-600' : 'text-slate-600'}`} />
+          <span>{isRefreshing ? 'Refreshing...' : 'Refresh Location'}</span>
+        </button>
+      )}
+
+      {/* Point dropping hint */}
+      {onMapClick && (
+        <div className="absolute bottom-2.5 left-2.5 z-[400] bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm pointer-events-none select-none">
+          <MapPin className="w-3.5 h-3.5 text-red-600" />
+          <span>Click anywhere to drop vehicle pin</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -14,7 +14,10 @@ import {
   Loader2, 
   ArrowRight,
   ShieldAlert,
-  Compass
+  Compass,
+  RotateCcw,
+  MapPin,
+  LocateFixed
 } from 'lucide-react';
 
 interface BookingFormProps {
@@ -33,6 +36,8 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
   const [landmark, setLandmark] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const [locationSuccess, setLocationSuccess] = useState(false);
+  const [pointDropped, setPointDropped] = useState(false);
+  const [lastRefreshedAt, setLastRefreshedAt] = useState<string | null>(null);
 
   // Dropoff
   const [dropoffName, setDropoffName] = useState('Nearest Authorized EV Fast Charger Hub');
@@ -61,7 +66,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
       setPickupLat(lat);
       setPickupLng(lng);
       setLocationSuccess(true);
+      setPointDropped(false);
       setIsLocating(false);
+      const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      setLastRefreshedAt(nowStr);
 
       const readableAddress = await reverseGeocode(lat, lng);
       setPickupAddress(readableAddress || fallbackLabel || `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`);
@@ -80,7 +88,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
 
       setIsLocating(false);
       if (!silent) {
-        setErrorMsg('Could not detect exact GPS coordinates. Please drag the red map pin to your location.');
+        setErrorMsg('Could not detect exact GPS coordinates. Please click on the map to drop your vehicle pin.');
       }
     };
 
@@ -96,7 +104,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
         {
           enableHighAccuracy: true,
           timeout: 8000,
-          maximumAge: 10000
+          maximumAge: silent ? 10000 : 0 // Force fresh reading on manual refresh
         }
       );
     } else {
@@ -109,14 +117,17 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
     detectCurrentLocation(true);
   }, []);
 
-  // Handle GPS One-Click Button
-  const handleGetLiveGPS = () => {
+  // Handle GPS One-Click / Refresh Button
+  const handleRefreshLocation = () => {
     detectCurrentLocation(false);
   };
 
-  const handleMarkerDragEnd = async (newLat: number, newLng: number) => {
+  // Handle Point Drop (either clicking map or dragging marker)
+  const handlePointDrop = async (newLat: number, newLng: number) => {
     setPickupLat(newLat);
     setPickupLng(newLng);
+    setLocationSuccess(true);
+    setPointDropped(true);
     const readableAddress = await reverseGeocode(newLat, newLng);
     setPickupAddress(readableAddress);
   };
@@ -288,33 +299,74 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                   </span>
                 </div>
 
-                {/* GPS button */}
-                <button
-                  type="button"
-                  onClick={handleGetLiveGPS}
-                  disabled={isLocating}
-                  className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3.5 py-1.5 rounded-lg text-xs shadow-sm transition disabled:opacity-50"
-                >
-                  {isLocating ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Detecting Coordinates...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Navigation className="w-3.5 h-3.5" />
-                      <span>Share My Live GPS Location</span>
-                    </>
-                  )}
-                </button>
+                {/* GPS Refresh & Share Action Buttons */}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleRefreshLocation}
+                    disabled={isLocating}
+                    className="inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-1.5 rounded-lg text-xs border border-slate-300 transition disabled:opacity-50"
+                    title="Re-query GPS coordinates from device"
+                  >
+                    <RotateCcw className={`w-3.5 h-3.5 ${isLocating ? 'animate-spin text-sky-600' : 'text-slate-600'}`} />
+                    <span>{isLocating ? 'Locating...' : 'Refresh GPS'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleRefreshLocation}
+                    disabled={isLocating}
+                    className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3.5 py-1.5 rounded-lg text-xs shadow-sm transition disabled:opacity-50"
+                  >
+                    {isLocating ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Detecting Coordinates...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Navigation className="w-3.5 h-3.5" />
+                        <span>Share My Live GPS Location</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
-              {locationSuccess && (
-                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
-                  <span>GPS location captured! You can drag the red map pin below to fine-tune your exact curb position.</span>
+              {/* Status Banner: Point Dropped vs GPS Captured */}
+              {pointDropped ? (
+                <div className="p-3 bg-sky-50 border border-sky-200 rounded-lg text-sky-900 text-xs flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-sky-600 shrink-0" />
+                    <span>Point dropped at: <strong className="text-slate-900">{pickupAddress}</strong> (Click anywhere to relocate pin)</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRefreshLocation}
+                    disabled={isLocating}
+                    className="text-xs font-bold text-sky-700 hover:text-sky-900 underline flex items-center gap-1 shrink-0 ml-2"
+                  >
+                    <RotateCcw className={`w-3 h-3 ${isLocating ? 'animate-spin' : ''}`} />
+                    <span>Re-center GPS</span>
+                  </button>
                 </div>
-              )}
+              ) : locationSuccess ? (
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-xs flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+                    <span>GPS location captured! {lastRefreshedAt ? `(Refreshed at ${lastRefreshedAt})` : ''} Tap or click anywhere on the map to drop a point.</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRefreshLocation}
+                    disabled={isLocating}
+                    className="text-xs font-semibold text-emerald-800 hover:text-emerald-950 underline flex items-center gap-1 shrink-0 ml-2"
+                  >
+                    <RotateCcw className={`w-3 h-3 ${isLocating ? 'animate-spin' : ''}`} />
+                    <span>Refresh</span>
+                  </button>
+                </div>
+              ) : null}
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="sm:col-span-2">
@@ -345,19 +397,21 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                 </div>
               </div>
 
-              {/* Interactive Leaflet Map for Pickup */}
+              {/* Interactive Leaflet Map for Pickup (Supports Point Dropping & Refresh) */}
               <div>
-                <div className="flex items-center justify-between text-xs text-slate-500 mb-1.5">
-                  <span className="flex items-center gap-1">
-                    <Compass className="w-3.5 h-3.5 text-sky-600" />
-                    Drag the red pin on the map to adjust exact vehicle location
+                <div className="flex flex-wrap items-center justify-between text-xs text-slate-600 mb-1.5 gap-2">
+                  <span className="flex items-center gap-1.5 font-medium text-slate-700">
+                    <MapPin className="w-3.5 h-3.5 text-red-600" />
+                    <span>Click anywhere on map to drop pin &bull; or drag the red marker</span>
                   </span>
-                  <span className="font-mono text-[11px] text-slate-600">
-                    {pickupLat.toFixed(4)}°N, {pickupLng.toFixed(4)}°E
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[11px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                      {pickupLat.toFixed(4)}°N, {pickupLng.toFixed(4)}°E
+                    </span>
+                  </div>
                 </div>
 
-                <div className="h-64 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                <div className="h-72 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
                   <LeafletMap
                     markers={[
                       {
@@ -371,7 +425,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
                     ]}
                     center={[pickupLat, pickupLng]}
                     zoom={15}
-                    onMarkerDragEnd={handleMarkerDragEnd}
+                    onMarkerDragEnd={handlePointDrop}
+                    onMapClick={handlePointDrop}
+                    onRefreshLocation={handleRefreshLocation}
+                    isRefreshing={isLocating}
                     className="h-full w-full"
                   />
                 </div>
