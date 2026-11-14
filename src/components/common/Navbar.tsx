@@ -83,6 +83,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               Why EV Flatbed?
             </button>
             <button
+              onClick={() => scrollToSection('coverage-areas')}
+              className="hover:text-sky-600 transition"
+            >
+              Hyderabad Hubs
+            </button>
+            <button
               onClick={() => scrollToSection('gallery-section')}
               className="hover:text-sky-600 transition"
             >
@@ -212,6 +218,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
             >
               <span>Why EV Flatbed?</span>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+            <button
+              onClick={() => scrollToSection('coverage-areas')}
+              className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
+            >
+              <span>Hyderabad Service Hubs</span>
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>
             <button

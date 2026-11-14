@@ -31,21 +31,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
             
             {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3 py-1 rounded-full text-xs font-semibold">
-              <span className="w-2 h-2 rounded-full bg-sky-600"></span>
-              <span>Certified Electric Vehicle Roadside Assistance</span>
+            <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3.5 py-1 rounded-full text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>📍 Hyderabad & Cyberabad • 24/7 Rapid EV Flatbed Towing</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Fast, Safe Flatbed Towing <br className="hidden sm:inline" />
-              <span className="text-sky-600">Specially Equipped for EVs.</span>
+              Hyderabad&apos;s #1 EV Flatbed Towing <br className="hidden sm:inline" />
+              <span className="text-sky-600">Zero-Drag Roadside Assistance.</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Standard tow trucks can overheat EV motors and damage sensitive battery enclosures. 
-              Our fleet uses full-hydraulic flatbeds and soft wheel skates so your vehicle is loaded with zero motor drag and zero underbody contact.
+              Standard towing burns out electric vehicle motors and inverters. Our certified Hyderabad fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-drag transport across Hitec City, Gachibowli, Outer Ring Road (ORR), and Shamshabad Airport.
             </p>
 
             {/* Action Buttons */}

@@ -5,6 +5,7 @@ import { PendingCallQueue } from './PendingCallQueue';
 import { OrdersTable } from './OrdersTable';
 import { FleetMonitor } from './FleetMonitor';
 import { ReviewModeration } from './ReviewModeration';
+import { LocationManager } from './LocationManager';
 import { 
   Lock, 
   PhoneCall, 
@@ -15,7 +16,8 @@ import {
   RefreshCw,
   Activity,
   Layers,
-  MessageSquare
+  MessageSquare,
+  MapPin
 } from 'lucide-react';
 
 interface OwnerDashboardProps {
@@ -38,7 +40,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'fleet' | 'reviews'>('queue');
+  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'fleet' | 'reviews' | 'locations'>('queue');
 
   // State from store
   const [requests, setRequests] = useState<TowRequest[]>(store.getRequests());
@@ -326,6 +328,18 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           <MessageSquare className="w-4 h-4 text-purple-600" />
           <span>Review Moderation</span>
         </button>
+
+        <button
+          onClick={() => setActiveTab('locations')}
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition ${
+            activeTab === 'locations'
+              ? 'bg-emerald-100 text-emerald-900 font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <MapPin className="w-4 h-4 text-emerald-600" />
+          <span>Serviceable Locations</span>
+        </button>
       </div>
 
       {/* Active Tab View */}
@@ -354,6 +368,10 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
       {activeTab === 'reviews' && (
         <ReviewModeration />
+      )}
+
+      {activeTab === 'locations' && (
+        <LocationManager />
       )}
 
     </div>

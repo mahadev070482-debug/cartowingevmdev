@@ -11,6 +11,7 @@ import { TrackingView } from './components/customer/TrackingView';
 import { ReviewsSection } from './components/customer/ReviewsSection';
 import { EVWhyFlatbed } from './components/customer/EVWhyFlatbed';
 import { RescueGallery } from './components/customer/RescueGallery';
+import { HyderabadCoverage } from './components/customer/HyderabadCoverage';
 import { OwnerDashboard } from './components/owner/OwnerDashboard';
 import { DriverPortal } from './components/driver/DriverPortal';
 
@@ -18,12 +19,17 @@ export function App() {
   const [currentView, setCurrentView] = useState<ActiveAppView>('customer');
   const [trackingId, setTrackingId] = useState<string | null>(null);
   const [selectedTruckId, setSelectedTruckId] = useState<string>('TRUCK-01');
+  const [prefillLocation, setPrefillLocation] = useState<{ address: string; landmark?: string } | null>(null);
+  const [showDevSwitcher, setShowDevSwitcher] = useState<boolean>(false);
 
-  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492)
+  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492 or ?debug=true)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const viewParam = params.get('view');
     const trackParam = params.get('track') || params.get('id');
+    const debugParam = params.get('debug') === 'true';
+
+    if (debugParam) setShowDevSwitcher(true);
 
     if (viewParam === 'owner') setCurrentView('owner');
     else if (viewParam === 'driver') setCurrentView('driver');
@@ -61,6 +67,14 @@ export function App() {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleSelectCoverageArea = (areaName: string, landmark: string) => {
+    setPrefillLocation({
+      address: `${areaName}, Hyderabad, Telangana`,
+      landmark: landmark
+    });
+    handleScrollToBooking();
   };
 
   const handleOpenWhyFlatbed = () => {
@@ -118,7 +132,12 @@ export function App() {
 
                 <RescueGallery onSelectBookNow={handleScrollToBooking} />
 
-                <BookingForm onBookingSuccess={handleBookingSuccess} />
+                <HyderabadCoverage onSelectArea={handleSelectCoverageArea} />
+
+                <BookingForm
+                  onBookingSuccess={handleBookingSuccess}
+                  initialLocation={prefillLocation}
+                />
 
                 <ReviewsSection isOwnerMode={false} />
               </div>
@@ -153,21 +172,23 @@ export function App() {
       {/* 4. Global Contact Section & Footer */}
       <Footer />
 
-      {/* 5. Persistent Role Switcher Dock (3-in-1 Quick Switcher) */}
-      <ViewSwitcher
-        currentView={currentView}
-        onViewChange={(v) => {
-          setCurrentView(v);
-          if (v !== 'customer') setTrackingId(null);
-        }}
-        selectedTruckId={selectedTruckId}
-        onSelectTruckId={setSelectedTruckId}
-        onOpenTrackId={(id) => {
-          setTrackingId(id);
-          setCurrentView('customer');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-      />
+      {/* 5. Persistent Role Switcher Dock (Hidden by default, visible only with ?debug=true) */}
+      {showDevSwitcher && (
+        <ViewSwitcher
+          currentView={currentView}
+          onViewChange={(v) => {
+            setCurrentView(v);
+            if (v !== 'customer') setTrackingId(null);
+          }}
+          selectedTruckId={selectedTruckId}
+          onSelectTruckId={setSelectedTruckId}
+          onOpenTrackId={(id) => {
+            setTrackingId(id);
+            setCurrentView('customer');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
+      )}
 
     </div>
   );

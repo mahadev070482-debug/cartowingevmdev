@@ -122,3 +122,15 @@ export interface BaseGarageLocation {
   email: string;
   whatsapp: string;
 }
+
+export interface ServiceableLocation {
+  id: string;
+  name: string;
+  zone: string;
+  hubLandmark: string;
+  pincodes: string[];
+  avgResponseMins: number;
+  standbyTruck: string;
+  isActive: boolean;
+  priorityHub?: boolean;
+}

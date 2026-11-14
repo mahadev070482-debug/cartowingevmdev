@@ -1,5 +1,5 @@
-import { TowRequest, TowTruck, Review, RequestStatus } from '../types';
-import { INITIAL_REQUESTS, INITIAL_TRUCKS, INITIAL_REVIEWS, BASE_GARAGE } from '../data/seedData';
+import { TowRequest, TowTruck, Review, RequestStatus, ServiceableLocation } from '../types';
+import { INITIAL_REQUESTS, INITIAL_TRUCKS, INITIAL_REVIEWS, BASE_GARAGE, INITIAL_SERVICEABLE_LOCATIONS } from '../data/seedData';
 import { cloudDb } from './db';
 
 const STORAGE_KEY = 'voltrescue_state_v1';
@@ -9,6 +9,7 @@ export interface AppState {
   requests: TowRequest[];
   trucks: TowTruck[];
   reviews: Review[];
+  serviceableLocations: ServiceableLocation[];
 }
 
 // Distance helper (Haversine formula in km)
@@ -67,7 +68,8 @@ class StoreService {
       return {
         requests: INITIAL_REQUESTS,
         trucks: INITIAL_TRUCKS,
-        reviews: INITIAL_REVIEWS
+        reviews: INITIAL_REVIEWS,
+        serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS
       };
     }
 
@@ -76,6 +78,9 @@ class StoreService {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.requests && parsed.trucks && parsed.reviews) {
+          if (!parsed.serviceableLocations || parsed.serviceableLocations.length === 0) {
+            parsed.serviceableLocations = INITIAL_SERVICEABLE_LOCATIONS;
+          }
           return parsed;
         }
       }
@@ -84,10 +89,11 @@ class StoreService {
     }
 
     // Default seed
-    const defaultState = {
+    const defaultState: AppState = {
       requests: INITIAL_REQUESTS,
       trucks: INITIAL_TRUCKS,
-      reviews: INITIAL_REVIEWS
+      reviews: INITIAL_REVIEWS,
+      serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS
     };
     this.saveState(defaultState);
     return defaultState;
@@ -565,10 +571,49 @@ class StoreService {
     const defaultState: AppState = {
       requests: INITIAL_REQUESTS,
       trucks: INITIAL_TRUCKS,
-      reviews: INITIAL_REVIEWS
+      reviews: INITIAL_REVIEWS,
+      serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS
     };
     this.state = defaultState;
     this.saveState(defaultState);
+    this.notify();
+  }
+
+  // --- SERVICEABLE LOCATIONS ---
+
+  public getServiceableLocations(): ServiceableLocation[] {
+    return this.state.serviceableLocations || INITIAL_SERVICEABLE_LOCATIONS;
+  }
+
+  public addServiceableLocation(data: Omit<ServiceableLocation, 'id'>): ServiceableLocation {
+    const newId = 'LOC-' + Math.floor(100 + Math.random() * 900);
+    const newLocation: ServiceableLocation = {
+      ...data,
+      id: newId
+    };
+    const updated = [newLocation, ...(this.state.serviceableLocations || INITIAL_SERVICEABLE_LOCATIONS)];
+    this.state = { ...this.state, serviceableLocations: updated };
+    this.saveState(this.state);
+    this.notify();
+    return newLocation;
+  }
+
+  public toggleServiceableLocation(id: string): void {
+    const updated = (this.state.serviceableLocations || INITIAL_SERVICEABLE_LOCATIONS).map((loc) => {
+      if (loc.id === id) {
+        return { ...loc, isActive: !loc.isActive };
+      }
+      return loc;
+    });
+    this.state = { ...this.state, serviceableLocations: updated };
+    this.saveState(this.state);
+    this.notify();
+  }
+
+  public removeServiceableLocation(id: string): void {
+    const updated = (this.state.serviceableLocations || INITIAL_SERVICEABLE_LOCATIONS).filter((loc) => loc.id !== id);
+    this.state = { ...this.state, serviceableLocations: updated };
+    this.saveState(this.state);
     this.notify();
   }
 

@@ -20,15 +20,14 @@ export const Footer: React.FC = () => {
   };
 
   const coverageAreas = [
-    "Expressway Corridor Sector XX - Sector XX",
-    "Outer Ring Highway Bypass - Mile Marker XX",
-    "Central Tech Park Zone & Sector XX",
-    "Metro Link Corridor - Junction XX",
-    "Industrial Estate Phase XX - Zone XX",
-    "Airport Highway Transit - Terminal Link XX",
-    "Peripheral Expressway - Exit 00 to 10",
-    "Commercial Boulevard - Sector XX",
-    "North-South Transit Link - Sector XX"
+    "Hitec City & Madhapur (Cyber Towers, Mindspace)",
+    "Gachibowli & Financial District (Wipro Circle, WaveRock)",
+    "Outer Ring Road (ORR) Expressways (Exit 1 to Exit 19)",
+    "Kondapur, KPHB & Miyapur NH65 Corridor",
+    "Shamshabad RGIA Airport & PVNR Elevated Expressway",
+    "Jubilee Hills, Banjara Hills & Panjagutta",
+    "Secunderabad, Begumpet & Paradise Circle",
+    "Kompally, Suchitra & Medchal Highway NH44"
   ];
 
   return (
@@ -197,11 +196,15 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright & Disclaimer */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 VOLTRESCUE™ Technologies India Pvt. Ltd. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <span className="text-slate-400">Zero-Drag EV Towing Specialist</span>
+          <p>© 2026 VOLTRESCUE™ Hyderabad Technologies. All rights reserved. Zero-Drag EV Flatbed Towing.</p>
+          <div className="flex items-center gap-3">
+            <a href="/?view=owner" className="hover:text-slate-300 underline transition">
+              Owner / Dispatcher Portal
+            </a>
             <span>•</span>
-            <span className="text-slate-400">Owner Helpline: +91 00000 00000</span>
+            <a href="/?view=driver" className="hover:text-slate-300 underline transition">
+              Driver Portal
+            </a>
           </div>
         </div>
 

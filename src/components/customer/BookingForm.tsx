@@ -22,9 +22,10 @@ import {
 
 interface BookingFormProps {
   onBookingSuccess: (newRequest: TowRequest) => void;
+  initialLocation?: { address: string; landmark?: string } | null;
 }
 
-export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) => {
+export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, initialLocation }) => {
   // Form fields
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -131,6 +132,14 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess }) =>
     const readableAddress = await reverseGeocode(newLat, newLng);
     setPickupAddress(readableAddress);
   };
+
+  // Sync external prefilled location when customer selects from Hyderabad coverage cards
+  useEffect(() => {
+    if (initialLocation) {
+      if (initialLocation.address) setPickupAddress(initialLocation.address);
+      if (initialLocation.landmark) setLandmark(initialLocation.landmark);
+    }
+  }, [initialLocation]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

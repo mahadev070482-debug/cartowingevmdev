@@ -1,14 +1,101 @@
-import { TowRequest, TowTruck, Review, BaseGarageLocation } from '../types';
+import { TowRequest, TowTruck, Review, BaseGarageLocation, ServiceableLocation } from '../types';
 
 export const BASE_GARAGE: BaseGarageLocation = {
-  name: "VOLTRESCUE Central Fleet Base & Dispatch Hub",
-  address: "Plot XX, Main Highway Corridor, Sector XX, Industrial Area, City - XXXXXX",
-  lat: 12.9538,
-  lng: 77.6980,
+  name: "VOLTRESCUE Central Fleet Base & Dispatch Hub (Hyderabad)",
+  address: "Plot XX, Outer Ring Road (ORR) Expressway Junction, Gachibowli - Financial District, Hyderabad - 500032, Telangana",
+  lat: 17.4400,
+  lng: 78.3489,
   phone: "+91 00000 00000",
   email: "support@yourdomain.com",
   whatsapp: "+910000000000",
 };
+
+export const INITIAL_SERVICEABLE_LOCATIONS: ServiceableLocation[] = [
+  {
+    id: "LOC-01",
+    name: "Gachibowli & Financial District",
+    zone: "Cyberabad IT Corridor",
+    hubLandmark: "Wipro Circle, WaveRock & ORR Exit 19",
+    pincodes: ["500032", "500075"],
+    avgResponseMins: 12,
+    standbyTruck: "Truck #01 (Tilt-Bed)",
+    isActive: true,
+    priorityHub: true
+  },
+  {
+    id: "LOC-02",
+    name: "Hitec City & Madhapur",
+    zone: "Cyberabad IT Corridor",
+    hubLandmark: "Cyber Towers, Mindspace & Inorbit Mall",
+    pincodes: ["500081", "500084"],
+    avgResponseMins: 15,
+    standbyTruck: "Truck #01 (Tilt-Bed)",
+    isActive: true,
+    priorityHub: true
+  },
+  {
+    id: "LOC-03",
+    name: "Outer Ring Road (ORR) Expressway",
+    zone: "Highway Expressway Ring",
+    hubLandmark: "Gachibowli to Shamshabad / Patancheru Toll Plazas",
+    pincodes: ["500075", "501504"],
+    avgResponseMins: 18,
+    standbyTruck: "Truck #02 (Rapid Flatbed)",
+    isActive: true,
+    priorityHub: true
+  },
+  {
+    id: "LOC-04",
+    name: "Shamshabad RGIA Airport Corridor",
+    zone: "Airport Express & South Hub",
+    hubLandmark: "PVNR Expressway & Airport Cargo Toll",
+    pincodes: ["500409", "501218"],
+    avgResponseMins: 20,
+    standbyTruck: "Truck #02 (Rapid Flatbed)",
+    isActive: true,
+    priorityHub: true
+  },
+  {
+    id: "LOC-05",
+    name: "Jubilee Hills & Banjara Hills",
+    zone: "Central Hyderabad",
+    hubLandmark: "Road No. 36 / Road No. 12 & KBR Park",
+    pincodes: ["500033", "500034"],
+    avgResponseMins: 18,
+    standbyTruck: "Truck #01 (Tilt-Bed)",
+    isActive: true
+  },
+  {
+    id: "LOC-06",
+    name: "Kondapur, KPHB & Miyapur NH65",
+    zone: "North-West Corridor",
+    hubLandmark: "JNTU Junction & Miyapur Allwyn Cross Roads",
+    pincodes: ["500072", "500049"],
+    avgResponseMins: 20,
+    standbyTruck: "Truck #02 (Rapid Flatbed)",
+    isActive: true
+  },
+  {
+    id: "LOC-07",
+    name: "Secunderabad & Begumpet",
+    zone: "Secunderabad Cantonment & North",
+    hubLandmark: "Paradise Circle & Bowenpally Junction",
+    pincodes: ["500003", "500011"],
+    avgResponseMins: 22,
+    standbyTruck: "Truck #01 (Tilt-Bed)",
+    isActive: true
+  },
+  {
+    id: "LOC-08",
+    name: "Kompally & Medchal Highway NH44",
+    zone: "North Highway Corridor",
+    hubLandmark: "Suchitra Circle & Cine Planet",
+    pincodes: ["500067", "501401"],
+    avgResponseMins: 25,
+    standbyTruck: "Truck #02 (Rapid Flatbed)",
+    isActive: true
+  }
+];
 
 export const INITIAL_TRUCKS: TowTruck[] = [
   {
