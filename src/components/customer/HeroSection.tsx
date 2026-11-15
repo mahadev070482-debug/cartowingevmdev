@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ArrowRight, CheckCircle2, AlertTriangle, PhoneCall } from 'lucide-react';
+import { Search, ArrowRight, CheckCircle2, AlertTriangle, PhoneCall, MessageSquare, Award, MapPin } from 'lucide-react';
 import { BASE_GARAGE } from '../../data/seedData';
 
 interface HeroSectionProps {
@@ -30,10 +30,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Left Hero Content (7 Cols) */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
             
-            {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3.5 py-1 rounded-full text-xs font-semibold">
+            {/* Pill Tag with 25+ Yrs & Madhapur */}
+            <div className="inline-flex flex-wrap items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3.5 py-1.5 rounded-full text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>📍 Hyderabad & Cyberabad • 24/7 Rapid EV Flatbed Towing</span>
+              <span>25+ Years Experience</span>
+              <span className="text-sky-400">•</span>
+              <span className="flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-sky-600" />
+                <span>Madhapur HQ, Hyderabad</span>
+              </span>
+              <span className="text-sky-400">•</span>
+              <span className="text-slate-600 font-mono">evvehiclwtowing.com</span>
             </div>
 
             {/* Main Headline */}
@@ -44,14 +51,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Standard towing burns out electric vehicle motors and inverters. Our certified Hyderabad fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-drag transport across Hitec City, Gachibowli, Outer Ring Road (ORR), and Shamshabad Airport.
+              Standard towing burns out electric vehicle motors and inverters. With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and headquarters in <strong className="text-slate-800">Madhapur</strong>, our certified fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-drag transport across Hitec City, Gachibowli, Outer Ring Road (ORR), and Shamshabad Airport.
             </p>
 
-            {/* Action Buttons */}
+            {/* Quick Action Buttons: Book, Call, WhatsApp */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
               <button
                 onClick={onScrollToBooking}
-                className="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm px-6 py-3.5 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm px-5 py-3 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
               >
                 <span>Request EV Flatbed</span>
                 <ArrowRight className="w-4 h-4" />
@@ -59,26 +66,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               <a
                 href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`}
-                className="w-full sm:w-auto bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 font-semibold text-sm px-5 py-3.5 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-white hover:bg-slate-100 border border-slate-300 text-slate-800 font-semibold text-sm px-4 py-3 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
+                title="Direct Emergency Dial"
               >
                 <PhoneCall className="w-4 h-4 text-emerald-600" />
-                <span>Call Dispatch: {BASE_GARAGE.phone}</span>
+                <span>Call: {BASE_GARAGE.phone}</span>
+              </a>
+
+              <a
+                href={`https://wa.me/${BASE_GARAGE.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Dispatch%2C%20I%20need%20emergency%20EV%20flatbed%20towing%20assistance%20in%20Hyderabad`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-3 rounded-lg shadow-sm transition flex items-center justify-center gap-2"
+                title="WhatsApp Redirection"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>WhatsApp</span>
               </a>
             </div>
 
             {/* Trust Highlights Checklist */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 text-xs text-slate-600">
               <div className="flex items-center gap-2 justify-center lg:justify-start">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Zero motor drag guaranteed</span>
+                <Award className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>25+ Years Towing Heritage</span>
               </div>
               <div className="flex items-center gap-2 justify-center lg:justify-start">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>2-minute call verification</span>
+                <span>Zero Motor Drag Guaranteed</span>
               </div>
               <div className="flex items-center gap-2 justify-center lg:justify-start">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Live truck map tracking</span>
+                <span>2-Min Verification Call</span>
               </div>
             </div>
 

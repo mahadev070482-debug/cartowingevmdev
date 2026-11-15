@@ -28,7 +28,10 @@ export interface DropoffLocation {
   type: 'service_center' | 'fast_charger' | 'home' | 'custom';
 }
 
+export type VehicleCategory = '2 Wheelers' | 'Car' | 'SUV' | 'Others';
+
 export interface EVVehicle {
+  category?: VehicleCategory;
   makeModel: string;
   regNumber?: string;
   color?: string;

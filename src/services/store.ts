@@ -1,4 +1,4 @@
-import { TowRequest, TowTruck, Review, RequestStatus, ServiceableLocation } from '../types';
+import { TowRequest, TowTruck, Review, RequestStatus, ServiceableLocation, EVVehicle, VehicleCategory } from '../types';
 import { INITIAL_REQUESTS, INITIAL_TRUCKS, INITIAL_REVIEWS, BASE_GARAGE, INITIAL_SERVICEABLE_LOCATIONS } from '../data/seedData';
 import { cloudDb } from './db';
 
@@ -168,6 +168,7 @@ class StoreService {
       type: 'service_center' | 'fast_charger' | 'home' | 'custom';
     };
     vehicle: {
+      category?: VehicleCategory;
       makeModel: string;
       regNumber?: string;
       color?: string;

@@ -1,12 +1,12 @@
 import { TowRequest, TowTruck, Review, BaseGarageLocation, ServiceableLocation } from '../types';
 
 export const BASE_GARAGE: BaseGarageLocation = {
-  name: "VOLTRESCUE Central Fleet Base & Dispatch Hub (Hyderabad)",
-  address: "Plot XX, Outer Ring Road (ORR) Expressway Junction, Gachibowli - Financial District, Hyderabad - 500032, Telangana",
-  lat: 17.4400,
-  lng: 78.3489,
+  name: "EV Vehicle Towing Central Base & Headquarters (Madhapur)",
+  address: "Plot XX, Main IT Arterial Road, Near Cyber Towers & Image Hospital Lane, Madhapur, Hyderabad - 500081, Telangana",
+  lat: 17.4483,
+  lng: 78.3915,
   phone: "+91 00000 00000",
-  email: "support@yourdomain.com",
+  email: "dispatch@evvehiclwtowing.com",
   whatsapp: "+910000000000",
 };
 
@@ -259,25 +259,136 @@ export const INITIAL_REVIEWS: Review[] = [
   }
 ];
 
-export const EV_MODELS = [
-  "Tata Nexon EV (Prime / Max / Fearless)",
-  "Tata Punch EV",
-  "Tata Tiago EV / Tigor EV",
-  "Tata Curvv EV",
-  "Mahindra XUV400 EV",
-  "MG ZS EV",
-  "MG Windsor EV",
-  "MG Comet EV",
-  "Hyundai Ioniq 5",
-  "Hyundai Kona Electric",
-  "Kia EV6",
-  "BYD Atto 3",
-  "BYD Seal",
-  "BYD eMax 7",
-  "BMW iX / i4 / iX1",
-  "Mercedes-Benz EQB / EQC / EQS",
-  "Volvo EX40 / C40 Recharge",
-  "Other Electric Vehicle"
+export const EV_CATEGORIZED_MODELS = {
+  "2 Wheelers": [
+    "Ola S1 Pro / Air / X",
+    "Ather 450X / 450S / Apex",
+    "TVS iQube Electric",
+    "Bajaj Chetak EV",
+    "Ultraviolette F77 Mach 2",
+    "Vida V1 Pro (Hero)",
+    "Revolt RV400 / RV1",
+    "Hero Electric Photon / Optima",
+    "Simple One",
+    "Other E-Scooter / E-Bike"
+  ],
+  "Car": [
+    "Tata Tiago EV",
+    "Tata Tigor EV",
+    "MG Comet EV",
+    "Tata Curvv EV (Coupe Sedan)",
+    "BYD Seal (Sedan)",
+    "BMW i4 Gran Coupe",
+    "Hyundai Ioniq 6",
+    "Other Electric Car / Sedan"
+  ],
+  "SUV": [
+    "Tata Nexon EV (Prime / Max / Fearless)",
+    "Tata Punch EV",
+    "Tata Harrier EV",
+    "Mahindra XUV400 EV",
+    "MG ZS EV Exclusive",
+    "MG Windsor EV",
+    "Hyundai Ioniq 5 AWD",
+    "Kia EV6 GT-Line",
+    "BYD Atto 3",
+    "BYD eMax 7 (MPV)",
+    "BMW iX / iX1",
+    "Mercedes EQB / EQE / EQS SUV",
+    "Volvo EX40 / C40 Recharge",
+    "Other Electric SUV"
+  ],
+  "Others": [
+    "Tata Ace EV (Mini Cargo)",
+    "Mahindra Zor Grand Cargo EV",
+    "Piaggio Ape E-City / E-Cargo (3-Wheeler)",
+    "Euler HiLoad EV",
+    "Custom Electric Fleet Vehicle",
+    "Other Commercial / Custom EV"
+  ]
+};
+
+export const EV_MODELS: string[] = [
+  ...EV_CATEGORIZED_MODELS["SUV"],
+  ...EV_CATEGORIZED_MODELS["Car"],
+  ...EV_CATEGORIZED_MODELS["2 Wheelers"],
+  ...EV_CATEGORIZED_MODELS["Others"]
+];
+
+export interface FleetEquipmentImage {
+  id: string;
+  title: string;
+  category: 'flatbeds' | 'skates' | 'chargers' | 'safety';
+  imageUrl: string;
+  tag: string;
+  specs: string;
+}
+
+export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
+  {
+    id: "FLEET-01",
+    title: "Heavy-Duty Hydraulic Full-Tilt Flatbed Bed",
+    category: "flatbeds",
+    tag: "Zero-Drag Flatbed",
+    specs: "Full deck tilt to zero degrees for zero-scrape loading",
+    imageUrl: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-02",
+    title: "Low-Angle Slide Deck Platform for Ground Clearance Protection",
+    category: "flatbeds",
+    tag: "Low Ground Clearance",
+    specs: "Designed specifically for low-slung EV battery casings",
+    imageUrl: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-03",
+    title: "Go-Jack Hydraulic Wheel Skates for Locked EV Parking Brakes",
+    category: "skates",
+    tag: "Wheel Skates (Locked Wheels)",
+    specs: "Rolls dead EVs with electronic parking brakes locked in Park",
+    imageUrl: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-04",
+    title: "Synthetic Rim-Safe Wheel Basket Harness & Strapping System",
+    category: "safety",
+    tag: "Alloy Wheel Care",
+    specs: "Tire-only contact webbing preserving high-end alloy rims",
+    imageUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-05",
+    title: "24/7 Mobile Rapid Emergency EV Boost Charger & Battery Unit",
+    category: "chargers",
+    tag: "Mobile Battery Boost",
+    specs: "Emergency charge to reach the nearest DC fast charger",
+    imageUrl: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-06",
+    title: "1000V Insulated Safety Isolation Kit & High-Voltage PPE",
+    category: "safety",
+    tag: "High-Voltage Safety Kit",
+    specs: "Certified pyro-fuse and contactor disconnect safeguards",
+    imageUrl: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-07",
+    title: "Dedicated 2-Wheeler Upright Security Channel & Scooter Ramp",
+    category: "flatbeds",
+    tag: "2-Wheeler & E-Bike Secure Rig",
+    specs: "Locks Ather, Ola, Chetak & e-motorcycles upright without tipping",
+    imageUrl: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: "FLEET-08",
+    title: "Rapid Hydraulic Winch with Synthetic Snatch Block Assembly",
+    category: "skates",
+    tag: "Gentle Loading Winch",
+    specs: "Continuous smooth tension winching without chassis strain",
+    imageUrl: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1000&q=80"
+  }
 ];
 
 export const COMMON_EV_DROPOFFS = [

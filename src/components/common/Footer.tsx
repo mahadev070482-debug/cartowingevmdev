@@ -86,13 +86,16 @@ export const Footer: React.FC = () => {
               <div className="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center">
                 <Zap className="w-4 h-4 text-white" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-white">
-                Volt<span className="text-sky-400">Rescue</span>
-              </span>
+              <div>
+                <span className="text-lg font-bold tracking-tight text-white">
+                  Volt<span className="text-sky-400">Rescue</span>
+                </span>
+                <span className="block text-[11px] font-mono text-cyan-400">evvehiclwtowing.com</span>
+              </div>
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              Specialized Electric Vehicle flatbed roadside assistance. Engineering-grade equipment designed to safeguard low-slung lithium-ion battery packs and dual-motor electric drivetrains.
+              With <strong>25+ years of vehicle recovery experience</strong> across Hyderabad, we provide engineering-grade zero-drag EV flatbed roadside assistance. Equipped with hydraulic tilt beds and wheel skates to safeguard lithium-ion battery packs and delicate drive motors.
             </p>
 
             <div className="space-y-2.5 pt-2 text-xs sm:text-sm">
@@ -196,7 +199,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright & Disclaimer */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 VOLTRESCUE™ Hyderabad Technologies. All rights reserved. Zero-Drag EV Flatbed Towing.</p>
+          <p>© 2026 evvehiclwtowing.com • VoltRescue™ Hyderabad. 25+ Years Recovery Heritage. Zero-Drag Flatbed Towing.</p>
           <div className="flex items-center gap-3">
             <a href="/?view=owner" className="hover:text-slate-300 underline transition">
               Owner / Dispatcher Portal

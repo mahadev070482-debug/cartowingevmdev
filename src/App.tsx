@@ -11,7 +11,9 @@ import { TrackingView } from './components/customer/TrackingView';
 import { ReviewsSection } from './components/customer/ReviewsSection';
 import { EVWhyFlatbed } from './components/customer/EVWhyFlatbed';
 import { RescueGallery } from './components/customer/RescueGallery';
+import { FleetGallery } from './components/customer/FleetGallery';
 import { HyderabadCoverage } from './components/customer/HyderabadCoverage';
+import { FloatingContactBar } from './components/common/FloatingContactBar';
 import { OwnerDashboard } from './components/owner/OwnerDashboard';
 import { DriverPortal } from './components/driver/DriverPortal';
 
@@ -130,6 +132,8 @@ export function App() {
 
                 <EVWhyFlatbed />
 
+                <FleetGallery />
+
                 <RescueGallery onSelectBookNow={handleScrollToBooking} />
 
                 <HyderabadCoverage onSelectArea={handleSelectCoverageArea} />
@@ -172,7 +176,10 @@ export function App() {
       {/* 4. Global Contact Section & Footer */}
       <Footer />
 
-      {/* 5. Persistent Role Switcher Dock (Hidden by default, visible only with ?debug=true) */}
+      {/* 5. Persistent Quick Emergency Dial & WhatsApp Dock */}
+      <FloatingContactBar />
+
+      {/* 6. Persistent Role Switcher Dock (Hidden by default, visible only with ?debug=true) */}
       {showDevSwitcher && (
         <ViewSwitcher
           currentView={currentView}
