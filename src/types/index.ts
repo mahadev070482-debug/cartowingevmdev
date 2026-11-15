@@ -28,7 +28,7 @@ export interface DropoffLocation {
   type: 'service_center' | 'fast_charger' | 'home' | 'custom';
 }
 
-export type VehicleCategory = '2 Wheelers' | 'Car' | 'SUV' | 'Others';
+export type VehicleCategory = 'Luxury Vehicle' | 'Car' | 'SUV' | '2 Wheelers' | 'Others';
 
 export interface EVVehicle {
   category?: VehicleCategory;

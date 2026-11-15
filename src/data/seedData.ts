@@ -1,12 +1,12 @@
 import { TowRequest, TowTruck, Review, BaseGarageLocation, ServiceableLocation } from '../types';
 
 export const BASE_GARAGE: BaseGarageLocation = {
-  name: "EV Vehicle Towing Central Base & Headquarters (Madhapur)",
+  name: "VoltRescue Central Base & Headquarters (Madhapur)",
   address: "Plot XX, Main IT Arterial Road, Near Cyber Towers & Image Hospital Lane, Madhapur, Hyderabad - 500081, Telangana",
   lat: 17.4483,
   lng: 78.3915,
   phone: "+91 00000 00000",
-  email: "dispatch@evvehiclwtowing.com",
+  email: "dispatch@voltrescue.com",
   whatsapp: "+910000000000",
 };
 

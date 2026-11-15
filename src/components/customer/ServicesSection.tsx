@@ -33,57 +33,57 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
   const services = [
     {
       id: "srv-1",
-      title: "100% Zero-Drag Hydraulic Flatbed Towing",
-      subtitle: "For 2-Wheelers, Sedans & SUVs",
+      title: "Flat Bed 0 Degree Towing & 24/7 Car Towing",
+      subtitle: "Zero-Drag Hydraulic Slide Bed Near Me",
       icon: Truck,
-      badge: "Zero Motor Drag",
-      description: "Electric vehicles cannot be towed with wheels rolling on the ground without destroying delicate drive motors and power inverters. Our entire flatbed deck tilts to road level for 100% stationary zero-scrape transport.",
-      highlights: ["No wheel rotation on pavement", "Protects manufacturer battery warranty", "Full vehicle deck tie-down straps"]
+      badge: "Flat Bed 0 Degree",
+      description: "Our certified flatbed tilts to true zero degrees at ground level. Eliminates drive wheel friction, preserves warranty, and prevents inverter or motor generator burnout across all car brands.",
+      highlights: ["No wheel contact with asphalt", "100% zero-drag hydraulic ramp", "Full chassis nylon security webbing"]
     },
     {
       id: "srv-2",
-      title: "Go-Jack Hydraulic Wheel Skates Extraction",
-      subtitle: "Locked Parking Brakes & 0% SOC",
-      icon: Disc,
-      badge: "Locked Wheels Safe",
-      description: "When an EV battery dies completely (0% SOC) or the 12V auxiliary system fails, the electronic parking brake stays permanently locked in Park. We slip heavy-duty hydraulic skates under each wheel to smoothly roll the car with zero transmission drag.",
-      highlights: ["No skidding or tire flat-spotting", "Safe extraction from tight basement parking", "Compatible with dual-motor AWD"]
+      title: "Luxury Car Towing (Zero-Scrape)",
+      subtitle: "Mercedes, BMW, Audi, Porsche, Jaguar, Volvo",
+      icon: Gauge,
+      badge: "Luxury Car Towing",
+      description: "Specialized ultra-low ground clearance recovery for premium sedans and performance sports cars. Soft synthetic wheel basket straps ensure your alloy rims and low front splitters remain flawless.",
+      highlights: ["Ultra-low angle ground transition", "Alloy rim safe tire-only webbing", "Zero bumper or underbody scrape"]
     },
     {
       id: "srv-3",
-      title: "Mobile Emergency EV Battery Boost",
-      subtitle: "On-Site Roadside Charging Boost",
-      icon: BatteryCharging,
-      badge: "Emergency Charging",
-      description: "Stranded just a few kilometers away from a fast charger? Our rapid roadside dispatch carries mobile power boost units to inject emergency kilowatt-hours directly into your EV battery pack to get you safely to the nearest DC station.",
-      highlights: ["Direct CCS2 & Type-2 emergency boost", "Avoids needless full recovery when near a charger", "Available 24/7 across Hyderabad"]
+      title: "Accident Car Recovery & Total Damage Towing",
+      subtitle: "Accident Car Towing & Total Loss Recovery",
+      icon: ShieldAlert,
+      badge: "Accident & Total Damage",
+      description: "Fast recovery for accident-impacted, locked-wheel, or total damage vehicles. Equipped with heavy-duty winches, snatch blocks, and dollies to retrieve vehicles safely without structural twisting.",
+      highlights: ["Rapid expressway collision retrieval", "Safe extraction of total loss vehicles", "Direct transport to insurance & body shops"]
     },
     {
       id: "srv-4",
-      title: "2-Wheeler Upright Security Transit",
-      subtitle: "Ather, Ola, Chetak, TVS, Ultraviolette",
-      icon: Bike,
-      badge: "2-Wheeler Dedicated",
-      description: "Electric two-wheelers have sensitive fiberglass fairings and low battery packs. We use dedicated vertical wheel chocks and soft suspension harness webbing to hold scooters and e-motorcycles 100% upright with zero tip risk.",
-      highlights: ["Dedicated wheel cradle locks", "Non-scratch soft synthetic straps", "Zero contact with painted fairings"]
+      title: "Emergency Car Breakdown Service",
+      subtitle: "Dead Battery, Mechanical & Motor Lock",
+      icon: BatteryCharging,
+      badge: "Emergency Breakdown",
+      description: "Instant response for dead battery (0% SOC), 12V system failures, and sudden mechanical breakdown. Mobile recharge boost and hydraulic skates deployed on-site within 15–20 minutes.",
+      highlights: ["15-minute average response time", "Mobile emergency battery boost", "Go-Jack skates for locked parking brakes"]
     },
     {
       id: "srv-5",
-      title: "1000V High-Voltage Battery Isolation",
-      subtitle: "Accident & Flood Roadside Disconnect",
-      icon: ShieldAlert,
-      badge: "1000V Certified",
-      description: "Following a collision, curb impact, or water logging, lithium-ion battery packs require certified safety handling. Our technicians are equipped with 1000V CAT-III PPE and factory isolation tools to disconnect high-voltage contactors before towing.",
-      highlights: ["Certified thermal & electrical safety", "Thermal imaging temperature inspection", "Direct drop-off to OEM authorized bays"]
+      title: "SUV Towing & AWD Zero-Drag Transport",
+      subtitle: "Nexon, Creta, XUV700, Fortuner, Ioniq 5, ZS EV",
+      icon: Disc,
+      badge: "SUV & AWD Towing",
+      description: "Heavy SUVs and All-Wheel Drive (AWD) vehicles require full deck isolation. We lift both front and rear axles onto our reinforced platform to prevent differential and gearbox overheating.",
+      highlights: ["Dual-motor AWD safe transport", "Reinforced high-payload deck", "Basement & parking garage extraction"]
     },
     {
       id: "srv-6",
-      title: "Low Ground-Clearance Luxury EV Transport",
-      subtitle: "BYD Seal, Ioniq 5, BMW i4, EQB, Taycan",
-      icon: Gauge,
-      badge: "Ultra-Low Angle Ramps",
-      description: "Performance sedans and low-slung EV battery casings sit mere millimeters off the asphalt. Standard tow ramps scrape the lithium battery underbody. Our ultra-low angle slide ramps ensure zero underbody contact throughout loading.",
-      highlights: ["Zero-degree deck transition", "Preserves underbody battery shielding", "Tire-only contact alloy wheel webbing"]
+      title: "2-Wheeler Upright Security Transit",
+      subtitle: "Ather, Ola, Chetak, TVS, Ultraviolette, Superbikes",
+      icon: Bike,
+      badge: "2-Wheeler Towing",
+      description: "Electric two-wheelers and premium motorbikes locked upright inside specialized wheel channels with soft suspension tie-down webbing. Guaranteed zero tip-over and zero fairing scratches.",
+      highlights: ["Dedicated vertical wheel chocks", "Non-scratch soft synthetic straps", "Zero contact with painted fairings"]
     }
   ];
 
@@ -101,7 +101,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Specialized EV Towing Services</span>
+            <span>24/7 Flatbed Towing Service Near Me • Hyderabad</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
             Engineering-Grade EV Recovery Services

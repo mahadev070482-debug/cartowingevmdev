@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { store } from '../../services/store';
 import { reverseGeocode, fetchIpLocation } from '../../services/geocoding';
-import { EV_MODELS, EV_CATEGORIZED_MODELS, COMMON_EV_DROPOFFS } from '../../data/seedData';
+import { COMMON_EV_DROPOFFS } from '../../data/seedData';
 import { LeafletMap } from '../common/LeafletMap';
 import { TowRequest, IssueType, VehicleCategory } from '../../types';
 import confetti from 'canvas-confetti';
@@ -20,7 +20,8 @@ import {
   LocateFixed,
   Bike,
   Car,
-  Truck
+  Truck,
+  Sparkles
 } from 'lucide-react';
 
 interface BookingFormProps {
@@ -49,9 +50,8 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
   const [dropoffType, setDropoffType] = useState<'service_center' | 'fast_charger' | 'home' | 'custom'>('fast_charger');
 
   // Vehicle & Issue
-  const [vehicleCategory, setVehicleCategory] = useState<VehicleCategory>('SUV');
-  const [selectedMakeModel, setSelectedMakeModel] = useState<string>(EV_CATEGORIZED_MODELS["SUV"][0]);
-  const [customModel, setCustomModel] = useState('');
+  const [vehicleCategory, setVehicleCategory] = useState<VehicleCategory>('Luxury Vehicle');
+  const [vehicleModelInput, setVehicleModelInput] = useState('');
   const [regNumber, setRegNumber] = useState('');
   const [issueType, setIssueType] = useState<IssueType>('Dead Battery (0% SOC)');
   const [issueDescription, setIssueDescription] = useState('');
@@ -168,9 +168,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
     setIsSubmitting(true);
 
     try {
-      const finalVehicleModel = selectedMakeModel.toLowerCase().includes('other') && customModel.trim() 
-        ? customModel.trim() 
-        : selectedMakeModel;
+      const finalVehicleModel = vehicleModelInput.trim() || `${vehicleCategory} (General)`;
 
       const created = store.createRequest({
         customerName: customerName.trim(),
@@ -513,21 +511,22 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
             <div className="space-y-4">
               <h3 className="text-slate-900 font-bold text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-100">
                 <span className="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">4</span>
-                <span>EV Model & Breakdown Details</span>
+                <span>Vehicle Type & Breakdown Details</span>
               </h3>
 
-              {/* Vehicle Category Selector (2 Wheelers, Car, SUV, Others) */}
+              {/* Vehicle Type Selector (Luxury Vehicle, Car, SUV, 2 Wheelers, Others) */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Select Vehicle Category <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   {(
                     [
-                      { id: '2 Wheelers' as VehicleCategory, label: '2 Wheelers', icon: Bike, desc: 'Ather, Ola, Chetak, TVS' },
-                      { id: 'Car' as VehicleCategory, label: 'Car', icon: Car, desc: 'Tiago, Tigor, BYD Seal, Comet' },
-                      { id: 'SUV' as VehicleCategory, label: 'SUV', icon: Car, desc: 'Nexon, ZS EV, Ioniq 5, XUV400' },
-                      { id: 'Others' as VehicleCategory, label: 'Others', icon: Truck, desc: 'Ace EV, Euler, 3-Wheeler' }
+                      { id: 'Luxury Vehicle' as VehicleCategory, label: 'Luxury Vehicle', icon: Sparkles, desc: 'BMW, Mercedes, Audi, Porsche' },
+                      { id: 'Car' as VehicleCategory, label: 'Car / Sedan', icon: Car, desc: 'Sedans, Hatchbacks, Compacts' },
+                      { id: 'SUV' as VehicleCategory, label: 'SUV / MUV', icon: Truck, desc: 'Nexon, Creta, XUV, Fortuner' },
+                      { id: '2 Wheelers' as VehicleCategory, label: '2 Wheelers', icon: Bike, desc: 'Ather, Ola, Chetak, Bikes' },
+                      { id: 'Others' as VehicleCategory, label: 'Commercial / Other', icon: Truck, desc: 'Vans, Pickups, Mini Cargo' }
                     ]
                   ).map((cat) => {
                     const IconComponent = cat.icon;
@@ -536,15 +535,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                       <button
                         key={cat.id}
                         type="button"
-                        onClick={() => {
-                          setVehicleCategory(cat.id);
-                          const firstModel = EV_CATEGORIZED_MODELS[cat.id]?.[0] || '';
-                          setSelectedMakeModel(firstModel);
-                          setCustomModel('');
-                        }}
+                        onClick={() => setVehicleCategory(cat.id)}
                         className={`p-2.5 rounded-lg border text-left transition flex flex-col items-start gap-1 ${
                           isSelected
-                            ? 'bg-sky-50 border-sky-600 ring-1 ring-sky-600 text-sky-950 font-medium'
+                            ? 'bg-sky-50 border-sky-600 ring-1 ring-sky-600 text-sky-950 font-medium shadow-sm'
                             : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                         }`}
                       >
@@ -559,32 +553,32 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                 </div>
               </div>
 
+              {/* Simple Model Input (No Complicated Dropdown) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    {vehicleCategory} Model <span className="text-red-500">*</span>
+                    Vehicle Make & Model (Optional)
                   </label>
-                  <select
-                    value={selectedMakeModel}
-                    onChange={(e) => setSelectedMakeModel(e.target.value)}
-                    className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-1 focus:ring-sky-600 transition"
-                  >
-                    {EV_CATEGORIZED_MODELS[vehicleCategory]?.map((model, idx) => (
-                      <option key={idx} value={model}>
-                        {model}
-                      </option>
-                    ))}
-                  </select>
-
-                  {selectedMakeModel.toLowerCase().includes('other') && (
-                    <input
-                      type="text"
-                      placeholder={`Specify ${vehicleCategory} Brand & Model`}
-                      value={customModel}
-                      onChange={(e) => setCustomModel(e.target.value)}
-                      className="mt-2 w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-600"
-                    />
-                  )}
+                  <input
+                    type="text"
+                    placeholder={
+                      vehicleCategory === 'Luxury Vehicle'
+                        ? 'e.g. BMW 5 Series, Mercedes C-Class, Audi A6, Porsche'
+                        : vehicleCategory === 'Car'
+                        ? 'e.g. Tata Tiago EV, Swift, Honda City, BYD Seal'
+                        : vehicleCategory === 'SUV'
+                        ? 'e.g. Tata Nexon EV, Creta, XUV700, Fortuner'
+                        : vehicleCategory === '2 Wheelers'
+                        ? 'e.g. Ather 450X, Ola S1 Pro, Royal Enfield, TVS'
+                        : 'Specify vehicle model / details'
+                    }
+                    value={vehicleModelInput}
+                    onChange={(e) => setVehicleModelInput(e.target.value)}
+                    className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-600 transition"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    Selected: <strong className="text-sky-700">{vehicleCategory}</strong> • Dispatcher will confirm exact specs on call.
+                  </p>
                 </div>
 
                 <div>
@@ -593,7 +587,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. XX-00-EV-XXXX"
+                    placeholder="e.g. TS-09-XX-0000"
                     value={regNumber}
                     onChange={(e) => setRegNumber(e.target.value)}
                     className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-600 transition uppercase font-mono"

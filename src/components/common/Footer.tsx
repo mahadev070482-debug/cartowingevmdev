@@ -90,7 +90,7 @@ export const Footer: React.FC = () => {
                 <span className="text-lg font-bold tracking-tight text-white">
                   Volt<span className="text-sky-400">Rescue</span>
                 </span>
-                <span className="block text-[11px] font-mono text-cyan-400">evvehiclwtowing.com</span>
+                <span className="block text-[11px] text-slate-400">24/7 Flatbed & Luxury Towing</span>
               </div>
             </div>
 
@@ -197,9 +197,47 @@ export const Footer: React.FC = () => {
 
         </div>
 
+        {/* SEO Keywords Section (From Official Dispatch Guidelines) */}
+        <div className="py-8 border-b border-slate-800 space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-sky-400"></span>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              Popular Search Queries & Emergency Towing Services in Hyderabad (SEO)
+            </h4>
+          </div>
+          
+          <div className="flex flex-wrap gap-2">
+            {[
+              "Car Towing Service Hyderabad",
+              "Tow Truck Near Me",
+              "24/7 Towing Service",
+              "24/7 Flatbed Towing Service Near Me",
+              "Flat Bed 0 Degree Towing",
+              "Emergency Towing Service",
+              "Emergency Car Breakdown Service",
+              "Car Breakdown Service",
+              "Accident Car Towing",
+              "Accident Car Recovery Service",
+              "Total Damage Car Towing",
+              "Total Damage Car Towing Service",
+              "Total Loss Car Towing",
+              "Luxury Car Towing",
+              "SUV Towing",
+              "Roadside Assistance Hyderabad"
+            ].map((kw, i) => (
+              <span
+                key={i}
+                className="bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-[11px] font-medium px-3 py-1 rounded-full border border-slate-700/80 transition"
+              >
+                {kw}
+              </span>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom Copyright & Disclaimer */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 evvehiclwtowing.com • VoltRescue™ Hyderabad. 25+ Years Recovery Heritage. Zero-Drag Flatbed Towing.</p>
+          <p>© 2026 VoltRescue™ Hyderabad. 25+ Years Recovery Heritage. 24/7 Flatbed & Luxury Vehicle Towing.</p>
           <div className="flex items-center gap-3">
             <a href="/?view=owner" className="hover:text-slate-300 underline transition">
               Owner / Dispatcher Portal

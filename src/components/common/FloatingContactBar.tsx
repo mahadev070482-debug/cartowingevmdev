@@ -5,7 +5,7 @@ import { BASE_GARAGE } from '../../data/seedData';
 export const FloatingContactBar: React.FC = () => {
   const cleanPhone = BASE_GARAGE.phone.replace(/\s+/g, '');
   const cleanWhatsapp = BASE_GARAGE.whatsapp.replace(/[^0-9]/g, '');
-  const waUrl = `https://wa.me/${cleanWhatsapp}?text=Hi%20Dispatch%20Team%20at%20evvehiclwtowing.com%2C%20I%20need%20emergency%20EV%20flatbed%20towing%20assistance%20in%20Hyderabad.`;
+  const waUrl = `https://wa.me/${cleanWhatsapp}?text=Hi%20Dispatch%20Team%2C%20I%20need%20emergency%20flatbed%20towing%20assistance%20in%20Hyderabad.`;
 
   return (
     <aside aria-label="Quick Emergency Contact Dock" className="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-5 sm:bottom-5 z-40 max-w-sm sm:max-w-md w-auto">
