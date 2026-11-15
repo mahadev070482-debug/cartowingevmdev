@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ArrowRight, CheckCircle2, AlertTriangle, PhoneCall, MessageSquare, Award, MapPin } from 'lucide-react';
+import { Search, ArrowRight, CheckCircle2, AlertTriangle, PhoneCall, MessageSquare, Award, MapPin, Zap } from 'lucide-react';
 import { BASE_GARAGE } from '../../data/seedData';
 
 interface HeroSectionProps {
@@ -103,50 +103,61 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Right Hero Card: Quick Track & EV Safety Callout (5 Cols) */}
+          {/* Right Hero Card: Quick Request Booking Priority Card & EV Safety Callout (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
             
-            {/* Quick Track Card */}
-            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-              <div className="flex items-center gap-2.5 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center">
-                  <Search className="w-4 h-4" />
-                </div>
-                <h2 className="font-bold text-slate-900 text-base">Track Active Tow Request</h2>
+            {/* Quick Request Booking Card (Priority UP) */}
+            <div className="bg-white border-2 border-sky-600/30 rounded-2xl p-6 sm:p-7 shadow-lg relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-sky-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                Fast Dispatch
               </div>
 
-              <p className="text-xs text-slate-500 mb-4">
-                Already submitted a request? Check live truck status and location by Tracking ID (e.g. <strong className="text-slate-800">VT-8492</strong>) or phone:
+              <div className="flex items-center gap-2.5 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-sky-600" />
+                </div>
+                <div>
+                  <h2 className="font-extrabold text-slate-900 text-base sm:text-lg">Request EV Flatbed Tow</h2>
+                  <p className="text-xs text-slate-500">2-Minute Verification Call • Zero Drag Guaranteed</p>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-600 my-3 leading-relaxed">
+                Breakdown on ORR, Hitec City, or Madhapur? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA & quote.
               </p>
 
-              <form onSubmit={handleTrackSubmit} className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="Enter VT-XXXX or Mobile (0000000000)"
-                  value={trackQuery}
-                  onChange={(e) => setTrackQuery(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-300 focus:border-sky-500 focus:bg-white rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition"
-                />
+              {/* Supported Vehicle Pills */}
+              <div className="grid grid-cols-4 gap-1.5 my-3 text-center text-[10px] font-bold">
+                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🛵 2-Wheelers</span>
+                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🚗 Cars</span>
+                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🚙 SUVs</span>
+                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🚐 Others</span>
+              </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    type="submit"
-                    className="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-sm flex items-center justify-center gap-2"
-                  >
-                    <Search className="w-4 h-4" />
-                    <span>Track Status</span>
-                  </button>
+              <div className="space-y-2 pt-2">
+                <button
+                  type="button"
+                  onClick={onScrollToBooking}
+                  className="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2 group"
+                >
+                  <span>Fill Booking Form (Takes 30 Sec)</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
 
+                <div className="text-center pt-2">
                   <button
                     type="button"
-                    onClick={() => onTrackSearch('VT-3108')}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono font-medium px-3 py-2.5 rounded-lg border border-slate-200 transition"
-                    title="Load Active Demo Request"
+                    onClick={() => {
+                      const el = document.getElementById('tracking-ticket-section');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-xs text-sky-700 hover:text-sky-900 font-semibold underline inline-flex items-center gap-1"
                   >
-                    Demo #VT-3108
+                    <Search className="w-3.5 h-3.5" />
+                    <span>Already booked? Track your active ticket below</span>
                   </button>
                 </div>
-              </form>
+              </div>
             </div>
 
             {/* EV Safety Callout Box */}

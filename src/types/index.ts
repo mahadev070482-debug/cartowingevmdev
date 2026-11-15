@@ -137,3 +137,11 @@ export interface ServiceableLocation {
   isActive: boolean;
   priorityHub?: boolean;
 }
+
+export interface CompanyStats {
+  yearsExperience: number;
+  rescuesCountText: string;
+  responseMinutes: number;
+  activeTrucksCount: number;
+  satisfactionRate: string;
+}

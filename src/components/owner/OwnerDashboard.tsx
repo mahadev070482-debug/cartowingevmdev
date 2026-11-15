@@ -6,6 +6,7 @@ import { OrdersTable } from './OrdersTable';
 import { FleetMonitor } from './FleetMonitor';
 import { ReviewModeration } from './ReviewModeration';
 import { LocationManager } from './LocationManager';
+import { StatsManager } from './StatsManager';
 import { 
   Lock, 
   PhoneCall, 
@@ -17,7 +18,8 @@ import {
   Activity,
   Layers,
   MessageSquare,
-  MapPin
+  MapPin,
+  Sparkles
 } from 'lucide-react';
 
 interface OwnerDashboardProps {
@@ -40,7 +42,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'fleet' | 'reviews' | 'locations'>('queue');
+  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'fleet' | 'reviews' | 'locations' | 'stats'>('queue');
 
   // State from store
   const [requests, setRequests] = useState<TowRequest[]>(store.getRequests());
@@ -340,6 +342,18 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           <MapPin className="w-4 h-4 text-emerald-600" />
           <span>Serviceable Locations</span>
         </button>
+
+        <button
+          onClick={() => setActiveTab('stats')}
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition ${
+            activeTab === 'stats'
+              ? 'bg-sky-100 text-sky-900 font-semibold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <Sparkles className="w-4 h-4 text-sky-600" />
+          <span>Edit 25+ Yrs & Rescues Stat</span>
+        </button>
       </div>
 
       {/* Active Tab View */}
@@ -372,6 +386,10 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
       {activeTab === 'locations' && (
         <LocationManager />
+      )}
+
+      {activeTab === 'stats' && (
+        <StatsManager />
       )}
 
     </div>

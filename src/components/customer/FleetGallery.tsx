@@ -11,6 +11,48 @@ import {
   Sparkles
 } from 'lucide-react';
 
+export const createStockDummySvg = (item: FleetEquipmentImage) => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" fill="none">
+    <rect width="800" height="600" fill="#0f172a"/>
+    <defs>
+      <linearGradient id="grad-${item.id}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+      </linearGradient>
+      <pattern id="grid-${item.id}" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="1" stroke-opacity="0.35"/>
+      </pattern>
+    </defs>
+    <rect width="800" height="600" fill="url(#grad-${item.id})"/>
+    <rect width="800" height="600" fill="url(#grid-${item.id})"/>
+    
+    <rect x="24" y="24" width="752" height="552" rx="16" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="8 8" stroke-opacity="0.4"/>
+    
+    <!-- Top badge: TEMP IMAGE LOGO -->
+    <rect x="250" y="44" width="300" height="36" rx="18" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="400" y="67" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="2">⚡ TEMP IMAGE LOGO • STOCK ASSET</text>
+    
+    <!-- Central Icon/Logo Emblem -->
+    <circle cx="400" cy="230" r="74" fill="#1e293b" stroke="#0ea5e9" stroke-width="3"/>
+    <circle cx="400" cy="230" r="62" fill="#0f172a"/>
+    <!-- Truck / EV Icon -->
+    <path d="M355 242 L355 214 C355 209 359 205 364 205 L412 205 L432 225 L444 225 C448 225 452 229 452 233 L452 252 L355 252 Z" fill="none" stroke="#38bdf8" stroke-width="4.5" stroke-linejoin="round"/>
+    <circle cx="375" cy="258" r="11" fill="#0f172a" stroke="#38bdf8" stroke-width="3.5"/>
+    <circle cx="428" cy="258" r="11" fill="#0f172a" stroke="#38bdf8" stroke-width="3.5"/>
+    <path d="M392 218 L406 218 L401 230 L414 230 L396 248 L400 235 L387 235 Z" fill="#38bdf8"/>
+
+    <!-- Large Unit Code / Tag -->
+    <text x="400" y="355" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">${item.id} // ${item.tag.toUpperCase()}</text>
+    <text x="400" y="390" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#38bdf8" text-anchor="middle">${item.title}</text>
+    <text x="400" y="425" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" fill="#94a3b8" text-anchor="middle">${item.specs}</text>
+    
+    <!-- Bottom Stamp: Official Fleet Asset -->
+    <rect x="210" y="488" width="380" height="36" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <text x="400" y="511" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#94a3b8" text-anchor="middle" letter-spacing="1.5">⚡ VOLTRESCUE HYDERABAD • FLEET SPECIFICATION</text>
+  </svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
 export const FleetGallery: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedImageIdx, setSelectedImageIdx] = useState<number | null>(null);
@@ -90,7 +132,7 @@ export const FleetGallery: React.FC = () => {
             >
               {/* Image */}
               <img
-                src={item.imageUrl}
+                src={createStockDummySvg(item)}
                 alt={item.title}
                 loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -161,7 +203,7 @@ export const FleetGallery: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={filteredImages[selectedImageIdx].imageUrl}
+                src={createStockDummySvg(filteredImages[selectedImageIdx])}
                 alt={filteredImages[selectedImageIdx].title}
                 className="max-h-[72vh] w-auto max-w-full rounded-xl object-contain shadow-2xl border border-white/10"
               />

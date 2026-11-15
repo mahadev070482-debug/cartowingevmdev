@@ -69,18 +69,24 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600">
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600">
+            <button
+              onClick={() => scrollToSection('services-section')}
+              className="hover:text-sky-600 transition"
+            >
+              Services
+            </button>
             <button
               onClick={() => scrollToSection('booking-section')}
-              className="hover:text-sky-600 transition"
+              className="hover:text-sky-600 font-semibold text-slate-900 transition"
             >
               Request Tow
             </button>
             <button
-              onClick={() => scrollToSection('why-flatbed')}
+              onClick={() => scrollToSection('tracking-ticket-section')}
               className="hover:text-sky-600 transition"
             >
-              Why EV Flatbed?
+              Track Ticket
             </button>
             <button
               onClick={() => scrollToSection('fleet-gallery')}
@@ -89,28 +95,28 @@ export const Navbar: React.FC<NavbarProps> = ({
               Our Fleet
             </button>
             <button
+              onClick={() => scrollToSection('why-flatbed')}
+              className="hover:text-sky-600 transition"
+            >
+              Why EV Flatbed?
+            </button>
+            <button
               onClick={() => scrollToSection('coverage-areas')}
               className="hover:text-sky-600 transition"
             >
               Hyderabad Hubs
             </button>
             <button
-              onClick={() => scrollToSection('gallery-section')}
-              className="hover:text-sky-600 transition"
-            >
-              Rescue Gallery
-            </button>
-            <button
               onClick={() => scrollToSection('reviews-section')}
               className="hover:text-sky-600 transition"
             >
-              Customer Reviews
+              Reviews
             </button>
             <button
               onClick={() => scrollToSection('contact-section')}
               className="hover:text-sky-600 transition"
             >
-              Service Areas & Contact
+              Contact
             </button>
           </nav>
 
@@ -213,10 +219,31 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div className="flex flex-col space-y-1 text-sm font-medium text-slate-700">
             <button
-              onClick={() => scrollToSection('booking-section')}
+              onClick={() => scrollToSection('services-section')}
               className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
             >
+              <span>Services (25+ Yrs & Rescues)</span>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+            <button
+              onClick={() => scrollToSection('booking-section')}
+              className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between font-bold text-sky-700"
+            >
               <span>Request EV Tow</span>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+            <button
+              onClick={() => scrollToSection('tracking-ticket-section')}
+              className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
+            >
+              <span>Track Active Ticket</span>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+            <button
+              onClick={() => scrollToSection('fleet-gallery')}
+              className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
+            >
+              <span>Our Fleet (Stock Images)</span>
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>
             <button
@@ -224,13 +251,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
             >
               <span>Why EV Flatbed?</span>
-              <ArrowRight className="w-4 h-4 text-slate-400" />
-            </button>
-            <button
-              onClick={() => scrollToSection('fleet-gallery')}
-              className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
-            >
-              <span>Our Fleet & Equipment</span>
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>
             <button

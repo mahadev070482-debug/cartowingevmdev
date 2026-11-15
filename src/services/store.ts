@@ -1,15 +1,24 @@
-import { TowRequest, TowTruck, Review, RequestStatus, ServiceableLocation, EVVehicle, VehicleCategory } from '../types';
+import { TowRequest, TowTruck, Review, RequestStatus, ServiceableLocation, EVVehicle, VehicleCategory, CompanyStats } from '../types';
 import { INITIAL_REQUESTS, INITIAL_TRUCKS, INITIAL_REVIEWS, BASE_GARAGE, INITIAL_SERVICEABLE_LOCATIONS } from '../data/seedData';
 import { cloudDb } from './db';
 
 const STORAGE_KEY = 'voltrescue_state_v1';
 const REVIEW_TOKENS_KEY = 'voltrescue_my_author_tokens';
 
+export const DEFAULT_STATS: CompanyStats = {
+  yearsExperience: 25,
+  rescuesCountText: '100+ Rescues',
+  responseMinutes: 15,
+  activeTrucksCount: 8,
+  satisfactionRate: '99.8%'
+};
+
 export interface AppState {
   requests: TowRequest[];
   trucks: TowTruck[];
   reviews: Review[];
   serviceableLocations: ServiceableLocation[];
+  stats: CompanyStats;
 }
 
 // Distance helper (Haversine formula in km)
@@ -69,7 +78,8 @@ class StoreService {
         requests: INITIAL_REQUESTS,
         trucks: INITIAL_TRUCKS,
         reviews: INITIAL_REVIEWS,
-        serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS
+        serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS,
+        stats: DEFAULT_STATS
       };
     }
 
@@ -80,6 +90,9 @@ class StoreService {
         if (parsed.requests && parsed.trucks && parsed.reviews) {
           if (!parsed.serviceableLocations || parsed.serviceableLocations.length === 0) {
             parsed.serviceableLocations = INITIAL_SERVICEABLE_LOCATIONS;
+          }
+          if (!parsed.stats || !parsed.stats.rescuesCountText) {
+            parsed.stats = DEFAULT_STATS;
           }
           return parsed;
         }
@@ -93,7 +106,8 @@ class StoreService {
       requests: INITIAL_REQUESTS,
       trucks: INITIAL_TRUCKS,
       reviews: INITIAL_REVIEWS,
-      serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS
+      serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS,
+      stats: DEFAULT_STATS
     };
     this.saveState(defaultState);
     return defaultState;
@@ -134,6 +148,22 @@ class StoreService {
 
   public getReviews(): Review[] {
     return this.state.reviews;
+  }
+
+  public getStats(): CompanyStats {
+    return this.state.stats || DEFAULT_STATS;
+  }
+
+  public updateStats(newStats: Partial<CompanyStats>) {
+    this.state = {
+      ...this.state,
+      stats: {
+        ...this.getStats(),
+        ...newStats
+      }
+    };
+    this.saveState(this.state);
+    this.notify();
   }
 
   public getRequestById(id: string): TowRequest | undefined {
@@ -573,7 +603,8 @@ class StoreService {
       requests: INITIAL_REQUESTS,
       trucks: INITIAL_TRUCKS,
       reviews: INITIAL_REVIEWS,
-      serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS
+      serviceableLocations: INITIAL_SERVICEABLE_LOCATIONS,
+      stats: DEFAULT_STATS
     };
     this.state = defaultState;
     this.saveState(defaultState);

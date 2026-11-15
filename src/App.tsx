@@ -6,7 +6,9 @@ import { Navbar } from './components/common/Navbar';
 import { ViewSwitcher } from './components/common/ViewSwitcher';
 import { Footer } from './components/common/Footer';
 import { HeroSection } from './components/customer/HeroSection';
+import { ServicesSection } from './components/customer/ServicesSection';
 import { BookingForm } from './components/customer/BookingForm';
+import { TrackingTicketLookup } from './components/customer/TrackingTicketLookup';
 import { TrackingView } from './components/customer/TrackingView';
 import { ReviewsSection } from './components/customer/ReviewsSection';
 import { EVWhyFlatbed } from './components/customer/EVWhyFlatbed';
@@ -130,18 +132,25 @@ export function App() {
                   onOpenWhyFlatbed={handleOpenWhyFlatbed}
                 />
 
-                <EVWhyFlatbed />
+                {/* Services Section with 25 in Large Recognisable Format & 100+ Rescues text */}
+                <ServicesSection onScrollToBooking={handleScrollToBooking} />
 
-                <FleetGallery />
-
-                <RescueGallery onSelectBookNow={handleScrollToBooking} />
-
-                <HyderabadCoverage onSelectArea={handleSelectCoverageArea} />
-
+                {/* Request Booking UP */}
                 <BookingForm
                   onBookingSuccess={handleBookingSuccess}
                   initialLocation={prefillLocation}
                 />
+
+                {/* Tracking Ticket BELOW Request Booking */}
+                <TrackingTicketLookup onTrackSearch={handleTrackSearch} />
+
+                <EVWhyFlatbed />
+
+                <FleetGallery />
+
+                <HyderabadCoverage onSelectArea={handleSelectCoverageArea} />
+
+                <RescueGallery onSelectBookNow={handleScrollToBooking} />
 
                 <ReviewsSection isOwnerMode={false} />
               </div>
