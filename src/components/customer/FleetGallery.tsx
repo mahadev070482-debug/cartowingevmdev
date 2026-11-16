@@ -101,7 +101,7 @@ export const FleetGallery: React.FC = () => {
             Specialized EV Fleet & Rescue Equipment
           </h2>
           <p className="mt-3 text-base text-slate-600 leading-relaxed">
-            25+ years of recovery experience backed by specialized zero-drag hydraulic flatbeds, soft rim webbing, Go-Jack wheel skates, and on-site EV rescue chargers.
+            25+ years of recovery experience backed by specialized zero-degree hydraulic flatbeds, soft rim webbing, Go-Jack wheel skates, and on-site EV rescue chargers.
           </p>
         </div>
 

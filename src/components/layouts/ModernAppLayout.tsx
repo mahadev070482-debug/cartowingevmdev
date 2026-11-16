@@ -43,7 +43,7 @@ export const ModernAppLayout: React.FC<ModernAppLayoutProps> = ({
   const quickServices = [
     {
       title: "0° Ground-Level Flatbed",
-      badge: "Zero Motor Drag",
+      badge: "Zero-Degree Tilt",
       desc: "Hydraulic slide bed tilts flat to the asphalt. Safe for all EVs, automatic transmissions & inverters.",
       icon: Truck,
       color: "border-sky-500 bg-sky-50 text-sky-950"
@@ -129,7 +129,7 @@ export const ModernAppLayout: React.FC<ModernAppLayoutProps> = ({
 
               {/* Subtitle */}
               <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Stranded on Outer Ring Road, Gachibowli, or Hitec City? Get hydraulic zero-drag flatbed assistance in 15 minutes. No motor friction, no inverter burnout.
+                Stranded on Outer Ring Road, Gachibowli, or Hitec City? Get hydraulic zero-degree flatbed assistance in 15 minutes. No motor friction, no inverter burnout.
               </p>
 
               {/* Big 1-Tap Emergency Actions */}
@@ -180,7 +180,7 @@ export const ModernAppLayout: React.FC<ModernAppLayoutProps> = ({
                     </div>
                     <div>
                       <h3 className="font-bold text-white text-sm">Rapid Tow Ticket</h3>
-                      <p className="text-[11px] text-slate-400">Zero-Drag Guaranteed</p>
+                      <p className="text-[11px] text-slate-400">Zero-Degree Guaranteed</p>
                     </div>
                   </div>
                   <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
@@ -283,7 +283,7 @@ export const ModernAppLayout: React.FC<ModernAppLayoutProps> = ({
           
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold uppercase tracking-wider text-sky-400">
-              Zero-Drag Engineering
+              Zero-Degree Engineering
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white mt-1">
               Select Your Towing Service

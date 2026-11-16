@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-white font-bold text-sm">100% Zero-Drag Flatbed</h4>
+              <h4 className="text-white font-bold text-sm">100% Zero-Degree Flatbed</h4>
               <p className="text-xs text-slate-400 mt-0.5">Wheels never roll on pavement. Prevents motor & inverter burnout.</p>
             </div>
           </div>
@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              With <strong>25+ years of vehicle recovery experience</strong> across Hyderabad, we provide engineering-grade zero-drag EV flatbed roadside assistance. Equipped with hydraulic tilt beds and wheel skates to safeguard lithium-ion battery packs and delicate drive motors.
+              With <strong>25+ years of vehicle recovery experience</strong> across Hyderabad, we provide engineering-grade zero-degree EV flatbed roadside assistance. Equipped with hydraulic tilt beds and wheel skates to safeguard lithium-ion battery packs and delicate drive motors.
             </p>
 
             <div className="space-y-2.5 pt-2 text-xs sm:text-sm">

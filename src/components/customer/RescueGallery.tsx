@@ -58,7 +58,7 @@ export const RescueGallery: React.FC<RescueGalleryProps> = ({ onSelectBookNow })
             Recent Successful EV Recoveries
           </h2>
           <p className="mt-3 text-base text-slate-600 leading-relaxed">
-            See how our hydraulic flatbeds and EV-certified technicians rescue stranded electric vehicles with zero gearbox drag, zero wheel-arch damage, and complete high-voltage battery protection.
+            See how our hydraulic flatbeds and EV-certified technicians rescue stranded electric vehicles with zero-degree ground tilt, zero wheel-arch damage, and complete high-voltage battery protection.
           </p>
         </div>
 
@@ -164,7 +164,7 @@ export const RescueGallery: React.FC<RescueGalleryProps> = ({ onSelectBookNow })
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-1 text-emerald-600 text-xs font-semibold">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Zero Drag Verified</span>
+                    <span>Zero-Degree Verified</span>
                   </div>
 
                   <button

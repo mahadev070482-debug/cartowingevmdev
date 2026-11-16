@@ -19,7 +19,7 @@ export const EmergencyBar: React.FC = () => {
 
           <div className="hidden md:flex items-center gap-1.5 text-slate-300 text-xs">
             <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
-            <span>25+ Years Experience • Gachibowli HQ, Hyderabad • Zero-Drag Flatbed Assistance</span>
+            <span>25+ Years Experience • Gachibowli HQ, Hyderabad • Zero-Degree Flatbed Assistance</span>
           </div>
         </div>
 

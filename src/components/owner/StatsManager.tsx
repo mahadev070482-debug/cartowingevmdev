@@ -108,7 +108,7 @@ export const StatsManager: React.FC = () => {
               100%
             </div>
             <div className="text-xs font-bold uppercase tracking-wider text-white mt-2">
-              Zero-Drag Guarantee
+              Zero-Degree Guarantee
             </div>
             <p className="text-[11px] text-slate-400 mt-0.5">Hydraulic tilt flatbeds only</p>
           </div>

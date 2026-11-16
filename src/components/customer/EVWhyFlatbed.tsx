@@ -20,7 +20,7 @@ export const EVWhyFlatbed: React.FC = () => {
           </p>
         </div>
 
-        {/* Comparison: Standard Tow vs VoltRescue Zero-Drag Flatbed */}
+        {/* Comparison: Standard Tow vs VoltRescue Zero-Degree Flatbed */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           
           {/* Wrong Way: Standard Wheel-Lift / Dragging */}

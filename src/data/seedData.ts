@@ -110,7 +110,7 @@ export const INITIAL_TRUCKS: TowTruck[] = [
     status: 'assigned',
     activeJobId: "VT-3108",
     features: [
-      "100% Zero-Drag Flatbed",
+      "100% Zero-Degree Flatbed",
       "Hydraulic Full Tilt Bed (Zero Scrape)",
       "Go-Jack Wheel Dollies (Locked EV Wheels)",
       "High-Voltage Insulated Safety Kit"
@@ -309,7 +309,7 @@ export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
     id: "FLEET-01",
     title: "Heavy-Duty Hydraulic Full-Tilt Flatbed Bed",
     category: "flatbeds",
-    tag: "Zero-Drag Flatbed",
+    tag: "Zero-Degree Flatbed",
     specs: "Full deck tilt to zero degrees for zero-scrape loading",
     imageUrl: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"
   },

@@ -10,7 +10,7 @@ A modern, responsive, full-stack web application designed specifically for **Ele
 
 ## ⚡ Design & Aesthetic
 - **Color Palette:** Modern automotive & EV aesthetic using an electric-blue/cyan accent palette (`#00D2FF`, `#00F5D4`, `#0F172A` dark slate backgrounds, and crisp structured cards for forms).
-- **Zero-Drag Flatbed Focus:** Explicit educational safeguards highlighting why EVs with permanent-magnet synchronous motors cannot be towed with wheels on the ground.
+- **Zero-Degree Flatbed Focus:** Explicit educational safeguards highlighting why EVs with permanent-magnet synchronous motors cannot be towed with wheels on the ground.
 - **Mobile-First Layout:** Designed for stranded motorists on expressways, mobile dispatchers, and tow truck drivers in the vehicle cabin.
 
 ---

@@ -46,12 +46,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
               Hyderabad&apos;s #1 EV Flatbed Towing <br className="hidden sm:inline" />
-              <span className="text-sky-600">Zero-Drag Roadside Assistance.</span>
+              <span className="text-sky-600">Zero-Degree Roadside Assistance.</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Standard towing burns out electric vehicle motors and inverters. With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and headquarters in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, our certified fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-drag transport across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport.
+              Standard towing burns out electric vehicle motors and inverters. With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and headquarters in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, our certified fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-degree transport across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport.
             </p>
 
             {/* Quick Action Buttons: Book, Call, WhatsApp */}
@@ -93,7 +93,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
               <div className="flex items-center gap-2 justify-center lg:justify-start">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Zero Motor Drag Guaranteed</span>
+                <span>Zero-Degree Tilt Guaranteed</span>
               </div>
               <div className="flex items-center gap-2 justify-center lg:justify-start">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -118,7 +118,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
                 <div>
                   <h2 className="font-extrabold text-slate-900 text-base sm:text-lg">Request EV Flatbed Tow</h2>
-                  <p className="text-xs text-slate-500">2-Minute Verification Call • Zero Drag Guaranteed</p>
+                  <p className="text-xs text-slate-500">2-Minute Verification Call • Zero-Degree Guaranteed</p>
                 </div>
               </div>
 

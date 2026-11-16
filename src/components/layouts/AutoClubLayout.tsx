@@ -44,7 +44,7 @@ export const AutoClubLayout: React.FC<AutoClubLayoutProps> = ({
   const clubServices = [
     {
       title: "0° Hydraulic Flatbed Transport",
-      tagline: "True Ground-Level Slide Bed for Zero Drive Drag",
+      tagline: "True Ground-Level Slide Bed for Zero-Degree Loading",
       desc: "Engineered specifically for electric and automatic transmission vehicles. The flatbed tilts to true zero degrees, completely eliminating friction against the asphalt, preventing inverter burnout and safeguarding your manufacturer warranty.",
       points: [
         "100% zero wheel contact with pavement during haul",
@@ -102,7 +102,7 @@ export const AutoClubLayout: React.FC<AutoClubLayoutProps> = ({
             <span className="font-bold tracking-wide text-amber-300 uppercase text-[11px]">
               Premier Automobile Club • 25+ Years of Heritage
             </span>
-            <span className="hidden md:inline text-slate-400">• Certified Zero-Drag Recovery Charter</span>
+            <span className="hidden md:inline text-slate-400">• Certified Zero-Degree Recovery Charter</span>
           </div>
 
           <div className="flex items-center gap-4 text-slate-300 text-xs">
@@ -146,7 +146,7 @@ export const AutoClubLayout: React.FC<AutoClubLayoutProps> = ({
               </h1>
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Operating with certified hydraulic zero-drag flatbeds and precision wheel skates. Headquartered at <strong className="text-white">Ground Floor, Sevanti Nivas, TNGOs Colony Phase 2, Gachibowli</strong>, we provide zero-scrape transport for luxury vehicles and rapid expressway recovery.
+                Operating with certified hydraulic zero-degree flatbeds and precision wheel skates. Headquartered at <strong className="text-white">Ground Floor, Sevanti Nivas, TNGOs Colony Phase 2, Gachibowli</strong>, we provide zero-scrape transport for luxury vehicles and rapid expressway recovery.
               </p>
 
               {/* Action Buttons */}
@@ -190,7 +190,7 @@ export const AutoClubLayout: React.FC<AutoClubLayoutProps> = ({
                 </div>
                 <div>
                   <div className="text-2xl font-black text-sky-400">100%</div>
-                  <div className="text-[11px] text-slate-400 uppercase font-semibold">Zero-Drag Bed</div>
+                  <div className="text-[11px] text-slate-400 uppercase font-semibold">Zero-Degree Bed</div>
                 </div>
               </div>
 
@@ -213,7 +213,7 @@ export const AutoClubLayout: React.FC<AutoClubLayoutProps> = ({
                 <ul className="space-y-3 py-5 border-b border-slate-800 text-xs text-slate-300">
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>100% Zero-Drag Flatbeds:</strong> Drive wheels never roll on the highway asphalt, protecting electric drive units and automatic transmissions.</span>
+                    <span><strong>100% Zero-Degree Flatbeds:</strong> Drive wheels never roll on the highway asphalt, protecting electric drive units and automatic transmissions.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />

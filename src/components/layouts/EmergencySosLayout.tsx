@@ -94,7 +94,7 @@ export const EmergencySosLayout: React.FC<EmergencySosLayoutProps> = ({
             </h1>
 
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-              Zero-drag hydraulic flatbeds and 4-point wheel skates stationed across Gachibowli, ORR Expressways, and Hitec City. 100% safe transport for electric cars, luxury sedans, and total collision vehicles.
+              Zero-degree hydraulic flatbeds and 4-point wheel skates stationed across Gachibowli, ORR Expressways, and Hitec City. 100% safe transport for electric cars, luxury sedans, and total collision vehicles.
             </p>
 
             {/* GIANT PULSING 1-TOUCH EMERGENCY SOS BUTTON */}
@@ -184,7 +184,7 @@ export const EmergencySosLayout: React.FC<EmergencySosLayoutProps> = ({
             <div className="bg-slate-900 border border-orange-500/30 rounded-2xl p-5 space-y-2">
               <div className="flex items-center gap-2.5 text-emerald-400">
                 <Truck className="w-5 h-5 shrink-0" />
-                <span className="font-black text-sm uppercase">Zero Drive Drag</span>
+                <span className="font-black text-sm uppercase">Zero-Degree Flatbed</span>
               </div>
               <p className="text-xs text-slate-400">
                 Hydraulic ground-level tilt beds ensure 100% zero wheel contact with asphalt during transit.

@@ -70,7 +70,7 @@ export const HyderabadCoverage: React.FC<HyderabadCoverageProps> = ({ onSelectAr
             Serviceable Corridors & EV Flatbed Recovery Hubs
           </h2>
           <p className="mt-3 text-base text-slate-600 leading-relaxed">
-            Our specialized zero-drag hydraulic flatbeds and rapid battery-boost trucks are stationed across Hyderabad&apos;s key IT corridors, Outer Ring Road (ORR) junctions, and expressways for 12–20 minute arrival.
+            Our specialized zero-degree hydraulic flatbeds and rapid battery-boost trucks are stationed across Hyderabad&apos;s key IT corridors, Outer Ring Road (ORR) junctions, and expressways for 12–20 minute arrival.
           </p>
         </div>
 

@@ -34,11 +34,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
     {
       id: "srv-1",
       title: "Flat Bed 0 Degree Towing & 24/7 Car Towing",
-      subtitle: "Zero-Drag Hydraulic Slide Bed Near Me",
+      subtitle: "Zero-Degree Hydraulic Slide Bed Near Me",
       icon: Truck,
       badge: "Flat Bed 0 Degree",
       description: "Our certified flatbed tilts to true zero degrees at ground level. Eliminates drive wheel friction, preserves warranty, and prevents inverter or motor generator burnout across all car brands.",
-      highlights: ["No wheel contact with asphalt", "100% zero-drag hydraulic ramp", "Full chassis nylon security webbing"]
+      highlights: ["No wheel contact with asphalt", "100% zero-degree hydraulic ramp", "Full chassis nylon security webbing"]
     },
     {
       id: "srv-2",
@@ -69,7 +69,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
     },
     {
       id: "srv-5",
-      title: "SUV Towing & AWD Zero-Drag Transport",
+      title: "SUV Towing & AWD Zero-Degree Transport",
       subtitle: "Nexon, Creta, XUV700, Fortuner, Ioniq 5, ZS EV",
       icon: Disc,
       badge: "SUV & AWD Towing",
@@ -158,14 +158,14 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
               </p>
             </div>
 
-            {/* Stat 4: 100% ZERO-DRAG FLATBED GUARANTEE */}
+            {/* Stat 4: 100% ZERO-DEGREE FLATBED GUARANTEE */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left pt-6 md:pt-0 md:px-6">
               <span className="text-xs font-bold uppercase tracking-widest text-sky-400 mb-2">Safety Standard</span>
               <div className="text-5xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-none">
                 100<span className="text-sky-400">%</span>
               </div>
               <div className="text-lg sm:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
-                Zero-Drag Guarantee
+                Zero-Degree Guarantee
               </div>
               <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
                 Hydraulic deck full tilt • Wheels never touch road • Inverter protected.
@@ -224,7 +224,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
           <div>
             <h4 className="text-lg font-bold text-white">Need an EV Flatbed Tow Truck Right Now?</h4>
             <p className="text-xs text-slate-400 mt-0.5">
-              Instant 2-minute verification call • Zero-drag flatbed dispatch across Hyderabad.
+              Instant 2-minute verification call • Zero-degree flatbed dispatch across Hyderabad.
             </p>
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
