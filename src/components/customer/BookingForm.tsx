@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { store } from '../../services/store';
 import { reverseGeocode, fetchIpLocation } from '../../services/geocoding';
-import { COMMON_EV_DROPOFFS } from '../../data/seedData';
 import { LeafletMap } from '../common/LeafletMap';
 import { TowRequest, IssueType, VehicleCategory } from '../../types';
 import confetti from 'canvas-confetti';
@@ -42,11 +41,6 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
   const [locationSuccess, setLocationSuccess] = useState(false);
   const [pointDropped, setPointDropped] = useState(false);
   const [lastRefreshedAt, setLastRefreshedAt] = useState<string | null>(null);
-
-  // Dropoff
-  const [dropoffName, setDropoffName] = useState('Nearest Authorized EV Fast Charger Hub');
-  const [dropoffAddress, setDropoffAddress] = useState('EV Fast Charging Hub, Sector XX, City - XXXXXX');
-  const [dropoffType, setDropoffType] = useState<'service_center' | 'fast_charger' | 'home' | 'custom'>('fast_charger');
 
   // Vehicle & Issue
   const [vehicleCategory, setVehicleCategory] = useState<VehicleCategory>('Luxury Vehicle');
@@ -179,9 +173,9 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
           landmark: landmark.trim() || undefined
         },
         dropoffLocation: {
-          name: dropoffName,
-          address: dropoffAddress,
-          type: dropoffType
+          name: 'Confirmed on verification call',
+          address: 'Customer destination / Nearest Service Station',
+          type: 'custom'
         },
         vehicle: {
           category: vehicleCategory,
@@ -446,70 +440,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
               </div>
             </div>
 
-            {/* Step 3: Drop-off Location */}
+            {/* Step 3: Vehicle & Issue Details */}
             <div className="space-y-4">
               <h3 className="text-slate-900 font-bold text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-100">
                 <span className="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">3</span>
-                <span>Drop-off Destination</span>
-              </h3>
-
-              {/* Quick Drop-off chips */}
-              <div className="flex flex-wrap gap-2">
-                {COMMON_EV_DROPOFFS.map((chip, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setDropoffName(chip.name);
-                      setDropoffAddress(chip.address);
-                      setDropoffType(chip.type);
-                    }}
-                    className={`text-xs px-3 py-1.5 rounded-lg border transition ${
-                      dropoffName === chip.name
-                        ? 'bg-sky-50 text-sky-800 font-semibold border-sky-500 ring-1 ring-sky-500'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
-                    }`}
-                  >
-                    {chip.name}
-                  </button>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Destination Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Authorized Service Center or Home, Sector XX"
-                    value={dropoffName}
-                    onChange={(e) => setDropoffName(e.target.value)}
-                    className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-1 focus:ring-sky-600 transition"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Destination Address
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Main Avenue, Sector XX, City - XXXXXX"
-                    value={dropoffAddress}
-                    onChange={(e) => setDropoffAddress(e.target.value)}
-                    className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-1 focus:ring-sky-600 transition"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Step 4: Vehicle & Issue Details */}
-            <div className="space-y-4">
-              <h3 className="text-slate-900 font-bold text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-100">
-                <span className="w-5 h-5 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">4</span>
                 <span>Vehicle Type & Breakdown Details</span>
               </h3>
 
@@ -521,9 +455,9 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {(
                     [
-                      { id: 'Luxury Vehicle' as VehicleCategory, label: 'Luxury Vehicle', icon: Sparkles, desc: 'Mercedes, BMW, Audi, Porsche, Jaguar, Volvo' },
-                      { id: 'Car' as VehicleCategory, label: 'Car / Sedan', icon: Car, desc: 'Sedans, Hatchbacks, Compact Cars' },
-                      { id: 'SUV' as VehicleCategory, label: 'SUV / MUV', icon: Truck, desc: 'Nexon, Creta, XUV700, Fortuner, Scorpio' }
+                      { id: 'Luxury Vehicle' as VehicleCategory, label: 'Luxury Vehicle', icon: Sparkles },
+                      { id: 'Car' as VehicleCategory, label: 'Car / Sedan', icon: Car },
+                      { id: 'SUV' as VehicleCategory, label: 'SUV / MUV', icon: Truck }
                     ]
                   ).map((cat) => {
                     const IconComponent = cat.icon;
@@ -533,19 +467,16 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                         key={cat.id}
                         type="button"
                         onClick={() => setVehicleCategory(cat.id)}
-                        className={`p-3.5 rounded-xl border text-left transition flex flex-col items-start gap-1.5 ${
+                        className={`p-3.5 rounded-xl border text-left transition flex items-center gap-3 ${
                           isSelected
                             ? 'bg-sky-50 border-sky-600 ring-2 ring-sky-600 text-sky-950 font-medium shadow-sm'
                             : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                         }`}
                       >
-                        <div className="flex items-center gap-2 w-full">
-                          <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
-                            <IconComponent className="w-4 h-4 shrink-0" />
-                          </div>
-                          <span className="text-sm font-bold leading-tight">{cat.label}</span>
+                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                          <IconComponent className="w-5 h-5 shrink-0" />
                         </div>
-                        <span className="text-xs text-slate-500">{cat.desc}</span>
+                        <span className="text-sm font-bold leading-tight">{cat.label}</span>
                       </button>
                     );
                   })}
@@ -560,13 +491,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                   </label>
                   <input
                     type="text"
-                    placeholder={
-                      vehicleCategory === 'Luxury Vehicle'
-                        ? 'e.g. BMW 5 Series, Mercedes C-Class, Audi A6, Porsche'
-                        : vehicleCategory === 'Car'
-                        ? 'e.g. Tata Tiago EV, Swift, Honda City, BYD Seal'
-                        : 'e.g. Tata Nexon EV, Creta, XUV700, Fortuner'
-                    }
+                    placeholder="Enter vehicle make & model (Optional)"
                     value={vehicleModelInput}
                     onChange={(e) => setVehicleModelInput(e.target.value)}
                     className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-600 transition"

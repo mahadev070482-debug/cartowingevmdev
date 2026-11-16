@@ -43,7 +43,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
     {
       id: "srv-2",
       title: "Luxury Car Towing (Zero-Scrape)",
-      subtitle: "Mercedes, BMW, Audi, Porsche, Jaguar, Volvo",
+      subtitle: "Ultra-Low Ground Clearance & Premium Protection",
       icon: Gauge,
       badge: "Luxury Car Towing",
       description: "Specialized ultra-low ground clearance recovery for premium sedans and performance sports cars. Soft synthetic wheel basket straps ensure your alloy rims and low front splitters remain flawless.",
