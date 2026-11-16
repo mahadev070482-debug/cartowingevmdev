@@ -120,6 +120,8 @@ export interface Review {
 
 export type ActiveAppView = 'customer' | 'owner' | 'driver';
 
+export type WebsiteLayoutId = 'classic' | 'modern-app' | 'auto-club' | 'emergency-sos';
+
 export interface BaseGarageLocation {
   name: string;
   address: string;

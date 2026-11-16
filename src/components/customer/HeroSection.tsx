@@ -37,7 +37,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <span className="text-sky-400">•</span>
               <span className="flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-sky-600" />
-                <span>Madhapur HQ, Hyderabad</span>
+                <span>Gachibowli HQ, Hyderabad</span>
               </span>
               <span className="text-sky-400">•</span>
               <span className="text-sky-700 font-semibold">24/7 Flatbed Towing Near Me</span>
@@ -51,7 +51,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Standard towing burns out electric vehicle motors and inverters. With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and headquarters in <strong className="text-slate-800">Madhapur</strong>, our certified fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-drag transport across Hitec City, Gachibowli, Outer Ring Road (ORR), and Shamshabad Airport.
+              Standard towing burns out electric vehicle motors and inverters. With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and headquarters in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, our certified fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-drag transport across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport.
             </p>
 
             {/* Quick Action Buttons: Book, Call, WhatsApp */}
@@ -123,7 +123,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
 
               <p className="text-xs text-slate-600 my-3 leading-relaxed">
-                Breakdown on ORR, Hitec City, or Madhapur? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA & quote.
+                Breakdown on ORR, Gachibowli, Hitec City, or Financial District? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA & quote.
               </p>
 
               {/* Supported Vehicle Categories (Luxury Vehicle, Car, SUV) */}

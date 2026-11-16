@@ -100,7 +100,7 @@ export const StatsManager: React.FC = () => {
             <div className="text-xs font-bold uppercase tracking-wider text-white mt-2">
               Average Arrival
             </div>
-            <p className="text-[11px] text-slate-400 mt-0.5">Standby at Madhapur & ORR</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Standby at Gachibowli & ORR</p>
           </div>
 
           <div className="text-center sm:text-left sm:pl-4 pt-4 sm:pt-0">

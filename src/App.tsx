@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { ActiveAppView, TowRequest } from './types';
+import { ActiveAppView, TowRequest, WebsiteLayoutId } from './types';
 import { store } from './services/store';
+import { LayoutSwitcher } from './components/common/LayoutSwitcher';
 import { EmergencyBar } from './components/common/EmergencyBar';
 import { Navbar } from './components/common/Navbar';
 import { ViewSwitcher } from './components/common/ViewSwitcher';
 import { Footer } from './components/common/Footer';
-import { HeroSection } from './components/customer/HeroSection';
-import { ServicesSection } from './components/customer/ServicesSection';
-import { BookingForm } from './components/customer/BookingForm';
-import { TrackingTicketLookup } from './components/customer/TrackingTicketLookup';
+import { ClassicLayout } from './components/layouts/ClassicLayout';
+import { ModernAppLayout } from './components/layouts/ModernAppLayout';
+import { AutoClubLayout } from './components/layouts/AutoClubLayout';
+import { EmergencySosLayout } from './components/layouts/EmergencySosLayout';
 import { TrackingView } from './components/customer/TrackingView';
-import { ReviewsSection } from './components/customer/ReviewsSection';
-import { EVWhyFlatbed } from './components/customer/EVWhyFlatbed';
-import { RescueGallery } from './components/customer/RescueGallery';
-import { FleetGallery } from './components/customer/FleetGallery';
-import { HyderabadCoverage } from './components/customer/HyderabadCoverage';
 import { FloatingContactBar } from './components/common/FloatingContactBar';
 import { OwnerDashboard } from './components/owner/OwnerDashboard';
 import { DriverPortal } from './components/driver/DriverPortal';
@@ -25,15 +21,37 @@ export function App() {
   const [selectedTruckId, setSelectedTruckId] = useState<string>('TRUCK-01');
   const [prefillLocation, setPrefillLocation] = useState<{ address: string; landmark?: string } | null>(null);
   const [showDevSwitcher, setShowDevSwitcher] = useState<boolean>(false);
+  const [websiteLayout, setWebsiteLayout] = useState<WebsiteLayoutId>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('voltrescue_ui_layout') as WebsiteLayoutId;
+      if (saved && ['classic', 'modern-app', 'auto-club', 'emergency-sos'].includes(saved)) {
+        return saved;
+      }
+    }
+    return 'classic';
+  });
 
-  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492 or ?debug=true)
+  const handleSelectLayout = (layout: WebsiteLayoutId) => {
+    setWebsiteLayout(layout);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('voltrescue_ui_layout', layout);
+    }
+  };
+
+  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492 or ?debug=true or ?layout=modern-app)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const viewParam = params.get('view');
     const trackParam = params.get('track') || params.get('id');
     const debugParam = params.get('debug') === 'true';
+    const layoutParam = params.get('layout') as WebsiteLayoutId;
 
     if (debugParam) setShowDevSwitcher(true);
+
+    if (layoutParam && ['classic', 'modern-app', 'auto-club', 'emergency-sos'].includes(layoutParam)) {
+      setWebsiteLayout(layoutParam);
+      localStorage.setItem('voltrescue_ui_layout', layoutParam);
+    }
 
     if (viewParam === 'owner') setCurrentView('owner');
     else if (viewParam === 'driver') setCurrentView('driver');
@@ -92,6 +110,12 @@ export function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
       
+      {/* 0. Multi-UI Layout Switcher (Allows picking from 4 distinct designs) */}
+      <LayoutSwitcher
+        currentLayout={websiteLayout}
+        onSelectLayout={handleSelectLayout}
+      />
+
       {/* 1. Sticky Emergency Contact Bar */}
       <EmergencyBar />
 
@@ -124,35 +148,42 @@ export function App() {
                 onTrackSearch={handleTrackSearch}
               />
             ) : (
-              // Customer Landing Page with Booking Form & Reviews
+              // 4 Distinct Website UI Layouts
               <div>
-                <HeroSection
-                  onScrollToBooking={handleScrollToBooking}
-                  onTrackSearch={handleTrackSearch}
-                  onOpenWhyFlatbed={handleOpenWhyFlatbed}
-                />
+                {websiteLayout === 'classic' && (
+                  <ClassicLayout
+                    onBookingSuccess={handleBookingSuccess}
+                    onTrackSearch={handleTrackSearch}
+                    onScrollToBooking={handleScrollToBooking}
+                    onOpenWhyFlatbed={handleOpenWhyFlatbed}
+                    onSelectCoverageArea={handleSelectCoverageArea}
+                    prefillLocation={prefillLocation}
+                  />
+                )}
 
-                {/* Services Section with 25 in Large Recognisable Format & 100+ Rescues text */}
-                <ServicesSection onScrollToBooking={handleScrollToBooking} />
+                {websiteLayout === 'modern-app' && (
+                  <ModernAppLayout
+                    onBookingSuccess={handleBookingSuccess}
+                    onTrackSearch={handleTrackSearch}
+                    onScrollToBooking={handleScrollToBooking}
+                  />
+                )}
 
-                {/* Request Booking UP */}
-                <BookingForm
-                  onBookingSuccess={handleBookingSuccess}
-                  initialLocation={prefillLocation}
-                />
+                {websiteLayout === 'auto-club' && (
+                  <AutoClubLayout
+                    onBookingSuccess={handleBookingSuccess}
+                    onTrackSearch={handleTrackSearch}
+                    onScrollToBooking={handleScrollToBooking}
+                  />
+                )}
 
-                {/* Tracking Ticket BELOW Request Booking */}
-                <TrackingTicketLookup onTrackSearch={handleTrackSearch} />
-
-                <EVWhyFlatbed />
-
-                <FleetGallery />
-
-                <HyderabadCoverage onSelectArea={handleSelectCoverageArea} />
-
-                <RescueGallery onSelectBookNow={handleScrollToBooking} />
-
-                <ReviewsSection isOwnerMode={false} />
+                {websiteLayout === 'emergency-sos' && (
+                  <EmergencySosLayout
+                    onBookingSuccess={handleBookingSuccess}
+                    onTrackSearch={handleTrackSearch}
+                    onScrollToBooking={handleScrollToBooking}
+                  />
+                )}
               </div>
             )}
           </div>
