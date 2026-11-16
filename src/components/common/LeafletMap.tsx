@@ -212,11 +212,11 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
   }, [markers, showRoute, onMarkerDragEnd]);
 
   return (
-    <div className={`relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ${className}`}>
+    <div className={`relative z-0 isolate overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ${className}`}>
       <div ref={containerRef} className={`w-full h-full min-h-[260px] ${onMapClick ? 'cursor-crosshair' : ''}`} />
       
       {/* Live GPS Map Badge */}
-      <div className="absolute top-2.5 left-2.5 z-[400] bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm">
+      <div className="absolute top-2.5 left-2.5 z-10 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm pointer-events-none select-none">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>Live GPS Map</span>
       </div>
@@ -230,7 +230,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
             onRefreshLocation();
           }}
           disabled={isRefreshing}
-          className="absolute top-2.5 right-2.5 z-[400] bg-white/95 hover:bg-white text-slate-700 hover:text-sky-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition disabled:opacity-60"
+          className="absolute top-2.5 right-2.5 z-10 bg-white/95 hover:bg-white text-slate-700 hover:text-sky-600 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 shadow-sm flex items-center gap-1.5 transition disabled:opacity-60"
           title="Refresh GPS Location"
         >
           <RotateCcw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-sky-600' : 'text-slate-600'}`} />
@@ -240,7 +240,7 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
 
       {/* Point dropping hint */}
       {onMapClick && (
-        <div className="absolute bottom-2.5 left-2.5 z-[400] bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm pointer-events-none select-none">
+        <div className="absolute bottom-2.5 left-2.5 z-10 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-700 border border-slate-200/80 flex items-center gap-1.5 shadow-sm pointer-events-none select-none">
           <MapPin className="w-3.5 h-3.5 text-red-600" />
           <span>Click anywhere to drop vehicle pin</span>
         </div>
