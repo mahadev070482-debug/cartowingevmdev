@@ -260,59 +260,39 @@ export const INITIAL_REVIEWS: Review[] = [
 ];
 
 export const EV_CATEGORIZED_MODELS = {
-  "2 Wheelers": [
-    "Ola S1 Pro / Air / X",
-    "Ather 450X / 450S / Apex",
-    "TVS iQube Electric",
-    "Bajaj Chetak EV",
-    "Ultraviolette F77 Mach 2",
-    "Vida V1 Pro (Hero)",
-    "Revolt RV400 / RV1",
-    "Hero Electric Photon / Optima",
-    "Simple One",
-    "Other E-Scooter / E-Bike"
+  "Luxury Vehicle": [
+    "BMW (i4, iX, i7, 3/5/7 Series)",
+    "Mercedes-Benz (EQE, EQS, C/E/S-Class)",
+    "Audi (e-tron, A4, A6, Q5, Q7)",
+    "Porsche (Taycan, Macan, Cayenne)",
+    "Jaguar & Land Rover (I-Pace, Defender, Range Rover)",
+    "Volvo (EX40, C40 Recharge, XC60, XC90)",
+    "Other Luxury / Performance Car"
   ],
   "Car": [
-    "Tata Tiago EV",
-    "Tata Tigor EV",
+    "Tata Tiago EV / Tigor EV",
     "MG Comet EV",
     "Tata Curvv EV (Coupe Sedan)",
     "BYD Seal (Sedan)",
-    "BMW i4 Gran Coupe",
     "Hyundai Ioniq 6",
-    "Other Electric Car / Sedan"
+    "Other Hatchback / Sedan"
   ],
   "SUV": [
     "Tata Nexon EV (Prime / Max / Fearless)",
-    "Tata Punch EV",
-    "Tata Harrier EV",
-    "Mahindra XUV400 EV",
-    "MG ZS EV Exclusive",
-    "MG Windsor EV",
-    "Hyundai Ioniq 5 AWD",
+    "Tata Punch EV / Harrier EV",
+    "Mahindra XUV400 EV / XUV700",
+    "MG ZS EV Exclusive / Windsor EV",
+    "Hyundai Ioniq 5 AWD / Creta",
     "Kia EV6 GT-Line",
-    "BYD Atto 3",
-    "BYD eMax 7 (MPV)",
-    "BMW iX / iX1",
-    "Mercedes EQB / EQE / EQS SUV",
-    "Volvo EX40 / C40 Recharge",
-    "Other Electric SUV"
-  ],
-  "Others": [
-    "Tata Ace EV (Mini Cargo)",
-    "Mahindra Zor Grand Cargo EV",
-    "Piaggio Ape E-City / E-Cargo (3-Wheeler)",
-    "Euler HiLoad EV",
-    "Custom Electric Fleet Vehicle",
-    "Other Commercial / Custom EV"
+    "BYD Atto 3 / eMax 7",
+    "Other SUV / MUV"
   ]
 };
 
 export const EV_MODELS: string[] = [
+  ...EV_CATEGORIZED_MODELS["Luxury Vehicle"],
   ...EV_CATEGORIZED_MODELS["SUV"],
-  ...EV_CATEGORIZED_MODELS["Car"],
-  ...EV_CATEGORIZED_MODELS["2 Wheelers"],
-  ...EV_CATEGORIZED_MODELS["Others"]
+  ...EV_CATEGORIZED_MODELS["Car"]
 ];
 
 export interface FleetEquipmentImage {
@@ -375,10 +355,10 @@ export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
   },
   {
     id: "FLEET-07",
-    title: "Dedicated 2-Wheeler Upright Security Channel & Scooter Ramp",
-    category: "flatbeds",
-    tag: "2-Wheeler & E-Bike Secure Rig",
-    specs: "Locks Ather, Ola, Chetak & e-motorcycles upright without tipping",
+    title: "Heavy-Duty Commercial Emergency Jump Start & Booster Pack System",
+    category: "chargers",
+    tag: "Emergency Jump Start",
+    specs: "High-amperage surge-protected 12V/24V booster unit for luxury and stalled vehicles",
     imageUrl: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1000&q=80"
   },
   {

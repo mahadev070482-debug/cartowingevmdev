@@ -18,7 +18,6 @@ import {
   RotateCcw, 
   MapPin, 
   LocateFixed,
-  Bike,
   Car,
   Truck,
   Sparkles
@@ -53,7 +52,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
   const [vehicleCategory, setVehicleCategory] = useState<VehicleCategory>('Luxury Vehicle');
   const [vehicleModelInput, setVehicleModelInput] = useState('');
   const [regNumber, setRegNumber] = useState('');
-  const [issueType, setIssueType] = useState<IssueType>('Dead Battery (0% SOC)');
+  const [issueType, setIssueType] = useState<IssueType>('Accident Car Towing');
   const [issueDescription, setIssueDescription] = useState('');
   const [wheelLock, setWheelLock] = useState(true);
   const [urgency] = useState<TowRequest['urgency']>('Emergency (High Priority)');
@@ -514,19 +513,17 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                 <span>Vehicle Type & Breakdown Details</span>
               </h3>
 
-              {/* Vehicle Type Selector (Luxury Vehicle, Car, SUV, 2 Wheelers, Others) */}
+              {/* Vehicle Type Selector (Luxury Vehicle, Car, SUV) */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                   Select Vehicle Category <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {(
                     [
-                      { id: 'Luxury Vehicle' as VehicleCategory, label: 'Luxury Vehicle', icon: Sparkles, desc: 'BMW, Mercedes, Audi, Porsche' },
-                      { id: 'Car' as VehicleCategory, label: 'Car / Sedan', icon: Car, desc: 'Sedans, Hatchbacks, Compacts' },
-                      { id: 'SUV' as VehicleCategory, label: 'SUV / MUV', icon: Truck, desc: 'Nexon, Creta, XUV, Fortuner' },
-                      { id: '2 Wheelers' as VehicleCategory, label: '2 Wheelers', icon: Bike, desc: 'Ather, Ola, Chetak, Bikes' },
-                      { id: 'Others' as VehicleCategory, label: 'Commercial / Other', icon: Truck, desc: 'Vans, Pickups, Mini Cargo' }
+                      { id: 'Luxury Vehicle' as VehicleCategory, label: 'Luxury Vehicle', icon: Sparkles, desc: 'Mercedes, BMW, Audi, Porsche, Jaguar, Volvo' },
+                      { id: 'Car' as VehicleCategory, label: 'Car / Sedan', icon: Car, desc: 'Sedans, Hatchbacks, Compact Cars' },
+                      { id: 'SUV' as VehicleCategory, label: 'SUV / MUV', icon: Truck, desc: 'Nexon, Creta, XUV700, Fortuner, Scorpio' }
                     ]
                   ).map((cat) => {
                     const IconComponent = cat.icon;
@@ -536,17 +533,19 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                         key={cat.id}
                         type="button"
                         onClick={() => setVehicleCategory(cat.id)}
-                        className={`p-2.5 rounded-lg border text-left transition flex flex-col items-start gap-1 ${
+                        className={`p-3.5 rounded-xl border text-left transition flex flex-col items-start gap-1.5 ${
                           isSelected
-                            ? 'bg-sky-50 border-sky-600 ring-1 ring-sky-600 text-sky-950 font-medium shadow-sm'
+                            ? 'bg-sky-50 border-sky-600 ring-2 ring-sky-600 text-sky-950 font-medium shadow-sm'
                             : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                         }`}
                       >
-                        <div className="flex items-center gap-1.5 w-full">
-                          <IconComponent className={`w-4 h-4 shrink-0 ${isSelected ? 'text-sky-600' : 'text-slate-500'}`} />
-                          <span className="text-xs font-bold leading-tight truncate">{cat.label}</span>
+                        <div className="flex items-center gap-2 w-full">
+                          <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                            <IconComponent className="w-4 h-4 shrink-0" />
+                          </div>
+                          <span className="text-sm font-bold leading-tight">{cat.label}</span>
                         </div>
-                        <span className="text-[10px] text-slate-500 line-clamp-1">{cat.desc}</span>
+                        <span className="text-xs text-slate-500">{cat.desc}</span>
                       </button>
                     );
                   })}
@@ -566,11 +565,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                         ? 'e.g. BMW 5 Series, Mercedes C-Class, Audi A6, Porsche'
                         : vehicleCategory === 'Car'
                         ? 'e.g. Tata Tiago EV, Swift, Honda City, BYD Seal'
-                        : vehicleCategory === 'SUV'
-                        ? 'e.g. Tata Nexon EV, Creta, XUV700, Fortuner'
-                        : vehicleCategory === '2 Wheelers'
-                        ? 'e.g. Ather 450X, Ola S1 Pro, Royal Enfield, TVS'
-                        : 'Specify vehicle model / details'
+                        : 'e.g. Tata Nexon EV, Creta, XUV700, Fortuner'
                     }
                     value={vehicleModelInput}
                     onChange={(e) => setVehicleModelInput(e.target.value)}
@@ -598,16 +593,17 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
               {/* Issue Type Selector */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                  Breakdown Reason <span className="text-red-500">*</span>
+                  Breakdown Reason / Service Required <span className="text-red-500">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {(
                     [
+                      'Accident Car Towing',
+                      'Total Damage / Total Loss',
+                      'Jump Start Service',
                       'Dead Battery (0% SOC)',
-                      'Flat Tire',
-                      'Accident / Collision',
-                      'Mechanical / Drive Unit',
-                      '12V Auxiliary System Failure'
+                      'Flat Tire / Wheel Damage',
+                      'Mechanical / Drive Unit'
                     ] as IssueType[]
                   ).map((type) => (
                     <button

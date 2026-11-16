@@ -5,7 +5,7 @@ import {
   Truck, 
   Disc, 
   BatteryCharging, 
-  Bike, 
+  Zap, 
   ShieldAlert, 
   Gauge, 
   Clock, 
@@ -51,12 +51,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
     },
     {
       id: "srv-3",
-      title: "Accident Car Recovery & Total Damage Towing",
-      subtitle: "Accident Car Towing & Total Loss Recovery",
+      title: "Accident Car Towing & Total Damage Recovery",
+      subtitle: "Severe Collision, Structural Impact & Total Loss",
       icon: ShieldAlert,
       badge: "Accident & Total Damage",
-      description: "Fast recovery for accident-impacted, locked-wheel, or total damage vehicles. Equipped with heavy-duty winches, snatch blocks, and dollies to retrieve vehicles safely without structural twisting.",
-      highlights: ["Rapid expressway collision retrieval", "Safe extraction of total loss vehicles", "Direct transport to insurance & body shops"]
+      description: "Fast recovery for accident-impacted, immobilized, or total damage vehicles. Equipped with heavy-duty hydraulic winches, synthetic snatch blocks, and 4-point dollies to extract total loss vehicles safely without chassis twisting.",
+      highlights: ["Expressway & highway collision retrieval", "Safe recovery of total loss & wheel-locked vehicles", "Direct transport to insurance yards & body shops"]
     },
     {
       id: "srv-4",
@@ -78,12 +78,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
     },
     {
       id: "srv-6",
-      title: "2-Wheeler Upright Security Transit",
-      subtitle: "Ather, Ola, Chetak, TVS, Ultraviolette, Superbikes",
-      icon: Bike,
-      badge: "2-Wheeler Towing",
-      description: "Electric two-wheelers and premium motorbikes locked upright inside specialized wheel channels with soft suspension tie-down webbing. Guaranteed zero tip-over and zero fairing scratches.",
-      highlights: ["Dedicated vertical wheel chocks", "Non-scratch soft synthetic straps", "Zero contact with painted fairings"]
+      title: "24/7 Emergency Jump Start Service",
+      subtitle: "Dead 12V Battery, Luxury Cars & EV Boost",
+      icon: Zap,
+      badge: "Jump Start Service",
+      description: "Car battery dead at home, office basement, or highway? Our rapid recovery units carry high-amperage, voltage-protected commercial booster packs to safely jump start your car without blowing sensitive computer ECUs or hybrid modules.",
+      highlights: ["Safe for luxury cars & delicate computer electronics", "High-amperage commercial jump pack", "On-site arrival within 15–20 minutes"]
     }
   ];
 

@@ -126,13 +126,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 Breakdown on ORR, Hitec City, or Madhapur? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA & quote.
               </p>
 
-              {/* Supported Vehicle Pills (Including Luxury Vehicle) */}
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 my-3 text-center text-[10px] font-bold">
-                <span className="bg-sky-50 text-sky-800 py-1.5 px-1 rounded-md border border-sky-200">💎 Luxury Car</span>
-                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🚗 Car / Sedan</span>
-                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🚙 SUV Towing</span>
-                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🛵 2-Wheelers</span>
-                <span className="bg-slate-100 text-slate-700 py-1.5 px-1 rounded-md border border-slate-200">🚐 Commercial</span>
+              {/* Supported Vehicle Categories (Luxury Vehicle, Car, SUV) */}
+              <div className="grid grid-cols-3 gap-2 my-2.5 text-center text-[11px] font-bold">
+                <span className="bg-sky-50 text-sky-800 py-1.5 px-2 rounded-lg border border-sky-200">💎 Luxury Car</span>
+                <span className="bg-slate-100 text-slate-700 py-1.5 px-2 rounded-lg border border-slate-200">🚗 Car / Sedan</span>
+                <span className="bg-slate-100 text-slate-700 py-1.5 px-2 rounded-lg border border-slate-200">🚙 SUV / MUV</span>
+              </div>
+
+              {/* Emergency Service Highlights (Accident, Total Damage, Jump Start) */}
+              <div className="grid grid-cols-3 gap-2 mb-3 text-center text-[10px] font-bold">
+                <span className="bg-red-50 text-red-700 py-1 px-1.5 rounded-md border border-red-200">💥 Accident Towing</span>
+                <span className="bg-amber-50 text-amber-800 py-1 px-1.5 rounded-md border border-amber-200">⚠️ Total Damage</span>
+                <span className="bg-emerald-50 text-emerald-800 py-1 px-1.5 rounded-md border border-emerald-200">⚡ Jump Start</span>
               </div>
 
               <div className="space-y-2 pt-2">

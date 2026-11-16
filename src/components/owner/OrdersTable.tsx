@@ -23,9 +23,13 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
 
   const issuePriorityWeight = (issue: TowRequest['issueType']): number => {
     switch (issue) {
+      case 'Total Damage / Total Loss':
+      case 'Accident Car Towing':
       case 'Accident / Collision': return 5;
       case 'Dead Battery (0% SOC)': return 4;
+      case 'Jump Start Service':
       case '12V Auxiliary System Failure': return 3;
+      case 'Flat Tire / Wheel Damage':
       case 'Flat Tire': return 2;
       case 'Mechanical / Drive Unit': return 1;
       default: return 0;

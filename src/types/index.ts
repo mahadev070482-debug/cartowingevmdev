@@ -9,10 +9,14 @@ export type RequestStatus =
   | 'declined';              // Cancelled / Declined with Owner's reason
 
 export type IssueType =
+  | 'Accident Car Towing'
+  | 'Total Damage / Total Loss'
+  | 'Jump Start Service'
   | 'Dead Battery (0% SOC)'
-  | 'Flat Tire'
-  | 'Accident / Collision'
+  | 'Flat Tire / Wheel Damage'
   | 'Mechanical / Drive Unit'
+  | 'Accident / Collision'
+  | 'Flat Tire'
   | '12V Auxiliary System Failure';
 
 export interface LocationPoint {
@@ -28,7 +32,7 @@ export interface DropoffLocation {
   type: 'service_center' | 'fast_charger' | 'home' | 'custom';
 }
 
-export type VehicleCategory = 'Luxury Vehicle' | 'Car' | 'SUV' | '2 Wheelers' | 'Others';
+export type VehicleCategory = 'Luxury Vehicle' | 'Car' | 'SUV';
 
 export interface EVVehicle {
   category?: VehicleCategory;
