@@ -118,7 +118,7 @@ export interface Review {
   verified: boolean;
 }
 
-export type ActiveAppView = 'customer' | 'owner' | 'driver';
+export type ActiveAppView = 'customer' | 'owner';
 
 export type WebsiteLayoutId = 'classic' | 'modern-app' | 'auto-club' | 'emergency-sos';
 

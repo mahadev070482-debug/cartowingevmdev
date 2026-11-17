@@ -1,8 +1,22 @@
 import React, { useState, useMemo } from 'react';
 import { TowRequest, TowTruck, RequestStatus } from '../../types';
-import { calculateDistanceKm } from '../../services/store';
+import { store, calculateDistanceKm } from '../../services/store';
 import { BASE_GARAGE } from '../../data/seedData';
-import { Search, ArrowUpDown, Phone, Truck, Eye } from 'lucide-react';
+import { 
+  Search, 
+  ArrowUpDown, 
+  Phone, 
+  Truck, 
+  Eye, 
+  ChevronRight, 
+  CheckCircle, 
+  Navigation, 
+  MapPin, 
+  MessageCircle, 
+  Copy, 
+  Check, 
+  AlertCircle 
+} from 'lucide-react';
 
 interface OrdersTableProps {
   requests: TowRequest[];
@@ -15,11 +29,20 @@ type FilterTab = 'all' | 'pending' | 'active' | 'completed' | 'rejected';
 
 export const OrdersTable: React.FC<OrdersTableProps> = ({
   requests,
+  trucks,
   onSelectRequestForTracking,
 }) => {
   const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [sortOption, setSortOption] = useState<SortOption>('newest');
   const [searchQuery, setSearchQuery] = useState('');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const pendingCount = useMemo(() => requests.filter((r) => r.status === 'pending_verification').length, [requests]);
+  const activeCount = useMemo(() => requests.filter((r) => 
+    ['verified_approved', 'driver_accepted', 'en_route', 'arrived_pickup', 'in_transit'].includes(r.status)
+  ).length, [requests]);
+  const completedCount = useMemo(() => requests.filter((r) => r.status === 'completed').length, [requests]);
+  const rejectedCount = useMemo(() => requests.filter((r) => r.status === 'declined').length, [requests]);
 
   const issuePriorityWeight = (issue: TowRequest['issueType']): number => {
     switch (issue) {
@@ -57,7 +80,8 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
         r.id.toLowerCase().includes(q) ||
         r.customerName.toLowerCase().includes(q) ||
         r.customerPhone.replace(/\s+/g, '').includes(q.replace(/\s+/g, '')) ||
-        r.vehicle.makeModel.toLowerCase().includes(q)
+        r.vehicle.makeModel.toLowerCase().includes(q) ||
+        r.pickupLocation.address.toLowerCase().includes(q)
       );
     }
 
@@ -85,63 +109,156 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
     return result;
   }, [requests, filterTab, sortOption, searchQuery]);
 
+  const handleAdvanceStatus = (reqId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    store.advanceDriverStatus(reqId);
+  };
+
+  const handleCopyLink = (reqId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const url = `${window.location.origin}/?track=${reqId}`;
+    navigator.clipboard.writeText(url);
+    setCopiedId(reqId);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
   const getStatusBadge = (status: RequestStatus) => {
     switch (status) {
       case 'pending_verification':
-        return <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">Awaiting Call</span>;
+        return <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">Awaiting Call</span>;
       case 'verified_approved':
-        return <span className="bg-sky-50 text-sky-800 border border-sky-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">Approved</span>;
+        return <span className="bg-sky-50 text-sky-800 border border-sky-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">Approved &amp; Assigned</span>;
       case 'driver_accepted':
       case 'en_route':
-        return <span className="bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">En Route</span>;
+        return <span className="bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">Driver En Route</span>;
       case 'arrived_pickup':
-        return <span className="bg-indigo-50 text-indigo-800 border border-indigo-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">At Pickup</span>;
+        return <span className="bg-indigo-50 text-indigo-800 border border-indigo-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">At Pickup</span>;
       case 'in_transit':
-        return <span className="bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">In Transit</span>;
+        return <span className="bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">Vehicle In Transit</span>;
       case 'completed':
-        return <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">Completed</span>;
+        return <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">Completed</span>;
       case 'declined':
-        return <span className="bg-red-50 text-red-800 border border-red-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">Declined</span>;
+        return <span className="bg-red-50 text-red-800 border border-red-200 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">Declined</span>;
+    }
+  };
+
+  const renderProgressionAction = (req: TowRequest) => {
+    switch (req.status) {
+      case 'verified_approved':
+      case 'driver_accepted':
+        return (
+          <button
+            onClick={(e) => handleAdvanceStatus(req.id, e)}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2.5 py-1.5 rounded-md text-[11px] flex items-center justify-center gap-1 transition shadow-xs"
+            title="Update: Tow truck driver has departed base"
+          >
+            <Navigation className="w-3 h-3" />
+            <span>Mark En Route</span>
+          </button>
+        );
+      case 'en_route':
+        return (
+          <button
+            onClick={(e) => handleAdvanceStatus(req.id, e)}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-2.5 py-1.5 rounded-md text-[11px] flex items-center justify-center gap-1 transition shadow-xs"
+            title="Update: Flatbed has reached customer location"
+          >
+            <MapPin className="w-3 h-3" />
+            <span>Mark Arrived</span>
+          </button>
+        );
+      case 'arrived_pickup':
+        return (
+          <button
+            onClick={(e) => handleAdvanceStatus(req.id, e)}
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold px-2.5 py-1.5 rounded-md text-[11px] flex items-center justify-center gap-1 transition shadow-xs"
+            title="Update: Car loaded on flatbed, rolling to destination"
+          >
+            <Truck className="w-3 h-3" />
+            <span>Mark In Transit</span>
+          </button>
+        );
+      case 'in_transit':
+        return (
+          <button
+            onClick={(e) => handleAdvanceStatus(req.id, e)}
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-md text-[11px] flex items-center justify-center gap-1 transition shadow-xs"
+            title="Update: Car unloaded & payment received"
+          >
+            <CheckCircle className="w-3 h-3" />
+            <span>Complete Job</span>
+          </button>
+        );
+      case 'completed':
+        return (
+          <span className="text-[11px] text-emerald-700 font-semibold flex items-center justify-center gap-1">
+            <CheckCircle className="w-3.5 h-3.5" />
+            <span>Delivered</span>
+          </span>
+        );
+      case 'declined':
+        return (
+          <span className="text-[11px] text-red-600 font-medium italic">
+            Closed
+          </span>
+        );
+      case 'pending_verification':
+        return (
+          <span className="text-[11px] text-amber-700 font-medium">
+            Requires Call
+          </span>
+        );
+      default:
+        return null;
     }
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+    <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm space-y-4">
       
       {/* Controls Header: Search + Sort + Tabs */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         
-        {/* Filter Tabs */}
-        <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 text-xs font-medium">
+        {/* Filter Tabs with Counter Badges */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs font-medium">
           {[
-            { id: 'all', label: 'All Requests' },
-            { id: 'pending', label: 'Pending Verification' },
-            { id: 'active', label: 'Active Rescues' },
-            { id: 'completed', label: 'Completed' },
-            { id: 'rejected', label: 'Declined' }
+            { id: 'all', label: 'All Requests', count: requests.length },
+            { id: 'pending', label: 'Call Queue', count: pendingCount, highlight: pendingCount > 0 },
+            { id: 'active', label: 'Active on Road', count: activeCount },
+            { id: 'completed', label: 'Completed', count: completedCount },
+            { id: 'rejected', label: 'Declined', count: rejectedCount }
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setFilterTab(tab.id as FilterTab)}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition flex items-center gap-1.5 ${
                 filterTab === tab.id
-                  ? 'bg-slate-900 text-white font-semibold'
+                  ? 'bg-slate-900 text-white font-semibold shadow-xs'
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
-              {tab.label}
+              <span>{tab.label}</span>
+              <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${
+                filterTab === tab.id
+                  ? 'bg-white/20 text-white'
+                  : tab.highlight
+                  ? 'bg-amber-600 text-white'
+                  : 'bg-slate-200 text-slate-700'
+              }`}>
+                {tab.count}
+              </span>
             </button>
           ))}
         </div>
 
-        {/* Search & Sort dropdown */}
+        {/* Search & Sort controls */}
         <div className="flex items-center gap-2">
           {/* Search bar */}
-          <div className="relative flex-1 sm:w-60">
+          <div className="relative flex-1 sm:w-64">
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
             <input
               type="text"
-              placeholder="Search ID, name, phone..."
+              placeholder="Search ID, name, car, area..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-600 focus:bg-white"
@@ -169,22 +286,24 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
 
       {/* Orders List / Table */}
       {filteredAndSortedRequests.length === 0 ? (
-        <div className="text-center py-10 text-slate-400 text-xs">
-          No tow requests match the active filter or search criteria.
+        <div className="text-center py-12 text-slate-400 text-xs space-y-2">
+          <AlertCircle className="w-8 h-8 text-slate-300 mx-auto" />
+          <p>No tow requests match the active filter or search criteria.</p>
         </div>
       ) : (
         <div className="overflow-x-auto border border-slate-200 rounded-lg">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
-                <th className="py-2.5 px-3">Tracking ID</th>
-                <th className="py-2.5 px-3">Customer & Phone</th>
-                <th className="py-2.5 px-3">EV Vehicle</th>
-                <th className="py-2.5 px-3">Issue</th>
-                <th className="py-2.5 px-3">Distance</th>
+                <th className="py-2.5 px-3">Ticket ID</th>
+                <th className="py-2.5 px-3">Customer &amp; Phone</th>
+                <th className="py-2.5 px-3">Vehicle Details</th>
+                <th className="py-2.5 px-3">Issue &amp; Urgency</th>
+                <th className="py-2.5 px-3">Pickup Location</th>
                 <th className="py-2.5 px-3">Status</th>
                 <th className="py-2.5 px-3">Assigned Truck</th>
-                <th className="py-2.5 px-3 text-right">Action</th>
+                <th className="py-2.5 px-3 text-center">Fast Status Update</th>
+                <th className="py-2.5 px-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -196,76 +315,122 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                   req.pickupLocation.lng
                 );
 
+                const cleanPhone = req.customerPhone.replace(/[^0-9]/g, '').slice(-10);
+
                 return (
                   <tr key={req.id} className="hover:bg-slate-50/80 transition">
                     {/* ID */}
-                    <td className="py-2.5 px-3 font-mono font-bold text-sky-800">
-                      {req.id}
+                    <td className="py-3 px-3">
+                      <div className="font-mono font-bold text-sky-800 text-xs">
+                        {req.id}
+                      </div>
+                      <span className="text-[10px] text-slate-400 block">
+                        {new Date(req.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
                     </td>
 
                     {/* Customer */}
-                    <td className="py-2.5 px-3">
+                    <td className="py-3 px-3">
                       <div className="font-semibold text-slate-900">{req.customerName}</div>
-                      <a
-                        href={`tel:${req.customerPhone.replace(/\s+/g, '')}`}
-                        className="text-[11px] text-slate-500 hover:text-sky-700 font-mono flex items-center gap-1"
-                      >
-                        <Phone className="w-3 h-3 text-slate-400" />
-                        <span>{req.customerPhone}</span>
-                      </a>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <a
+                          href={`tel:${cleanPhone}`}
+                          className="text-[11px] text-sky-700 hover:underline font-mono flex items-center gap-1"
+                        >
+                          <Phone className="w-3 h-3 text-slate-400" />
+                          <span>{req.customerPhone}</span>
+                        </a>
+                        <a
+                          href={`https://wa.me/91${cleanPhone}?text=Hello%20${encodeURIComponent(req.customerName)},%20Mahadev%20Car%20Towing%20update%20for%20ticket%20${req.id}.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-600 hover:text-emerald-700"
+                          title="Message on WhatsApp"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
                     </td>
 
-                    {/* EV */}
-                    <td className="py-2.5 px-3">
-                      <div className="text-slate-800 font-medium">{req.vehicle.makeModel}</div>
-                      {req.vehicle.regNumber && (
-                        <div className="text-[10px] text-slate-400 font-mono">{req.vehicle.regNumber}</div>
-                      )}
+                    {/* Vehicle */}
+                    <td className="py-3 px-3">
+                      <div className="text-slate-800 font-semibold">{req.vehicle.makeModel}</div>
+                      <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono">
+                        {req.vehicle.regNumber && <span>{req.vehicle.regNumber}</span>}
+                        {req.vehicle.hasWheelLock && (
+                          <span className="text-red-700 bg-red-50 border border-red-200 px-1 py-0.2 rounded font-sans">
+                            Locked
+                          </span>
+                        )}
+                      </div>
                     </td>
 
                     {/* Issue */}
-                    <td className="py-2.5 px-3">
-                      <div className="text-amber-900 font-medium">{req.issueType}</div>
-                      <div className="text-[10px] text-slate-400">{req.urgency}</div>
+                    <td className="py-3 px-3">
+                      <div className="text-slate-900 font-medium">{req.issueType}</div>
+                      <span className="text-[10px] text-slate-500 block">{req.urgency}</span>
                     </td>
 
-                    {/* Distance */}
-                    <td className="py-2.5 px-3 text-slate-600 font-mono">
-                      {dist} km
+                    {/* Pickup & Distance */}
+                    <td className="py-3 px-3 max-w-[180px]">
+                      <div className="truncate text-slate-700" title={req.pickupLocation.address}>
+                        {req.pickupLocation.address}
+                      </div>
+                      <span className="text-[10px] text-slate-500 font-mono">
+                        {dist} km from Gachibowli HQ
+                      </span>
                     </td>
 
                     {/* Status */}
-                    <td className="py-2.5 px-3">
+                    <td className="py-3 px-3">
                       {getStatusBadge(req.status)}
                     </td>
 
                     {/* Truck */}
-                    <td className="py-2.5 px-3">
+                    <td className="py-3 px-3">
                       {req.assignedTruckPlate ? (
                         <div className="text-slate-800 font-medium flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5 text-slate-500" />
-                          <span>{req.assignedTruckPlate}</span>
+                          <span className="font-mono">{req.assignedTruckPlate}</span>
                         </div>
                       ) : (
-                        <span className="text-slate-400 italic">Unassigned</span>
+                        <span className="text-slate-400 italic">Not Assigned</span>
                       )}
-                      {req.agreedPrice && (
+                      {req.agreedPrice ? (
                         <span className="text-[10px] text-emerald-700 font-bold block">
                           ₹ {req.agreedPrice}
                         </span>
-                      )}
+                      ) : null}
+                    </td>
+
+                    {/* Fast Status Progression Button */}
+                    <td className="py-3 px-3 text-center min-w-[130px]">
+                      {renderProgressionAction(req)}
                     </td>
 
                     {/* Actions */}
-                    <td className="py-2.5 px-3 text-right">
-                      <button
-                        onClick={() => onSelectRequestForTracking?.(req.id)}
-                        className="p-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition inline-flex items-center gap-1 text-[11px] font-medium"
-                        title="View Customer Tracking View"
-                      >
-                        <Eye className="w-3.5 h-3.5 text-slate-500" />
-                        <span>View</span>
-                      </button>
+                    <td className="py-3 px-3 text-right">
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          onClick={(e) => handleCopyLink(req.id, e)}
+                          className="p-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
+                          title="Copy Customer Tracking Link"
+                        >
+                          {copiedId === req.id ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5 text-slate-500" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => onSelectRequestForTracking?.(req.id)}
+                          className="p-1.5 rounded bg-sky-50 hover:bg-sky-100 text-sky-800 transition inline-flex items-center gap-1 text-[11px] font-semibold border border-sky-200"
+                          title="Open Customer Live GPS Screen"
+                        >
+                          <Eye className="w-3.5 h-3.5 text-sky-600" />
+                          <span>Track</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );

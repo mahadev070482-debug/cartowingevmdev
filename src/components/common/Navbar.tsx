@@ -142,30 +142,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </form>
 
-            {/* Portal Direct Switches */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs">
-              <button
-                onClick={() => onViewChange('owner')}
-                className={`px-2.5 py-1 rounded font-medium flex items-center gap-1 transition ${
-                  currentView === 'owner' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-                title="Dispatcher & Owner Portal (PIN: 1234)"
-              >
-                <Shield className="w-3.5 h-3.5 text-slate-500" />
-                <span>Owner</span>
-              </button>
-              <button
-                onClick={() => onViewChange('driver')}
-                className={`px-2.5 py-1 rounded font-medium flex items-center gap-1 transition ${
-                  currentView === 'driver' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-                title="Tow Truck Driver Console"
-              >
-                <Truck className="w-3.5 h-3.5 text-slate-500" />
-                <span>Driver</span>
-              </button>
-            </div>
-
             {/* Phone CTA */}
             <a
               href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`}
@@ -283,27 +259,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-2">
-            <button
-              onClick={() => {
-                onViewChange('owner');
-                setMobileMenuOpen(false);
-              }}
-              className="flex-1 bg-slate-100 hover:bg-slate-200 py-2 rounded-lg text-xs font-medium text-slate-700 flex items-center justify-center gap-1.5"
+          <div className="pt-2 border-t border-slate-200">
+            <a
+              href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`}
+              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2 shadow-sm transition"
             >
-              <Shield className="w-4 h-4 text-slate-500" />
-              <span>Owner Portal</span>
-            </button>
-            <button
-              onClick={() => {
-                onViewChange('driver');
-                setMobileMenuOpen(false);
-              }}
-              className="flex-1 bg-slate-100 hover:bg-slate-200 py-2 rounded-lg text-xs font-medium text-slate-700 flex items-center justify-center gap-1.5"
-            >
-              <Truck className="w-4 h-4 text-slate-500" />
-              <span>Driver Portal</span>
-            </button>
+              <Phone className="w-4 h-4" />
+              <span>Call 24/7 Helpline: {BASE_GARAGE.phone}</span>
+            </a>
           </div>
         </div>
       )}

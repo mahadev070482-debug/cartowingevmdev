@@ -3,38 +3,64 @@ import { ActiveAppView, TowRequest } from './types';
 import { store } from './services/store';
 import { EmergencyBar } from './components/common/EmergencyBar';
 import { Navbar } from './components/common/Navbar';
-import { ViewSwitcher } from './components/common/ViewSwitcher';
 import { Footer } from './components/common/Footer';
 import { ClassicLayout } from './components/layouts/ClassicLayout';
 import { TrackingView } from './components/customer/TrackingView';
 import { FloatingContactBar } from './components/common/FloatingContactBar';
 import { OwnerDashboard } from './components/owner/OwnerDashboard';
-import { DriverPortal } from './components/driver/DriverPortal';
 
 export function App() {
   const [currentView, setCurrentView] = useState<ActiveAppView>('customer');
   const [trackingId, setTrackingId] = useState<string | null>(null);
-  const [selectedTruckId, setSelectedTruckId] = useState<string>('TRUCK-01');
   const [prefillLocation, setPrefillLocation] = useState<{ address: string; landmark?: string } | null>(null);
-  const [showDevSwitcher, setShowDevSwitcher] = useState<boolean>(false);
 
-  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492 or ?debug=true)
+  // Private owner routing check: hidden behind designated URLs/parameters
+  const checkIsOwnerRoute = () => {
+    const pathname = window.location.pathname.toLowerCase();
+    const params = new URLSearchParams(window.location.search);
+    const ownerPaths = ['/admin', '/owner', '/owner-portal', '/dispatch'];
+    const hasOwnerPath = ownerPaths.some((p) => pathname === p || pathname.startsWith(p + '/'));
+    const hasOwnerParam = 
+      params.get('portal') === 'admin' ||
+      params.get('portal') === 'owner' ||
+      params.get('admin') === 'true' ||
+      params.get('secret') === 'owner' ||
+      params.get('view') === 'owner';
+    return hasOwnerPath || hasOwnerParam;
+  };
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const viewParam = params.get('view');
     const trackParam = params.get('track') || params.get('id');
-    const debugParam = params.get('debug') === 'true';
-
-    if (debugParam) setShowDevSwitcher(true);
-
-    if (viewParam === 'owner') setCurrentView('owner');
-    else if (viewParam === 'driver') setCurrentView('driver');
-    else if (viewParam === 'customer') setCurrentView('customer');
 
     if (trackParam) {
       setTrackingId(trackParam);
       setCurrentView('customer');
+      return;
     }
+
+    if (checkIsOwnerRoute()) {
+      setCurrentView('owner');
+    } else {
+      setCurrentView('customer');
+    }
+
+    // Listen to popstate (back/forward navigation)
+    const handlePopState = () => {
+      const p = new URLSearchParams(window.location.search);
+      const t = p.get('track') || p.get('id');
+      if (t) {
+        setTrackingId(t);
+        setCurrentView('customer');
+      } else if (checkIsOwnerRoute()) {
+        setCurrentView('owner');
+      } else {
+        setCurrentView('customer');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const handleTrackSearch = (query: string) => {
@@ -44,7 +70,6 @@ export function App() {
       setCurrentView('customer');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Try using the query directly as an ID
       setTrackingId(query.trim().toUpperCase());
       setCurrentView('customer');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -81,6 +106,17 @@ export function App() {
     }
   };
 
+  const handleExitToCustomerSite = () => {
+    try {
+      window.history.pushState({}, '', '/');
+    } catch {
+      window.location.href = '/';
+    }
+    setCurrentView('customer');
+    setTrackingId(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
       
@@ -96,16 +132,14 @@ export function App() {
         }}
         onTrackSearch={handleTrackSearch}
         onNavigateHome={() => {
-          setCurrentView('customer');
-          setTrackingId(null);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          handleExitToCustomerSite();
         }}
       />
 
       {/* 3. Main Views Container */}
       <main className="flex-1">
         
-        {/* VIEW 1: CUSTOMER VIEW (Confirmed UI 1) */}
+        {/* VIEW 1: CUSTOMER VIEW (UI 1: Classic Clean Layout) */}
         {currentView === 'customer' && (
           <div>
             {trackingId ? (
@@ -129,25 +163,14 @@ export function App() {
           </div>
         )}
 
-        {/* VIEW 2: OWNER / DISPATCHER DASHBOARD (PIN PROTECTED 1234) */}
+        {/* VIEW 2: OWNER / DISPATCHER DASHBOARD (PIN PROTECTED 1234, HIDDEN BEHIND /admin or ?portal=admin) */}
         {currentView === 'owner' && (
           <OwnerDashboard
             onSelectRequestForTracking={(id) => {
               setTrackingId(id);
               setCurrentView('customer');
             }}
-            onOpenDriverPortal={(truckId) => {
-              setSelectedTruckId(truckId);
-              setCurrentView('driver');
-            }}
-          />
-        )}
-
-        {/* VIEW 3: TOW TRUCK DRIVER VIEW */}
-        {currentView === 'driver' && (
-          <DriverPortal
-            selectedTruckId={selectedTruckId}
-            onSelectTruckId={setSelectedTruckId}
+            onExitToCustomerSite={handleExitToCustomerSite}
           />
         )}
 
@@ -158,24 +181,6 @@ export function App() {
 
       {/* 5. Persistent Quick Emergency Dial & WhatsApp Dock */}
       <FloatingContactBar />
-
-      {/* 6. Persistent Role Switcher Dock (Hidden by default, visible only with ?debug=true) */}
-      {showDevSwitcher && (
-        <ViewSwitcher
-          currentView={currentView}
-          onViewChange={(v) => {
-            setCurrentView(v);
-            if (v !== 'customer') setTrackingId(null);
-          }}
-          selectedTruckId={selectedTruckId}
-          onSelectTruckId={setSelectedTruckId}
-          onOpenTrackId={(id) => {
-            setTrackingId(id);
-            setCurrentView('customer');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
-      )}
 
     </div>
   );

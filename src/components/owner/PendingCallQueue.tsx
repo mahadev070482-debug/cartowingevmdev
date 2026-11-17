@@ -13,7 +13,8 @@ import {
   Car, 
   AlertTriangle, 
   Navigation, 
-  ShieldAlert 
+  ShieldAlert,
+  MessageCircle
 } from 'lucide-react';
 
 interface PendingCallQueueProps {
@@ -110,15 +111,27 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                   </div>
                 </div>
 
-                {/* Primary Call Controls: Click-to-Call + "Call Made" Toggle */}
-                <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+                {/* Primary Call Controls: Click-to-Call + WhatsApp + "Call Made" Toggle */}
+                <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                   {/* One-Tap Click-to-Call button */}
                   <a
                     href={`tel:${req.customerPhone.replace(/\s+/g, '')}`}
-                    className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition"
+                    className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3.5 py-2 rounded-lg text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-sm transition"
                   >
                     <PhoneCall className="w-4 h-4" />
-                    <span>Call Driver ({req.customerPhone})</span>
+                    <span>Call ({req.customerPhone})</span>
+                  </a>
+
+                  {/* One-Tap WhatsApp */}
+                  <a
+                    href={`https://wa.me/91${req.customerPhone.replace(/[^0-9]/g, '').slice(-10)}?text=Hello%20${encodeURIComponent(req.customerName)},%20this%20is%20Mahadev%20Car%20Towing%20Services%20regarding%20your%20flatbed%20request%20${req.id}.`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-medium px-3 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 shadow-xs transition"
+                    title="Send WhatsApp message"
+                  >
+                    <MessageCircle className="w-4 h-4 text-emerald-600" />
+                    <span>WhatsApp</span>
                   </a>
 
                   {/* "Call Made" Toggle Badge */}

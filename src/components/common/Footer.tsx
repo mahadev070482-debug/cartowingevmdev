@@ -233,17 +233,12 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Copyright & Disclaimer */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        {/* Bottom Copyright & Verification Details */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 border-t border-slate-800/80">
           <p>© 2026 Mahadev Car Towing Services Hyderabad. 25+ Years Recovery Heritage. 24/7 Flatbed &amp; Breakdown Services.</p>
-          <div className="flex items-center gap-3">
-            <a href="/?view=owner" className="hover:text-slate-300 underline transition">
-              Owner / Dispatcher Portal
-            </a>
-            <span>•</span>
-            <a href="/?view=driver" className="hover:text-slate-300 underline transition">
-              Driver Portal
-            </a>
+          <div className="flex items-center gap-2 text-slate-400">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Ground-Level 0° Tilt Flatbed Recovery • Gachibowli HQ, Hyderabad</span>
           </div>
         </div>
 
