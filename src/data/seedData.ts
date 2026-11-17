@@ -5,9 +5,10 @@ export const BASE_GARAGE: BaseGarageLocation = {
   address: "Ground floor, Sevanti Nivas, Plot No 712, Tngos colony phase 2, Gachibowli, Hyderabad, Telangana 500032",
   lat: 17.4334,
   lng: 78.3475,
-  phone: "+91 00000 00000",
+  phone: "+91 99121 24247",
+  emergencyPhone: "+91 99121 24247",
   email: "dispatch@voltrescue.com",
-  whatsapp: "+910000000000",
+  whatsapp: "+919912124247",
 };
 
 export const INITIAL_SERVICEABLE_LOCATIONS: ServiceableLocation[] = [

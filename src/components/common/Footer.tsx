@@ -110,10 +110,8 @@ export const Footer: React.FC = () => {
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>
-                  <strong className="text-white font-medium">Helpline (24/7): </strong>
-                  <a href={`tel:${BASE_GARAGE.phone}`} className="text-cyan-400 hover:underline">{BASE_GARAGE.phone}</a>
-                  {' '}|{' '}
-                  <a href="tel:0000000000" className="text-cyan-400 hover:underline">1800-000-0000</a>
+                  <strong className="text-white font-medium">Primary Hotline (24/7): </strong>
+                  <a href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`} className="text-cyan-400 font-bold hover:underline">{BASE_GARAGE.phone}</a>
                 </span>
               </div>
 

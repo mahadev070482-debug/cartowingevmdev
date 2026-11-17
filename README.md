@@ -18,7 +18,7 @@ A modern, responsive, full-stack web application designed specifically for **Ele
 ## 🚀 Key Features by View
 
 ### 1. Customer View
-- **Sticky Emergency Bar:** Always-visible click-to-call (`+91 00000 00000`), WhatsApp live chat (`wa.me`), and 24/7 Dispatch Live badge.
+- **Sticky Emergency Bar:** Always-visible click-to-call (`+91 99121 24247`), WhatsApp live chat (`wa.me`), and 24/7 Dispatch Live badge.
 - **Zero-Friction Booking (No Login Required):**
   - Customer name & 10-digit mobile number (`+91`) with a 2-minute call verification note.
   - **One-Click Live GPS Sharing:** Browser `navigator.geolocation` with `enableHighAccuracy: true` + reverse geocoding to automatically resolve street addresses.

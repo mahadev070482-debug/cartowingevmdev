@@ -128,6 +128,7 @@ export interface BaseGarageLocation {
   lat: number;
   lng: number;
   phone: string;
+  emergencyPhone?: string;
   email: string;
   whatsapp: string;
 }
