@@ -51,19 +51,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center gap-2.5 cursor-pointer select-none"
           >
             <div className="w-9 h-9 rounded-lg bg-sky-600 flex items-center justify-center shadow-sm">
-              <Zap className="w-5 h-5 text-white" />
+              <Truck className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-lg font-bold tracking-tight text-slate-900 font-sans">
-                  Volt<span className="text-sky-600">Rescue</span>
+                  Mahadev <span className="text-sky-600">Car Towing</span>
                 </span>
                 <span className="bg-sky-50 text-sky-700 text-[10px] font-semibold px-1.5 py-0.5 rounded border border-sky-200">
-                  EV Assistance
+                  Services
                 </span>
               </div>
               <p className="text-[11px] text-slate-500 font-normal">
-                Flatbed Towing & Roadside
+                24/7 Flatbed &amp; Breakdown Services
               </p>
             </div>
           </div>

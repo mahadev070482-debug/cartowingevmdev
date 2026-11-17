@@ -249,7 +249,7 @@ export const ModernAppLayout: React.FC<ModernAppLayoutProps> = ({
                 {
                   lat: 17.4334,
                   lng: 78.3475,
-                  title: 'VoltRescue HQ (Gachibowli)',
+                  title: 'Mahadev Car Towing HQ (Gachibowli)',
                   subtitle: 'Ground floor, Sevanti Nivas, TNGOs colony phase 2',
                   type: 'base'
                 },

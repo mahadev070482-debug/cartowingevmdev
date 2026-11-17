@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BASE_GARAGE } from '../../data/seedData';
-import { Phone, Mail, MapPin, Zap, CheckCircle2, Send, Clock, ShieldAlert, Award } from 'lucide-react';
+import { Phone, Mail, MapPin, Zap, CheckCircle2, Send, Clock, ShieldAlert, Award, Truck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [callbackName, setCallbackName] = useState('');
@@ -84,13 +84,13 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-5 space-y-3.5">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center">
-                <Zap className="w-4 h-4 text-white" />
+                <Truck className="w-4 h-4 text-white" />
               </div>
               <div>
                 <span className="text-lg font-bold tracking-tight text-white">
-                  Volt<span className="text-sky-400">Rescue</span>
+                  Mahadev <span className="text-sky-400">Car Towing</span>
                 </span>
-                <span className="block text-[11px] text-slate-400">24/7 Flatbed & Luxury Towing</span>
+                <span className="block text-[11px] text-slate-400">Services • 24/7 Flatbed &amp; Breakdown</span>
               </div>
             </div>
 
@@ -235,7 +235,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright & Disclaimer */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 VoltRescue™ Hyderabad. 25+ Years Recovery Heritage. 24/7 Flatbed & Luxury Vehicle Towing.</p>
+          <p>© 2026 Mahadev Car Towing Services Hyderabad. 25+ Years Recovery Heritage. 24/7 Flatbed &amp; Breakdown Services.</p>
           <div className="flex items-center gap-3">
             <a href="/?view=owner" className="hover:text-slate-300 underline transition">
               Owner / Dispatcher Portal

@@ -30,28 +30,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Left Hero Content (7 Cols) */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
             
-            {/* Pill Tag with 25+ Yrs & Madhapur */}
+            {/* Pill Tag with 25+ Yrs & Gachibowli */}
             <div className="inline-flex flex-wrap items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3.5 py-1.5 rounded-full text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>25+ Years Experience</span>
+              <span>Mahadev Car Towing</span>
               <span className="text-sky-400">•</span>
               <span className="flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-sky-600" />
                 <span>Gachibowli HQ, Hyderabad</span>
               </span>
               <span className="text-sky-400">•</span>
-              <span className="text-sky-700 font-semibold">24/7 Flatbed Towing Near Me</span>
+              <span className="text-sky-700 font-semibold">24/7 Flatbed Near Me</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Hyderabad&apos;s #1 EV Flatbed Towing <br className="hidden sm:inline" />
-              <span className="text-sky-600">Zero-Degree Roadside Assistance.</span>
+              Mahadev Car Towing Services <br className="hidden sm:inline" />
+              <span className="text-sky-600">24/7 Zero-Degree Flatbed Hyderabad.</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Standard towing burns out electric vehicle motors and inverters. With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and headquarters in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, our certified fleet operates hydraulic tilt flatbeds and wheel skates for 100% zero-degree transport across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport.
+              With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and central depot in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, Mahadev Car Towing Services operates certified hydraulic zero-degree flatbeds and wheel skates across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport. Safe for luxury cars, EVs, SUVs, and accident recoveries.
             </p>
 
             {/* Quick Action Buttons: Book, Call, WhatsApp */}

@@ -20,7 +20,7 @@ export const EVWhyFlatbed: React.FC = () => {
           </p>
         </div>
 
-        {/* Comparison: Standard Tow vs VoltRescue Zero-Degree Flatbed */}
+        {/* Comparison: Standard Tow vs Mahadev Car Towing Zero-Degree Flatbed */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           
           {/* Wrong Way: Standard Wheel-Lift / Dragging */}
@@ -60,12 +60,12 @@ export const EVWhyFlatbed: React.FC = () => {
             </ul>
           </div>
 
-          {/* Right Way: VOLTRESCUE Certified Flatbed */}
+          {/* Right Way: MAHADEV CAR TOWING Certified Flatbed */}
           <div className="bg-sky-50/60 border border-sky-200 rounded-xl p-6 space-y-4 shadow-sm">
             <div className="flex items-center justify-between pb-3 border-b border-sky-200/80">
               <div className="flex items-center gap-2 text-sky-800 font-bold text-sm">
                 <CheckCircle2 className="w-4 h-4 shrink-0 text-sky-600" />
-                <span>VoltRescue Dedicated Flatbed (OEM Safe)</span>
+                <span>Mahadev Car Towing Dedicated Flatbed (OEM Safe)</span>
               </div>
               <span className="text-[10px] font-semibold bg-sky-100 text-sky-800 px-2.5 py-0.5 rounded-full border border-sky-200">
                 Recommended by EV Makers

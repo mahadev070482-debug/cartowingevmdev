@@ -1,7 +1,7 @@
 import { TowRequest, TowTruck, Review, BaseGarageLocation, ServiceableLocation } from '../types';
 
 export const BASE_GARAGE: BaseGarageLocation = {
-  name: "VoltRescue Central Base & Headquarters (Gachibowli)",
+  name: "Mahadev Car Towing Services Central Base & Headquarters (Gachibowli)",
   address: "Ground floor, Sevanti Nivas, Plot No 712, Tngos colony phase 2, Gachibowli, Hyderabad, Telangana 500032",
   lat: 17.4334,
   lng: 78.3475,
@@ -219,7 +219,7 @@ export const INITIAL_REVIEWS: Review[] = [
     customerName: "Rahul S.",
     evModel: "Tata Nexon EV Max",
     rating: 5,
-    comment: "Battery died at 11 PM on the Highway Corridor XX. VoltRescue dispatch owner called me back in less than 90 seconds to confirm location. Tow truck #01 arrived with special wheel skates so my front regenerative motor was 100% safe. Highly professional!",
+    comment: "Battery died at 11 PM on the Highway Corridor XX. Mahadev Car Towing dispatch owner called me back in less than 90 seconds to confirm location. Tow truck #01 arrived with special wheel skates so my front regenerative motor was 100% safe. Highly professional!",
     date: "2 days ago",
     serviceType: "Dead Battery Emergency Tow",
     authorToken: "demo-token-1",
@@ -230,7 +230,7 @@ export const INITIAL_REVIEWS: Review[] = [
     customerName: "Ananya S.",
     evModel: "MG ZS EV",
     rating: 5,
-    comment: "Tire sidewall ripped on Expressway Sector XX. Regular roadside assistance wanted to drag my car with front wheels on the road, which would destroy the transmission! VoltRescue sent a flatbed that slid completely flat. Loaded in 5 minutes with zero scrapes.",
+    comment: "Tire sidewall ripped on Expressway Sector XX. Regular roadside assistance wanted to drag my car with front wheels on the road, which would destroy the transmission! Mahadev Car Towing sent a flatbed that slid completely flat. Loaded in 5 minutes with zero scrapes.",
     date: "5 days ago",
     serviceType: "Flat Tire Flatbed Recovery",
     authorToken: "demo-token-2",

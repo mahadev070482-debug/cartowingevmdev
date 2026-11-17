@@ -48,7 +48,7 @@ export const createStockDummySvg = (item: FleetEquipmentImage) => {
     
     <!-- Bottom Stamp: Official Fleet Asset -->
     <rect x="210" y="488" width="380" height="36" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
-    <text x="400" y="511" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#94a3b8" text-anchor="middle" letter-spacing="1.5">⚡ VOLTRESCUE HYDERABAD • FLEET SPECIFICATION</text>
+    <text x="400" y="511" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#94a3b8" text-anchor="middle" letter-spacing="1.5">⚡ MAHADEV CAR TOWING SERVICES HYDERABAD • FLEET SPECIFICATION</text>
   </svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 };
