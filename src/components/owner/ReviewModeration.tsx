@@ -43,7 +43,7 @@ export const ReviewModeration: React.FC = () => {
             <div className="space-y-1 flex-1">
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-slate-900">{rev.customerName}</span>
-                <span className="text-slate-600 font-medium">({rev.evModel})</span>
+                {rev.evModel && <span className="text-slate-600 font-medium">({rev.evModel})</span>}
                 <div className="flex text-amber-400">
                   {[...Array(5)].map((_, i) => (
                     <Star

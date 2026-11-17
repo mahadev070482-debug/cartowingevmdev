@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { store } from '../../services/store';
 import { Review } from '../../types';
-import { EV_MODELS } from '../../data/seedData';
 import { Star, Trash2, CheckCircle2, MessageSquarePlus, ShieldCheck } from 'lucide-react';
 
 interface ReviewsSectionProps {
@@ -14,7 +13,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ isOwnerMode = fa
 
   // New review form fields
   const [customerName, setCustomerName] = useState('');
-  const [evModel, setEvModel] = useState(EV_MODELS[0]);
+  const [vehicleModel, setVehicleModel] = useState('');
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
@@ -40,12 +39,13 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ isOwnerMode = fa
     setSubmitting(true);
     store.addReview({
       customerName: customerName.trim(),
-      evModel,
+      evModel: vehicleModel.trim() || 'Customer Vehicle',
       rating,
       comment: comment.trim(),
     });
 
     setCustomerName('');
+    setVehicleModel('');
     setComment('');
     setRating(5);
     setSubmitting(false);
@@ -163,7 +163,9 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ isOwnerMode = fa
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-slate-500">{rev.evModel}</p>
+                    {rev.evModel && (
+                      <p className="text-[11px] text-slate-500">{rev.evModel}</p>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-1 text-emerald-700 text-[11px]">
@@ -206,20 +208,22 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ isOwnerMode = fa
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Your Electric Vehicle Model
-                  </label>
-                  <select
-                    value={evModel}
-                    onChange={(e) => setEvModel(e.target.value)}
-                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-sky-600"
-                  >
-                    {EV_MODELS.map((model, idx) => (
-                      <option key={idx} value={model}>
-                        {model}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">
+                      Vehicle Model
+                    </label>
+                    <span className="text-[11px] text-slate-400 font-normal">Optional</span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="e.g. Tata Nexon EV, Creta, BMW, Fortuner, Swift..."
+                    value={vehicleModel}
+                    onChange={(e) => setVehicleModel(e.target.value)}
+                    className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Optionally describe the car or vehicle that was towed.
+                  </p>
                 </div>
 
                 <div>
