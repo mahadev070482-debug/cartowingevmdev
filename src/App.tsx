@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ActiveAppView, TowRequest, WebsiteLayoutId } from './types';
+import { ActiveAppView, TowRequest } from './types';
 import { store } from './services/store';
-import { LayoutSwitcher } from './components/common/LayoutSwitcher';
 import { EmergencyBar } from './components/common/EmergencyBar';
 import { Navbar } from './components/common/Navbar';
 import { ViewSwitcher } from './components/common/ViewSwitcher';
 import { Footer } from './components/common/Footer';
 import { ClassicLayout } from './components/layouts/ClassicLayout';
-import { ModernAppLayout } from './components/layouts/ModernAppLayout';
-import { AutoClubLayout } from './components/layouts/AutoClubLayout';
-import { EmergencySosLayout } from './components/layouts/EmergencySosLayout';
 import { TrackingView } from './components/customer/TrackingView';
 import { FloatingContactBar } from './components/common/FloatingContactBar';
 import { OwnerDashboard } from './components/owner/OwnerDashboard';
@@ -21,37 +17,15 @@ export function App() {
   const [selectedTruckId, setSelectedTruckId] = useState<string>('TRUCK-01');
   const [prefillLocation, setPrefillLocation] = useState<{ address: string; landmark?: string } | null>(null);
   const [showDevSwitcher, setShowDevSwitcher] = useState<boolean>(false);
-  const [websiteLayout, setWebsiteLayout] = useState<WebsiteLayoutId>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('voltrescue_ui_layout') as WebsiteLayoutId;
-      if (saved && ['classic', 'modern-app', 'auto-club', 'emergency-sos'].includes(saved)) {
-        return saved;
-      }
-    }
-    return 'classic';
-  });
 
-  const handleSelectLayout = (layout: WebsiteLayoutId) => {
-    setWebsiteLayout(layout);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('voltrescue_ui_layout', layout);
-    }
-  };
-
-  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492 or ?debug=true or ?layout=modern-app)
+  // Listen to hash / URL parameters if accessed directly (e.g. ?view=owner or ?view=driver or ?track=VT-8492 or ?debug=true)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const viewParam = params.get('view');
     const trackParam = params.get('track') || params.get('id');
     const debugParam = params.get('debug') === 'true';
-    const layoutParam = params.get('layout') as WebsiteLayoutId;
 
     if (debugParam) setShowDevSwitcher(true);
-
-    if (layoutParam && ['classic', 'modern-app', 'auto-club', 'emergency-sos'].includes(layoutParam)) {
-      setWebsiteLayout(layoutParam);
-      localStorage.setItem('voltrescue_ui_layout', layoutParam);
-    }
 
     if (viewParam === 'owner') setCurrentView('owner');
     else if (viewParam === 'driver') setCurrentView('driver');
@@ -110,12 +84,6 @@ export function App() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
       
-      {/* 0. Multi-UI Layout Switcher (Allows picking from 4 distinct designs) */}
-      <LayoutSwitcher
-        currentLayout={websiteLayout}
-        onSelectLayout={handleSelectLayout}
-      />
-
       {/* 1. Sticky Emergency Contact Bar */}
       <EmergencyBar />
 
@@ -137,7 +105,7 @@ export function App() {
       {/* 3. Main Views Container */}
       <main className="flex-1">
         
-        {/* VIEW 1: CUSTOMER VIEW */}
+        {/* VIEW 1: CUSTOMER VIEW (Confirmed UI 1) */}
         {currentView === 'customer' && (
           <div>
             {trackingId ? (
@@ -148,43 +116,15 @@ export function App() {
                 onTrackSearch={handleTrackSearch}
               />
             ) : (
-              // 4 Distinct Website UI Layouts
-              <div>
-                {websiteLayout === 'classic' && (
-                  <ClassicLayout
-                    onBookingSuccess={handleBookingSuccess}
-                    onTrackSearch={handleTrackSearch}
-                    onScrollToBooking={handleScrollToBooking}
-                    onOpenWhyFlatbed={handleOpenWhyFlatbed}
-                    onSelectCoverageArea={handleSelectCoverageArea}
-                    prefillLocation={prefillLocation}
-                  />
-                )}
-
-                {websiteLayout === 'modern-app' && (
-                  <ModernAppLayout
-                    onBookingSuccess={handleBookingSuccess}
-                    onTrackSearch={handleTrackSearch}
-                    onScrollToBooking={handleScrollToBooking}
-                  />
-                )}
-
-                {websiteLayout === 'auto-club' && (
-                  <AutoClubLayout
-                    onBookingSuccess={handleBookingSuccess}
-                    onTrackSearch={handleTrackSearch}
-                    onScrollToBooking={handleScrollToBooking}
-                  />
-                )}
-
-                {websiteLayout === 'emergency-sos' && (
-                  <EmergencySosLayout
-                    onBookingSuccess={handleBookingSuccess}
-                    onTrackSearch={handleTrackSearch}
-                    onScrollToBooking={handleScrollToBooking}
-                  />
-                )}
-              </div>
+              // Confirmed UI: Classic Clean Layout
+              <ClassicLayout
+                onBookingSuccess={handleBookingSuccess}
+                onTrackSearch={handleTrackSearch}
+                onScrollToBooking={handleScrollToBooking}
+                onOpenWhyFlatbed={handleOpenWhyFlatbed}
+                onSelectCoverageArea={handleSelectCoverageArea}
+                prefillLocation={prefillLocation}
+              />
             )}
           </div>
         )}
