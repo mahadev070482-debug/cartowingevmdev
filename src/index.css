@@ -3,38 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    font-size: 15px;
-    -webkit-text-size-adjust: 100%;
-    text-rendering: optimizeLegibility;
-  }
-  @media (min-width: 1024px) {
-    html {
-      font-size: 16px;
-    }
-  }
   body {
     @apply bg-slate-50 text-slate-800 antialiased font-sans;
-    line-height: 1.5;
-  }
-}
-
-/* PC & Desktop Screen Typography & Proportion Enhancements */
-@media (min-width: 1024px) {
-  /* Boost micro tags/badges on desktop monitors so they never look squinty */
-  .text-\[9px\] {
-    font-size: 11px !important;
-  }
-  .text-\[10px\] {
-    font-size: 12px !important;
-  }
-  .text-\[11px\] {
-    font-size: 12.5px !important;
-  }
-
-  /* Crisp desktop form fields & labels */
-  input, select, textarea, button {
-    letter-spacing: -0.01em;
   }
 }
 

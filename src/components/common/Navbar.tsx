@@ -43,33 +43,33 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+        <div className="flex items-center justify-between h-[72px] gap-4">
           
           {/* Logo */}
           <div
             onClick={onNavigateHome}
-            className="flex items-center gap-2.5 cursor-pointer select-none"
+            className="flex items-center gap-2.5 cursor-pointer select-none shrink-0"
           >
-            <div className="w-9 h-9 rounded-lg bg-sky-600 flex items-center justify-center shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-sky-600 flex items-center justify-center shadow-xs shrink-0">
               <Truck className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-lg font-bold tracking-tight text-slate-900 font-sans">
+            <div className="flex flex-col justify-center shrink-0">
+              <div className="flex items-center gap-1.5 leading-none">
+                <span className="text-base sm:text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap">
                   Mahadev <span className="text-sky-600">Car Towing</span>
                 </span>
-                <span className="bg-sky-50 text-sky-700 text-[10px] font-semibold px-1.5 py-0.5 rounded border border-sky-200">
+                <span className="bg-sky-50 text-sky-700 text-[10px] font-semibold px-1.5 py-0.5 rounded border border-sky-200 uppercase tracking-wider whitespace-nowrap">
                   Services
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-normal">
+              <p className="text-[11px] text-slate-500 font-normal leading-none mt-1 whitespace-nowrap">
                 24/7 Flatbed &amp; Breakdown Services
               </p>
             </div>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5 text-xs xl:text-sm font-medium text-slate-600 whitespace-nowrap">
             <button
               onClick={() => scrollToSection('services-section')}
               className="hover:text-sky-600 transition"
@@ -83,14 +83,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               Request Tow
             </button>
             <button
-              onClick={() => scrollToSection('tracking-ticket-section')}
-              className="hover:text-sky-600 transition"
-            >
-              Track Ticket
-            </button>
-            <button
               onClick={() => scrollToSection('fleet-gallery')}
-              className="hover:text-sky-600 transition"
+              className="hidden xl:inline hover:text-sky-600 transition"
             >
               Our Fleet
             </button>
@@ -98,13 +92,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => scrollToSection('why-flatbed')}
               className="hover:text-sky-600 transition"
             >
-              Why EV Flatbed?
+              Why Flatbed?
             </button>
             <button
               onClick={() => scrollToSection('coverage-areas')}
               className="hover:text-sky-600 transition"
             >
-              Hyderabad Hubs
+              Coverage Hubs
             </button>
             <button
               onClick={() => scrollToSection('reviews-section')}
@@ -121,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5 shrink-0">
             {/* Quick Track Input / Button */}
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
@@ -129,9 +123,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 placeholder="Track ID or Phone..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-44 xl:w-52 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 pl-8 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:bg-white transition"
+                className="w-36 lg:w-40 xl:w-48 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 pl-8 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:bg-white transition"
               />
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
               {searchQuery && (
                 <button
                   type="submit"
@@ -145,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Phone CTA */}
             <a
               href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`}
-              className="bg-sky-600 hover:bg-sky-700 text-white font-semibold px-3.5 py-2 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition"
+              className="bg-sky-600 hover:bg-sky-700 text-white font-semibold px-3 py-1.5 xl:px-3.5 xl:py-2 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition whitespace-nowrap shrink-0"
             >
               <Phone className="w-3.5 h-3.5" />
               <span>Call Helpline</span>
@@ -153,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="flex sm:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <button
               onClick={() => setShowSearchModal(true)}
               className="p-2 text-slate-600 hover:text-slate-900 bg-slate-100 rounded-lg"
@@ -173,9 +167,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile / Tablet Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4">
+        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4">
           <form onSubmit={handleSearchSubmit} className="relative">
             <input
               type="text"
