@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TowRequest, RequestStatus } from '../../types';
 import { store } from '../../services/store';
+import { cloudDb } from '../../services/db';
 import { LeafletMap } from '../common/LeafletMap';
 import { BASE_GARAGE } from '../../data/seedData';
 import { 
@@ -30,16 +31,44 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
   const [request, setRequest] = useState<TowRequest | undefined>(store.getRequestById(requestId));
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Subscribe to real-time store changes
+  // Subscribe to real-time store changes and live sync from cloud database
   useEffect(() => {
+    let isMounted = true;
+
     const update = () => {
       const found = store.getRequestById(requestId);
-      setRequest(found);
+      if (isMounted) setRequest(found);
     };
 
     update();
     const unsubscribe = store.subscribe(update);
-    return () => unsubscribe();
+
+    // Cross-device live cloud sync: Fetch status from Firebase every 2.5 seconds
+    const syncFromCloud = async () => {
+      if (cloudDb.isCloudConnected()) {
+        try {
+          const cloudReq = await cloudDb.fetchTowRequestById(requestId);
+          if (cloudReq && isMounted) {
+            store.updateRequestFromCloud(cloudReq);
+            setRequest(cloudReq);
+          }
+        } catch (e) {
+          // ignore transient network errors
+        }
+      }
+    };
+
+    // Immediately trigger cloud fetch
+    syncFromCloud();
+
+    // Fast 2.5-second live polling interval
+    const interval = setInterval(syncFromCloud, 2500);
+
+    return () => {
+      isMounted = false;
+      unsubscribe();
+      clearInterval(interval);
+    };
   }, [requestId]);
 
   if (!request) {

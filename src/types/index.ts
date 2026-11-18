@@ -72,6 +72,7 @@ export interface TowRequest {
   
   // Timestamps
   createdAt: string;
+  updatedAt?: string;
   verifiedAt?: string;
   acceptedAt?: string;
   arrivedAt?: string;

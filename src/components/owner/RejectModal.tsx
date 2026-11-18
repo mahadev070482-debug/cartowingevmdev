@@ -26,18 +26,20 @@ export const RejectModal: React.FC<RejectModalProps> = ({
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleReject = (e: React.FormEvent) => {
+  const handleReject = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    store.rejectRequest(request.id, {
-      reason: selectedReason,
-      notes: notes.trim() || undefined
-    });
-
-    setIsSubmitting(false);
-    onSuccess();
-    onClose();
+    try {
+      await store.rejectRequest(request.id, {
+        reason: selectedReason,
+        notes: notes.trim() || undefined
+      });
+    } finally {
+      setIsSubmitting(false);
+      onSuccess();
+      onClose();
+    }
   };
 
   return (

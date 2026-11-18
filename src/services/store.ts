@@ -182,6 +182,15 @@ class StoreService {
         const existingMap = new Map(this.state.requests.map((r) => [r.id, r]));
         for (const req of cloudRequests) {
           if (req && req.id) {
+            const existing = existingMap.get(req.id);
+            if (existing) {
+              const localTime = new Date(existing.updatedAt || existing.createdAt || 0).getTime();
+              const cloudTime = new Date(req.updatedAt || req.createdAt || 0).getTime();
+              // Prevent stale cloud data from overriding a newer local status change
+              if (localTime > cloudTime) {
+                continue;
+              }
+            }
             existingMap.set(req.id, req);
           }
         }
@@ -207,6 +216,43 @@ class StoreService {
       }
     } catch (e) {
       console.warn('[Store] Cloud pull skipped:', e);
+    }
+  }
+
+  /**
+   * Safely merges a single request update received from cloud polling
+   */
+  public updateRequestFromCloud(cloudReq: TowRequest): void {
+    if (!cloudReq || !cloudReq.id) return;
+    let hasChanged = false;
+    let found = false;
+
+    const updated = this.state.requests.map((r) => {
+      if (r.id === cloudReq.id) {
+        found = true;
+        if (
+          r.status !== cloudReq.status ||
+          r.assignedDriverName !== cloudReq.assignedDriverName ||
+          r.assignedDriverPhone !== cloudReq.assignedDriverPhone ||
+          r.rejectionReason !== cloudReq.rejectionReason ||
+          r.rejectionNotes !== cloudReq.rejectionNotes
+        ) {
+          hasChanged = true;
+          return { ...r, ...cloudReq };
+        }
+      }
+      return r;
+    });
+
+    if (!found) {
+      updated.unshift(cloudReq);
+      hasChanged = true;
+    }
+
+    if (hasChanged) {
+      this.state = { ...this.state, requests: updated };
+      this.saveState(this.state);
+      this.notify();
     }
   }
 
@@ -286,14 +332,14 @@ class StoreService {
     this.notify();
   }
 
-  public approveRequest(
+  public async approveRequest(
     requestId: string,
     params?: {
       driverName?: string;
       driverPhone?: string;
       notes?: string;
     }
-  ): void {
+  ): Promise<void> {
     const req = this.state.requests.find((r) => r.id === requestId);
     if (!req) return;
 
@@ -305,6 +351,7 @@ class StoreService {
       req.pickupLocation.lng
     );
     const eta = estimateEtaMinutes(dist);
+    const now = new Date().toISOString();
 
     const updatedRequests = this.state.requests.map((r) => {
       if (r.id === requestId) {
@@ -316,12 +363,13 @@ class StoreService {
           callNotes: params?.notes || r.callNotes,
           assignedDriverName: params?.driverName?.trim() || r.assignedDriverName || undefined,
           assignedDriverPhone: params?.driverPhone?.trim() || r.assignedDriverPhone || undefined,
-          verifiedAt: new Date().toISOString(),
+          verifiedAt: now,
+          updatedAt: now,
           etaMinutes: eta,
           driverLiveLocation: {
             lat: BASE_GARAGE.lat,
             lng: BASE_GARAGE.lng,
-            updatedAt: new Date().toISOString(),
+            updatedAt: now,
             speed: 0
           }
         };
@@ -337,7 +385,9 @@ class StoreService {
     this.notify();
 
     const targetReq = updatedRequests.find((r) => r.id === requestId);
-    if (targetReq) cloudDb.syncTowRequest(targetReq);
+    if (targetReq) {
+      await cloudDb.syncTowRequest(targetReq);
+    }
   }
 
   // Alias for backward compatibility
@@ -354,19 +404,21 @@ class StoreService {
     this.approveRequest(requestId, params);
   }
 
-  public updateDriverInfo(
+  public async updateDriverInfo(
     requestId: string,
     params: {
       driverName?: string;
       driverPhone?: string;
     }
-  ): void {
+  ): Promise<void> {
+    const now = new Date().toISOString();
     const updatedRequests = this.state.requests.map((r) => {
       if (r.id === requestId) {
         return {
           ...r,
           assignedDriverName: params.driverName?.trim() || undefined,
-          assignedDriverPhone: params.driverPhone?.trim() || undefined
+          assignedDriverPhone: params.driverPhone?.trim() || undefined,
+          updatedAt: now
         };
       }
       return r;
@@ -380,16 +432,19 @@ class StoreService {
     this.notify();
 
     const targetReq = updatedRequests.find((r) => r.id === requestId);
-    if (targetReq) cloudDb.syncTowRequest(targetReq);
+    if (targetReq) {
+      await cloudDb.syncTowRequest(targetReq);
+    }
   }
 
-  public rejectRequest(
+  public async rejectRequest(
     requestId: string,
     params: {
       reason: TowRequest['rejectionReason'];
       notes?: string;
     }
-  ): void {
+  ): Promise<void> {
+    const now = new Date().toISOString();
     const updatedRequests = this.state.requests.map((r) => {
       if (r.id === requestId) {
         return {
@@ -397,7 +452,8 @@ class StoreService {
           status: 'declined' as RequestStatus,
           rejectionReason: params.reason,
           rejectionNotes: params.notes,
-          callMade: true
+          callMade: true,
+          updatedAt: now
         };
       }
       return r;
@@ -424,7 +480,9 @@ class StoreService {
     this.notify();
 
     const targetReq = updatedRequests.find((r) => r.id === requestId);
-    if (targetReq) cloudDb.syncTowRequest(targetReq);
+    if (targetReq) {
+      await cloudDb.syncTowRequest(targetReq);
+    }
   }
 
   public acceptJobByDriver(requestId: string, truckId: string): void {
@@ -462,7 +520,7 @@ class StoreService {
     if (targetReq) cloudDb.syncTowRequest(targetReq);
   }
 
-  public advanceDriverStatus(requestId: string): void {
+  public async advanceDriverStatus(requestId: string): Promise<void> {
     const req = this.state.requests.find((r) => r.id === requestId);
     if (!req) return;
 
@@ -494,7 +552,7 @@ class StoreService {
     const now = new Date().toISOString();
     const updatedRequests = this.state.requests.map((r) => {
       if (r.id === requestId) {
-        const patch: Partial<TowRequest> = { status: nextStatus };
+        const patch: Partial<TowRequest> = { status: nextStatus, updatedAt: now };
         if (nextStatus === 'arrived_pickup') patch.arrivedAt = now;
         if (nextStatus === 'in_transit') patch.loadedAt = now;
         if (nextStatus === 'completed') {
@@ -527,7 +585,9 @@ class StoreService {
     this.notify();
 
     const targetReq = updatedRequests.find((r) => r.id === requestId);
-    if (targetReq) cloudDb.syncTowRequest(targetReq);
+    if (targetReq) {
+      await cloudDb.syncTowRequest(targetReq);
+    }
   }
 
   public updateDriverLocation(

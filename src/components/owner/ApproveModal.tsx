@@ -22,19 +22,21 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleApprove = (e: React.FormEvent) => {
+  const handleApprove = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    store.approveRequest(request.id, {
-      driverName: driverName.trim() || undefined,
-      driverPhone: driverPhone.trim() || undefined,
-      notes: dispatchNotes
-    });
-
-    setIsSubmitting(false);
-    onSuccess();
-    onClose();
+    try {
+      await store.approveRequest(request.id, {
+        driverName: driverName.trim() || undefined,
+        driverPhone: driverPhone.trim() || undefined,
+        notes: dispatchNotes
+      });
+    } finally {
+      setIsSubmitting(false);
+      onSuccess();
+      onClose();
+    }
   };
 
   return (

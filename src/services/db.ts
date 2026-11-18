@@ -177,6 +177,37 @@ class CloudDbService {
   }
 
   /**
+   * Fetch a single tow request by ID from cloud (Supabase or Firebase)
+   */
+  public async fetchTowRequestById(id: string): Promise<TowRequest | null> {
+    if (!this.isCloudConnected() || !this.isOnline) return null;
+
+    try {
+      if (this.config.provider === 'firebase' && this.config.firebaseDbUrl) {
+        const res = await fetch(`${this.config.firebaseDbUrl}/tow_requests/${id}.json`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data as TowRequest | null;
+      }
+
+      if (this.config.provider === 'supabase' && this.config.supabaseUrl && this.config.supabaseAnonKey) {
+        const res = await fetch(`${this.config.supabaseUrl}/rest/v1/tow_requests?id=eq.${id}`, {
+          headers: {
+            'apikey': this.config.supabaseAnonKey,
+            'Authorization': `Bearer ${this.config.supabaseAnonKey}`
+          }
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data?.[0] || null;
+      }
+    } catch (err) {
+      console.warn('[CloudDB] Fetch single request failed:', err);
+    }
+    return null;
+  }
+
+  /**
    * Fetch all tow requests from cloud (Supabase or Firebase)
    */
   public async fetchTowRequests(): Promise<TowRequest[] | null> {
