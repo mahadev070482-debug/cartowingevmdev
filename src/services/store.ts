@@ -485,6 +485,51 @@ class StoreService {
     }
   }
 
+  /**
+   * Permanently delete a tow request from local state and cloud database
+   */
+  public async deleteRequest(requestId: string): Promise<void> {
+    const updatedRequests = this.state.requests.filter((r) => r.id !== requestId);
+    const updatedTrucks = this.state.trucks.map((t) => {
+      if (t.activeJobId === requestId) {
+        return {
+          ...t,
+          status: 'idle' as const,
+          activeJobId: null
+        };
+      }
+      return t;
+    });
+
+    this.state = {
+      ...this.state,
+      requests: updatedRequests,
+      trucks: updatedTrucks
+    };
+    this.saveState(this.state);
+    this.notify();
+
+    await cloudDb.deleteTowRequest(requestId);
+  }
+
+  /**
+   * Bulk delete completed or declined requests
+   */
+  public async clearRequestsByStatus(statuses: RequestStatus[]): Promise<void> {
+    const toDelete = this.state.requests.filter((r) => statuses.includes(r.status));
+    const toKeep = this.state.requests.filter((r) => !statuses.includes(r.status));
+
+    this.state = {
+      ...this.state,
+      requests: toKeep
+    };
+    this.saveState(this.state);
+    this.notify();
+
+    // Delete in cloud concurrently
+    await Promise.all(toDelete.map((r) => cloudDb.deleteTowRequest(r.id)));
+  }
+
   public acceptJobByDriver(requestId: string, truckId: string): void {
     const updatedRequests = this.state.requests.map((r) => {
       if (r.id === requestId) {

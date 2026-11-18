@@ -21,7 +21,8 @@ import {
   User,
   UserPlus,
   Pencil,
-  XCircle
+  XCircle,
+  Trash2
 } from 'lucide-react';
 
 interface OrdersTableProps {
@@ -44,6 +45,33 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editingDriverReq, setEditingDriverReq] = useState<TowRequest | null>(null);
   const [rejectingReq, setRejectingReq] = useState<TowRequest | null>(null);
+  const [deletingReq, setDeletingReq] = useState<TowRequest | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleConfirmDelete = async () => {
+    if (!deletingReq) return;
+    setIsDeleting(true);
+    try {
+      await store.deleteRequest(deletingReq.id);
+    } finally {
+      setIsDeleting(false);
+      setDeletingReq(null);
+    }
+  };
+
+  const handleBulkClear = async (status: RequestStatus) => {
+    const targetCount = requests.filter((r) => r.status === status).length;
+    if (!targetCount) return;
+    const label = status === 'completed' ? 'completed' : 'declined';
+    if (window.confirm(`Permanently delete all ${targetCount} ${label} requests from your dashboard and Firebase cloud?`)) {
+      setIsDeleting(true);
+      try {
+        await store.clearRequestsByStatus([status]);
+      } finally {
+        setIsDeleting(false);
+      }
+    }
+  };
 
   const pendingCount = useMemo(() => requests.filter((r) => r.status === 'pending_verification').length, [requests]);
   const activeCount = useMemo(() => requests.filter((r) => 
@@ -257,6 +285,31 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
               </span>
             </button>
           ))}
+
+          {/* Bulk Clear Actions */}
+          {filterTab === 'completed' && completedCount > 0 && (
+            <button
+              onClick={() => handleBulkClear('completed')}
+              disabled={isDeleting}
+              className="px-2.5 py-1.5 rounded-lg whitespace-nowrap text-xs text-red-600 hover:bg-red-50 border border-red-200 transition flex items-center gap-1 font-medium ml-2"
+              title="Permanently remove all completed requests"
+            >
+              <Trash2 className="w-3 h-3" />
+              <span>Clear Completed ({completedCount})</span>
+            </button>
+          )}
+
+          {filterTab === 'rejected' && rejectedCount > 0 && (
+            <button
+              onClick={() => handleBulkClear('declined')}
+              disabled={isDeleting}
+              className="px-2.5 py-1.5 rounded-lg whitespace-nowrap text-xs text-red-600 hover:bg-red-50 border border-red-200 transition flex items-center gap-1 font-medium ml-2"
+              title="Permanently remove all declined requests"
+            >
+              <Trash2 className="w-3 h-3" />
+              <span>Clear Declined ({rejectedCount})</span>
+            </button>
+          )}
         </div>
 
         {/* Search & Sort controls */}
@@ -467,6 +520,13 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                             <XCircle className="w-3.5 h-3.5" />
                           </button>
                         )}
+                        <button
+                          onClick={() => setDeletingReq(req)}
+                          className="p-1.5 rounded bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-600 transition"
+                          title="Permanently Delete Request"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -497,6 +557,47 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
             // Updated
           }}
         />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deletingReq && (
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-xl p-5 max-w-sm w-full shadow-xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-red-600 shrink-0">
+                <Trash2 className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900">Delete Tow Request</h3>
+                <p className="text-xs text-slate-500">Permanently remove this record</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Are you sure you want to permanently delete ticket <strong className="text-slate-900 font-mono">{deletingReq.id}</strong> for <strong className="text-slate-900">{deletingReq.customerName}</strong>? This action will remove it from both your dashboard and Firebase cloud database.
+            </p>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setDeletingReq(null)}
+                disabled={isDeleting}
+                className="px-3.5 py-1.5 rounded-lg text-xs text-slate-600 hover:bg-slate-100 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                disabled={isDeleting}
+                className="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-1.5 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition disabled:opacity-50"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>{isDeleting ? 'Deleting...' : 'Delete Permanently'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
     </div>

@@ -268,6 +268,36 @@ class CloudDbService {
     }
     return null;
   }
+
+  /**
+   * Delete a tow request permanently from cloud database
+   */
+  public async deleteTowRequest(id: string): Promise<boolean> {
+    if (!this.isCloudConnected() || !this.isOnline) return false;
+
+    try {
+      if (this.config.provider === 'firebase' && this.config.firebaseDbUrl) {
+        const res = await fetch(`${this.config.firebaseDbUrl}/tow_requests/${id}.json`, {
+          method: 'DELETE'
+        });
+        return res.ok;
+      }
+
+      if (this.config.provider === 'supabase' && this.config.supabaseUrl && this.config.supabaseAnonKey) {
+        const res = await fetch(`${this.config.supabaseUrl}/rest/v1/tow_requests?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': this.config.supabaseAnonKey,
+            'Authorization': `Bearer ${this.config.supabaseAnonKey}`
+          }
+        });
+        return res.ok;
+      }
+    } catch (err) {
+      console.warn('[CloudDB] Delete request failed:', err);
+    }
+    return false;
+  }
 }
 
 export const cloudDb = new CloudDbService(dbConfig);
