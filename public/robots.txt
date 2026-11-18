@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /owner
+Disallow: /owner-portal
+Disallow: /dispatch
+
+Sitemap: https://www.evvehicletowing.com/sitemap.xml
