@@ -175,10 +175,10 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
             <div>
               <input
                 type="password"
-                maxLength={8}
+                maxLength={32}
                 required
                 disabled={isLockedOut}
-                placeholder="Enter Secret PIN"
+                placeholder="Enter Secret PIN / Password"
                 value={pinInput}
                 onChange={(e) => {
                   setPinInput(e.target.value);
