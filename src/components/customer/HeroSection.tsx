@@ -51,7 +51,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Subtitle */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience</strong> and central depot in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, Mahadev Car Towing Services operates certified hydraulic zero-degree flatbeds and wheel skates across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport. Safe for luxury cars, EVs, SUVs, and accident recoveries.
+              With <strong className="text-slate-800">25+ years of trusted vehicle recovery experience led by Anil Kumar</strong> and central depot in <strong className="text-slate-800">Gachibowli (TNGOs Colony)</strong>, Mahadev Car Towing Services operates certified hydraulic zero-degree flatbeds and wheel skates across Gachibowli, Hitec City, Madhapur, Outer Ring Road (ORR), and Shamshabad Airport. Safe for luxury cars, EVs, SUVs, and accident recoveries.
             </p>
 
             {/* Quick Action Buttons: Book, Call, WhatsApp */}

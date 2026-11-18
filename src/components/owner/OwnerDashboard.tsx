@@ -251,7 +251,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Mahadev Car Towing Services • Gachibowli HQ Central Dispatch
+            Mahadev Car Towing Services • Gachibowli HQ Central Dispatch • Operations Lead: Anil Kumar
           </p>
         </div>
 

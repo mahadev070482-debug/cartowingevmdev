@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              With <strong>25+ years of vehicle recovery experience</strong> across Hyderabad, we provide engineering-grade zero-degree EV flatbed roadside assistance. Equipped with hydraulic tilt beds and wheel skates to safeguard lithium-ion battery packs and delicate drive motors.
+              Founded and managed by <strong>Anil Kumar</strong> with <strong>25+ years of vehicle recovery experience</strong> across Hyderabad, we provide engineering-grade zero-degree EV flatbed roadside assistance. Equipped with hydraulic tilt beds and wheel skates to safeguard lithium-ion battery packs and delicate drive motors.
             </p>
 
             <div className="space-y-2.5 pt-2 text-xs sm:text-sm">
@@ -235,7 +235,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright & Verification Details */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 border-t border-slate-800/80">
-          <p>© 2026 Mahadev Car Towing Services Hyderabad. 25+ Years Recovery Heritage. 24/7 Flatbed &amp; Breakdown Services.</p>
+          <p>© 2026 Mahadev Car Towing Services Hyderabad • Founded &amp; Managed by Anil Kumar (25+ Years Experience) • 24/7 Flatbed &amp; Breakdown Services.</p>
           <div className="flex items-center gap-2 text-slate-400">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>Ground-Level 0° Tilt Flatbed Recovery • Gachibowli HQ, Hyderabad</span>
