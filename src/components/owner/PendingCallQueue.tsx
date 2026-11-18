@@ -221,13 +221,13 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                     <span>Decline / Cancel</span>
                   </button>
 
-                  {/* Approve & Assign Truck */}
+                  {/* Accept Request */}
                   <button
                     onClick={() => setActiveApproveReq(req)}
                     className="flex-1 sm:flex-none bg-sky-600 hover:bg-sky-700 text-white font-semibold px-4 py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 shadow-sm transition"
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>Approve & Assign Truck</span>
+                    <span>Accept Request</span>
                   </button>
                 </div>
               </div>

@@ -286,24 +286,21 @@ class StoreService {
     this.notify();
   }
 
-  public approveAndAssign(
+  public approveRequest(
     requestId: string,
-    params: {
-      agreedPrice?: number;
-      truckId: string;
+    params?: {
+      driverName?: string;
+      driverPhone?: string;
       notes?: string;
     }
   ): void {
-    const targetTruck = this.state.trucks.find((t) => t.id === params.truckId);
-    if (!targetTruck) return;
-
     const req = this.state.requests.find((r) => r.id === requestId);
     if (!req) return;
 
-    // Calculate initial ETA based on truck location and pickup location
+    // Calculate initial ETA based on base garage and pickup location
     const dist = calculateDistanceKm(
-      targetTruck.currentLocation.lat,
-      targetTruck.currentLocation.lng,
+      BASE_GARAGE.lat,
+      BASE_GARAGE.lng,
       req.pickupLocation.lat,
       req.pickupLocation.lng
     );
@@ -316,17 +313,14 @@ class StoreService {
           status: 'verified_approved' as RequestStatus,
           callVerified: true,
           callMade: true,
-          agreedPrice: params.agreedPrice,
-          callNotes: params.notes || r.callNotes,
-          assignedTruckId: targetTruck.id,
-          assignedDriverName: targetTruck.driverName,
-          assignedDriverPhone: targetTruck.driverPhone,
-          assignedTruckPlate: targetTruck.plateNumber,
+          callNotes: params?.notes || r.callNotes,
+          assignedDriverName: params?.driverName?.trim() || r.assignedDriverName || undefined,
+          assignedDriverPhone: params?.driverPhone?.trim() || r.assignedDriverPhone || undefined,
           verifiedAt: new Date().toISOString(),
           etaMinutes: eta,
           driverLiveLocation: {
-            lat: targetTruck.currentLocation.lat,
-            lng: targetTruck.currentLocation.lng,
+            lat: BASE_GARAGE.lat,
+            lng: BASE_GARAGE.lng,
             updatedAt: new Date().toISOString(),
             speed: 0
           }
@@ -335,22 +329,52 @@ class StoreService {
       return r;
     });
 
-    // Update truck status
-    const updatedTrucks = this.state.trucks.map((t) => {
-      if (t.id === params.truckId) {
+    this.state = {
+      ...this.state,
+      requests: updatedRequests
+    };
+    this.saveState(this.state);
+    this.notify();
+
+    const targetReq = updatedRequests.find((r) => r.id === requestId);
+    if (targetReq) cloudDb.syncTowRequest(targetReq);
+  }
+
+  // Alias for backward compatibility
+  public approveAndAssign(
+    requestId: string,
+    params: {
+      agreedPrice?: number;
+      truckId?: string;
+      driverName?: string;
+      driverPhone?: string;
+      notes?: string;
+    }
+  ): void {
+    this.approveRequest(requestId, params);
+  }
+
+  public updateDriverInfo(
+    requestId: string,
+    params: {
+      driverName?: string;
+      driverPhone?: string;
+    }
+  ): void {
+    const updatedRequests = this.state.requests.map((r) => {
+      if (r.id === requestId) {
         return {
-          ...t,
-          status: 'assigned' as const,
-          activeJobId: requestId
+          ...r,
+          assignedDriverName: params.driverName?.trim() || undefined,
+          assignedDriverPhone: params.driverPhone?.trim() || undefined
         };
       }
-      return t;
+      return r;
     });
 
     this.state = {
       ...this.state,
-      requests: updatedRequests,
-      trucks: updatedTrucks
+      requests: updatedRequests
     };
     this.saveState(this.state);
     this.notify();

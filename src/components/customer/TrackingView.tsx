@@ -255,7 +255,7 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
                  'Vehicle Loaded & In Transit'}
               </span>
               <h3 className="text-base font-bold text-slate-900">
-                {request.assignedTruckPlate ? `Flatbed ${request.assignedTruckPlate}` : 'EV Hydraulic Flatbed'}
+                {request.assignedDriverName ? `Driver: ${request.assignedDriverName}` : 'Mahadev Hydraulic Flatbed'}
               </h3>
             </div>
           </div>
@@ -417,52 +417,64 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
         <div className="lg:col-span-5 space-y-4">
           
           {/* Assigned Driver Card */}
-          {request.assignedDriverName ? (
+          {request.assignedDriverName || request.assignedDriverPhone ? (
             <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3.5">
               <div className="flex items-center justify-between pb-2.5 border-b border-slate-100">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Assigned Recovery Crew
+                  Assigned Recovery Driver
                 </h4>
                 <span className="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200">
-                  EV Certified
+                  Flatbed Driver
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-lg bg-sky-100 text-sky-800 font-bold flex items-center justify-center text-base">
-                  {request.assignedDriverName[0]}
+                  {(request.assignedDriverName || 'D')[0]}
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">{request.assignedDriverName}</h4>
-                  <p className="text-xs text-slate-500">EV Flatbed Driver</p>
-                  <p className="text-xs text-slate-700 font-mono font-medium">{request.assignedTruckPlate}</p>
+                  <h4 className="font-bold text-slate-900 text-sm">{request.assignedDriverName || 'Assigned Driver'}</h4>
+                  <p className="text-xs text-slate-500">Mahadev Flatbed Driver</p>
+                  {request.assignedDriverPhone && (
+                    <p className="text-xs text-slate-700 font-mono font-medium">{request.assignedDriverPhone}</p>
+                  )}
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
-                <a
-                  href={`tel:${request.assignedDriverPhone}`}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition shadow-sm"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span>Call Driver</span>
-                </a>
+                {request.assignedDriverPhone ? (
+                  <a
+                    href={`tel:${request.assignedDriverPhone}`}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition shadow-sm"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call Driver</span>
+                  </a>
+                ) : (
+                  <a
+                    href={`tel:${BASE_GARAGE.phone}`}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition shadow-sm"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Call Dispatch</span>
+                  </a>
+                )}
 
                 <a
                   href={`tel:${BASE_GARAGE.phone}`}
                   className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition border border-slate-200"
                 >
                   <PhoneCall className="w-3.5 h-3.5 text-slate-600" />
-                  <span>Call Dispatch</span>
+                  <span>HQ: 9912124247</span>
                 </a>
               </div>
             </div>
           ) : (
             <div className="bg-white border border-slate-200 rounded-xl p-5 text-center space-y-2 shadow-sm">
               <Truck className="w-7 h-7 text-slate-400 mx-auto" />
-              <h4 className="text-sm font-bold text-slate-900">Truck Assignment in Progress</h4>
+              <h4 className="text-sm font-bold text-slate-900">Driver Assignment in Progress</h4>
               <p className="text-xs text-slate-500">
-                Our dispatcher will assign the nearest hydraulic flatbed after your verification call.
+                Our central dispatch is assigning a recovery driver. For immediate updates, contact dispatch at <strong className="text-slate-800">9912124247</strong>.
               </p>
             </div>
           )}

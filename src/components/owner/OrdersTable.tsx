@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { TowRequest, TowTruck, RequestStatus } from '../../types';
 import { store, calculateDistanceKm } from '../../services/store';
 import { BASE_GARAGE } from '../../data/seedData';
+import { DriverAssignModal } from './DriverAssignModal';
 import { 
   Search, 
   ArrowUpDown, 
@@ -15,7 +16,10 @@ import {
   MessageCircle, 
   Copy, 
   Check, 
-  AlertCircle 
+  AlertCircle,
+  User,
+  UserPlus,
+  Pencil
 } from 'lucide-react';
 
 interface OrdersTableProps {
@@ -36,6 +40,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
   const [sortOption, setSortOption] = useState<SortOption>('newest');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [editingDriverReq, setEditingDriverReq] = useState<TowRequest | null>(null);
 
   const pendingCount = useMemo(() => requests.filter((r) => r.status === 'pending_verification').length, [requests]);
   const activeCount = useMemo(() => requests.filter((r) => 
@@ -301,7 +306,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                 <th className="py-2.5 px-3">Issue &amp; Urgency</th>
                 <th className="py-2.5 px-3">Pickup Location</th>
                 <th className="py-2.5 px-3">Status</th>
-                <th className="py-2.5 px-3">Assigned Truck</th>
+                <th className="py-2.5 px-3">Driver Details</th>
                 <th className="py-2.5 px-3 text-center">Fast Status Update</th>
                 <th className="py-2.5 px-3 text-right">Actions</th>
               </tr>
@@ -386,15 +391,40 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                       {getStatusBadge(req.status)}
                     </td>
 
-                    {/* Truck */}
+                    {/* Driver Details */}
                     <td className="py-3 px-3">
-                      {req.assignedTruckPlate ? (
-                        <div className="text-slate-800 font-medium flex items-center gap-1">
-                          <Truck className="w-3.5 h-3.5 text-slate-500" />
-                          <span className="font-mono">{req.assignedTruckPlate}</span>
+                      {req.assignedDriverName || req.assignedDriverPhone ? (
+                        <div className="space-y-0.5">
+                          <div className="flex items-center gap-1.5 font-semibold text-slate-900">
+                            <User className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+                            <span className="truncate max-w-[95px]">{req.assignedDriverName || 'Driver'}</span>
+                            <button
+                              onClick={() => setEditingDriverReq(req)}
+                              className="text-slate-400 hover:text-sky-600 p-0.5 rounded transition"
+                              title="Edit driver details"
+                            >
+                              <Pencil className="w-3 h-3" />
+                            </button>
+                          </div>
+                          {req.assignedDriverPhone && (
+                            <a
+                              href={`tel:${req.assignedDriverPhone}`}
+                              className="text-[11px] text-sky-700 hover:underline font-mono flex items-center gap-1"
+                            >
+                              <Phone className="w-2.5 h-2.5 text-slate-400" />
+                              <span>{req.assignedDriverPhone}</span>
+                            </a>
+                          )}
                         </div>
                       ) : (
-                        <span className="text-slate-400 italic">Not Assigned</span>
+                        <button
+                          onClick={() => setEditingDriverReq(req)}
+                          className="inline-flex items-center gap-1 text-[11px] font-medium text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2 py-1 rounded-md transition"
+                          title="Assign driver name & phone number"
+                        >
+                          <UserPlus className="w-3 h-3 text-sky-600" />
+                          <span>+ Add Driver</span>
+                        </button>
                       )}
                     </td>
 
@@ -433,6 +463,17 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
             </tbody>
           </table>
         </div>
+      )}
+
+      {/* Driver Assignment Modal */}
+      {editingDriverReq && (
+        <DriverAssignModal
+          request={editingDriverReq}
+          onClose={() => setEditingDriverReq(null)}
+          onSuccess={() => {
+            // Updated
+          }}
+        />
       )}
 
     </div>
