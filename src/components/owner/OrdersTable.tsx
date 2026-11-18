@@ -3,6 +3,7 @@ import { TowRequest, TowTruck, RequestStatus } from '../../types';
 import { store, calculateDistanceKm } from '../../services/store';
 import { BASE_GARAGE } from '../../data/seedData';
 import { DriverAssignModal } from './DriverAssignModal';
+import { RejectModal } from './RejectModal';
 import { 
   Search, 
   ArrowUpDown, 
@@ -19,7 +20,8 @@ import {
   AlertCircle,
   User,
   UserPlus,
-  Pencil
+  Pencil,
+  XCircle
 } from 'lucide-react';
 
 interface OrdersTableProps {
@@ -41,6 +43,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editingDriverReq, setEditingDriverReq] = useState<TowRequest | null>(null);
+  const [rejectingReq, setRejectingReq] = useState<TowRequest | null>(null);
 
   const pendingCount = useMemo(() => requests.filter((r) => r.status === 'pending_verification').length, [requests]);
   const activeCount = useMemo(() => requests.filter((r) => 
@@ -455,6 +458,15 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                           <Eye className="w-3.5 h-3.5 text-sky-600" />
                           <span>Track</span>
                         </button>
+                        {req.status !== 'completed' && req.status !== 'declined' && (
+                          <button
+                            onClick={() => setRejectingReq(req)}
+                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600 transition"
+                            title="Decline / Cancel Request"
+                          >
+                            <XCircle className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -470,6 +482,17 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
         <DriverAssignModal
           request={editingDriverReq}
           onClose={() => setEditingDriverReq(null)}
+          onSuccess={() => {
+            // Updated
+          }}
+        />
+      )}
+
+      {/* Decline / Cancel Request Modal */}
+      {rejectingReq && (
+        <RejectModal
+          request={rejectingReq}
+          onClose={() => setRejectingReq(null)}
           onSuccess={() => {
             // Updated
           }}
