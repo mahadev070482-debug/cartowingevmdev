@@ -106,10 +106,10 @@ export const INITIAL_TRUCKS: TowTruck[] = [
     driverName: "Rajesh Kumar",
     driverPhone: "+91 99121 24247",
     plateNumber: "TS-09-UB-4247",
-    currentLocation: { lat: 12.9550, lng: 77.6320 },
+    currentLocation: { lat: 17.4334, lng: 78.3475 },
     isOnline: true,
-    status: 'assigned',
-    activeJobId: "VT-3108",
+    status: 'idle',
+    activeJobId: null,
     features: [
       "100% Zero-Degree Flatbed",
       "Hydraulic Full Tilt Bed (Zero Scrape)",
@@ -124,7 +124,7 @@ export const INITIAL_TRUCKS: TowTruck[] = [
     driverName: "Vikram Rathore",
     driverPhone: "+91 99121 24247",
     plateNumber: "TS-09-UB-9912",
-    currentLocation: { lat: 13.0150, lng: 77.6100 },
+    currentLocation: { lat: 17.4474, lng: 78.3762 },
     isOnline: true,
     status: 'idle',
     activeJobId: null,
@@ -137,80 +137,7 @@ export const INITIAL_TRUCKS: TowTruck[] = [
   }
 ];
 
-export const INITIAL_REQUESTS: TowRequest[] = [
-  {
-    id: "VT-8492",
-    customerName: "Siddharth Rao",
-    customerPhone: "+91 00000 00000",
-    pickupLocation: {
-      address: "Highway Corridor XX near Flyover Pillar XXX, City - XXXXXX",
-      lat: 12.9345,
-      lng: 77.6821,
-      landmark: "Opposite Tech Hub Gate XX"
-    },
-    dropoffLocation: {
-      name: "Tata.ev Mega Fast Charger Hub",
-      address: "Main Road, Sector XX, City - XXXXXX",
-      type: "fast_charger"
-    },
-    vehicle: {
-      makeModel: "Tata Nexon EV Max",
-      regNumber: "XX-00-EV-0000",
-      color: "Pristine White",
-      hasWheelLock: true
-    },
-    issueType: "Dead Battery (0% SOC)",
-    issueDescription: "Battery reached 0% on flyover incline. Drive selector locked in Park, electronic parking brake engaged.",
-    status: "pending_verification",
-    urgency: "Emergency (High Priority)",
-    callMade: false,
-    callVerified: false,
-    createdAt: new Date(Date.now() - 6 * 60 * 1000).toISOString(), // 6 mins ago
-  },
-  {
-    id: "VT-3108",
-    customerName: "Neha Deshmukh",
-    customerPhone: "+91 00000 00000",
-    pickupLocation: {
-      address: "Commercial Boulevard, Near Landmark XXXX, Sector XX, City - XXXXXX",
-      lat: 12.9719,
-      lng: 77.6412,
-      landmark: "Outside Landmark XXXX"
-    },
-    dropoffLocation: {
-      name: "Authorized MG Motors Service Center",
-      address: "Service Bay Area, Sector XX, City - XXXXXX",
-      type: "service_center"
-    },
-    vehicle: {
-      makeModel: "MG ZS EV Exclusive",
-      regNumber: "XX-00-EV-0000",
-      color: "Current Red",
-      hasWheelLock: false
-    },
-    issueType: "Flat Tire",
-    issueDescription: "Front-left tire blew on road debris. Rim is touching ground, cannot roll car forward.",
-    status: "verified_approved",
-    urgency: "Standard Tow",
-    callMade: true,
-    callVerified: true,
-    callNotes: "Spoke with Neha on call. She is in a safe parking bay. Agreed to flatbed tow with soft wheel straps to authorized service bay.",
-    assignedTruckId: "TRUCK-01",
-    assignedDriverName: "Rajesh Kumar",
-    assignedDriverPhone: "+91 99121 24247",
-    assignedTruckPlate: "XX-00-EV-0001",
-    createdAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-    verifiedAt: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
-    driverLiveLocation: {
-      lat: 12.9550,
-      lng: 77.6320,
-      updatedAt: new Date().toISOString(),
-      heading: 45,
-      speed: 32
-    },
-    etaMinutes: 12
-  }
-];
+export const INITIAL_REQUESTS: TowRequest[] = [];
 
 export const INITIAL_REVIEWS: Review[] = [
   {

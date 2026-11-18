@@ -124,10 +124,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
             {/* Stat 1: 25+ YEARS SERVICE EXPERIENCE IN LARGE RECOGNISABLE FORMAT */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left pt-6 md:pt-0 md:px-4 first:pt-0 first:px-0">
               <span className="text-xs font-bold uppercase tracking-widest text-sky-400 mb-2">Heritage & Trust</span>
-              <div className="text-7xl sm:text-8xl lg:text-9xl font-black text-sky-500 tracking-tighter leading-none select-none">
+              <div className="text-6xl sm:text-7xl lg:text-7xl xl:text-8xl font-black text-sky-500 tracking-tighter leading-none select-none">
                 {stats.yearsExperience}<span className="text-sky-300">+</span>
               </div>
-              <div className="text-lg sm:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
+              <div className="text-base sm:text-lg lg:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
                 Years Experience
               </div>
               <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
@@ -138,10 +138,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
             {/* Stat 2: 100+ RESCUES (TEXT ONLY, EDITABLE FROM OWNER SIDE) */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left pt-6 md:pt-0 md:px-6">
               <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Verified Track Record</span>
-              <div className="text-5xl sm:text-6xl lg:text-7xl font-black text-emerald-400 tracking-tight leading-none">
+              <div className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-emerald-400 tracking-tight leading-none">
                 {stats.rescuesCountText}
               </div>
-              <div className="text-lg sm:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
+              <div className="text-base sm:text-lg lg:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
                 EV Rescues Completed
               </div>
               <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">
@@ -152,11 +152,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
             {/* Stat 3: 15 MIN AVERAGE DISPATCH */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left pt-6 md:pt-0 md:px-6">
               <span className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-2">Emergency Speed</span>
-              <div className="text-5xl sm:text-6xl lg:text-7xl font-black text-amber-400 tracking-tight leading-none flex items-baseline gap-1">
+              <div className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-amber-400 tracking-tight leading-none flex items-baseline gap-1">
                 <span>{stats.responseMinutes}</span>
-                <span className="text-2xl sm:text-3xl font-bold text-amber-200">MIN</span>
+                <span className="text-xl sm:text-2xl font-bold text-amber-200">MIN</span>
               </div>
-              <div className="text-lg sm:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
+              <div className="text-base sm:text-lg lg:text-xl font-extrabold text-white uppercase tracking-tight mt-3">
                 Average Arrival
               </div>
               <p className="text-xs text-slate-400 mt-1 max-w-xs leading-relaxed">

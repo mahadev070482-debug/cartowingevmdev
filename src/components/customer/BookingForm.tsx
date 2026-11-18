@@ -32,10 +32,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   
-  // Location
-  const [pickupAddress, setPickupAddress] = useState('Sector XX, Main Highway Road, City - XXXXXX');
-  const [pickupLat, setPickupLat] = useState(12.9538);
-  const [pickupLng, setPickupLng] = useState(77.6980);
+  // Location (Default to Gachibowli HQ Hyderabad)
+  const [pickupAddress, setPickupAddress] = useState('Gachibowli, Hyderabad, Telangana');
+  const [pickupLat, setPickupLat] = useState(17.4334);
+  const [pickupLng, setPickupLng] = useState(78.3475);
   const [landmark, setLandmark] = useState('');
   const [isLocating, setIsLocating] = useState(false);
   const [locationSuccess, setLocationSuccess] = useState(false);

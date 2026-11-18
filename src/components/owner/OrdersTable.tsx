@@ -357,9 +357,9 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
         </div>
       ) : (
         <div className="overflow-x-auto border border-slate-200 rounded-lg">
-          <table className="w-full text-left text-xs border-collapse">
+          <table className="w-full text-left text-xs lg:text-sm border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+              <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-xs lg:text-sm">
                 <th className="py-2.5 px-3">Ticket ID</th>
                 <th className="py-2.5 px-3">Customer &amp; Phone</th>
                 <th className="py-2.5 px-3">Vehicle Details</th>

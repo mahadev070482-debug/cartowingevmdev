@@ -93,8 +93,15 @@ class StoreService {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.requests && parsed.trucks && parsed.reviews) {
-          // Normalize requests defensively so missing fields in old test records never crash
-          parsed.requests = parsed.requests.map((r: any) => ({
+          // Filter out legacy demo records and normalize requests defensively
+          parsed.requests = parsed.requests
+            .filter((r: any) => 
+              r.id !== 'VT-8492' && 
+              r.id !== 'VT-3108' && 
+              r.customerName !== 'Siddharth Rao' && 
+              r.customerName !== 'Neha Deshmukh'
+            )
+            .map((r: any) => ({
             id: r.id,
             customerName: r.customerName || 'Customer',
             customerPhone: r.customerPhone || '',
@@ -210,7 +217,7 @@ class StoreService {
       if (cloudRequests && Array.isArray(cloudRequests) && cloudRequests.length > 0) {
         const existingMap = new Map(this.state.requests.map((r) => [r.id, r]));
         for (const rawReq of cloudRequests) {
-          if (rawReq && rawReq.id) {
+          if (rawReq && rawReq.id && rawReq.id !== 'VT-8492' && rawReq.id !== 'VT-3108') {
             // Defensive normalization: guarantee all required nested objects exist
             const req: TowRequest = {
               ...rawReq,
