@@ -45,7 +45,7 @@ export const FloatingContactBar: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold py-2.5 px-3 rounded-xl text-xs sm:text-sm shadow-md transition"
-            title="Chat directly on WhatsApp for Live Dispatch & Quote"
+            title="Chat directly on WhatsApp for Live Dispatch & Assistance"
           >
             <MessageSquare className="w-4 h-4 shrink-0 text-white" />
             <span className="truncate">WhatsApp</span>

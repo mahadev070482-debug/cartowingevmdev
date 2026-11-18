@@ -76,7 +76,7 @@ export const TrackingTicketLookup: React.FC<TrackingTicketLookupProps> = ({ onTr
           <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500 gap-2">
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Shows live truck location, driver phone, verified quote & estimated time of arrival (ETA).</span>
+              <span>Shows live request status, driver phone &amp; estimated time of arrival (ETA).</span>
             </div>
             <span className="text-slate-400">Updates every 5 seconds</span>
           </div>

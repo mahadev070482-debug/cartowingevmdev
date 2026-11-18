@@ -221,7 +221,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
             Book an EV Flatbed Tow Truck
           </h2>
           <p className="text-sm text-slate-600">
-            Provide your breakdown details below. Our dispatcher will call you directly to verify vehicle specs and quote before dispatching.
+            Provide your breakdown details below. Our dispatcher will call you directly to verify vehicle specs and dispatch details.
           </p>
         </div>
 
@@ -233,7 +233,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
             <PhoneCall className="w-5 h-5 text-sky-700 shrink-0 mt-0.5" />
             <div className="text-xs sm:text-sm text-sky-950">
               <span className="font-bold">2-Minute Verification Call:</span>{' '}
-              Our dispatch owner will call your mobile number within <strong className="text-sky-900">2 minutes</strong> to confirm your vehicle state, exact GPS pin, and upfront quote before dispatching the tow truck.
+              Our dispatch owner will call your mobile number within <strong className="text-sky-900">2 minutes</strong> to confirm your vehicle state, exact GPS pin, and dispatch details before sending the tow truck.
             </div>
           </div>
 
@@ -285,7 +285,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
                     />
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
-                    ✓ Dispatcher calls this number immediately to confirm quote.
+                    ✓ Dispatcher calls this number immediately to confirm booking.
                   </p>
                 </div>
               </div>
@@ -599,7 +599,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
               </button>
 
               <p className="text-center text-xs text-slate-500">
-                No credit card required upfront. Transparent quotes confirmed verbally by phone.
+                No payment required upfront. Service confirmed directly over phone by our dispatch team.
               </p>
             </div>
 

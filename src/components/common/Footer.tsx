@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
             </div>
             <div>
               <h4 className="text-white font-bold text-sm">2-Minute Verification</h4>
-              <p className="text-xs text-slate-400 mt-0.5">Dispatcher calls right away to confirm exact location & quote.</p>
+              <p className="text-xs text-slate-400 mt-0.5">Dispatcher calls right away to confirm exact location & details.</p>
             </div>
           </div>
 

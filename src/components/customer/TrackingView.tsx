@@ -98,7 +98,7 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
     {
       key: 'verified_approved',
       label: 'Call Verified & Approved',
-      desc: 'Agreed quote & vehicle confirmed'
+      desc: 'Vehicle confirmed & dispatch approved'
     },
     {
       key: 'driver_accepted',
@@ -220,7 +220,7 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-900">Step 1: Awaiting Owner Verification Call</h3>
             <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-              Our dispatch owner will ring your mobile (<strong className="text-slate-900 font-mono">{request.customerPhone}</strong>) within <strong className="text-amber-800">2 minutes</strong> to confirm your vehicle state, exact location, and upfront quote before dispatching the truck.
+              Our dispatch owner will ring your mobile (<strong className="text-slate-900 font-mono">{request.customerPhone}</strong>) within <strong className="text-amber-800">2 minutes</strong> to confirm your vehicle state and exact location before dispatching the truck.
             </p>
             <div className="pt-2 flex items-center gap-3 text-xs">
               <span className="text-slate-500">Keep your phone line free.</span>
@@ -499,15 +499,6 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
                 <span className="text-slate-400 block text-[11px]">Drop-off Destination:</span>
                 <span className="text-slate-800">{request.dropoffLocation.name} - {request.dropoffLocation.address}</span>
               </div>
-
-              {request.agreedPrice && (
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-slate-500">Agreed Quote:</span>
-                  <span className="text-base font-bold text-slate-900 font-mono">
-                    ₹ {request.agreedPrice.toLocaleString('en-IN')}
-                  </span>
-                </div>
-              )}
             </div>
           </div>
 

@@ -169,7 +169,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
 
                 <p className="text-xs text-slate-600 my-3 leading-relaxed">
-                  Breakdown on ORR, Gachibowli, Hitec City, or Financial District? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA &amp; quote.
+                  Breakdown on ORR, Gachibowli, Hitec City, or Financial District? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA &amp; driver details.
                 </p>
 
               {/* Supported Vehicle Categories (Luxury Vehicle, Car, SUV) */}

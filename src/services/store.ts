@@ -245,7 +245,7 @@ class StoreService {
   public approveAndAssign(
     requestId: string,
     params: {
-      agreedPrice: number;
+      agreedPrice?: number;
       truckId: string;
       notes?: string;
     }

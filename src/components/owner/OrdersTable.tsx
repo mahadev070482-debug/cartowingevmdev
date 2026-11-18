@@ -396,11 +396,6 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                       ) : (
                         <span className="text-slate-400 italic">Not Assigned</span>
                       )}
-                      {req.agreedPrice ? (
-                        <span className="text-[10px] text-emerald-700 font-bold block">
-                          ₹ {req.agreedPrice}
-                        </span>
-                      ) : null}
                     </td>
 
                     {/* Fast Status Progression Button */}

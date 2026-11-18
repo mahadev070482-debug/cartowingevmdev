@@ -58,7 +58,7 @@ export interface TowRequest {
   callMade: boolean;
   callVerified: boolean;
   callNotes?: string;
-  agreedPrice?: number; // In INR ₹
+  agreedPrice?: number;
   
   // Truck assignment
   assignedTruckId?: string; // "TRUCK-01" or "TRUCK-02"

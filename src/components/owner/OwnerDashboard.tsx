@@ -3,7 +3,6 @@ import { store } from '../../services/store';
 import { TowRequest, TowTruck } from '../../types';
 import { PendingCallQueue } from './PendingCallQueue';
 import { OrdersTable } from './OrdersTable';
-import { FleetMonitor } from './FleetMonitor';
 import { ReviewModeration } from './ReviewModeration';
 import { LocationManager } from './LocationManager';
 import { StatsManager } from './StatsManager';
@@ -47,7 +46,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'fleet' | 'reviews' | 'locations' | 'stats'>('queue');
+  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'reviews' | 'locations' | 'stats'>('queue');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('owner_sound_alert') !== 'false';
@@ -204,7 +203,6 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
   ).length;
   const completedCount = requests.filter((r) => r.status === 'completed').length;
   const rejectedCount = requests.filter((r) => r.status === 'declined').length;
-  const availableTrucksCount = trucks.filter((t) => t.status === 'idle').length;
 
   return (
     <div className="py-6 lg:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -298,8 +296,8 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
         </div>
       )}
 
-      {/* KPI Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
+      {/* KPI Stat Cards (4 Clean Columns, No Truck Monitoring) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
         {/* Card 1: Pending Calls */}
         <div
           onClick={() => setActiveTab('queue')}
@@ -338,26 +336,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           <span className="text-[11px] text-sky-700 font-medium">En Route / In Transit</span>
         </div>
 
-        {/* Card 3: Trucks Available */}
-        <div
-          onClick={() => setActiveTab('fleet')}
-          className={`p-4 rounded-xl border cursor-pointer transition ${
-            activeTab === 'fleet'
-              ? 'bg-emerald-50/80 border-emerald-300 ring-1 ring-emerald-300'
-              : 'bg-white border-slate-200 hover:border-slate-300 shadow-xs'
-          }`}
-        >
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs text-slate-600 font-semibold">Fleet Ready</span>
-            <div className="p-1.5 rounded-md bg-emerald-100 text-emerald-700">
-              <Activity className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold text-slate-900 font-mono">{availableTrucksCount} / {trucks.length}</div>
-          <span className="text-[11px] text-emerald-700 font-medium">Idle at Gachibowli HQ</span>
-        </div>
-
-        {/* Card 4: Completed */}
+        {/* Card 3: Completed */}
         <div
           onClick={() => setActiveTab('orders')}
           className="p-4 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-slate-300 transition shadow-xs"
@@ -372,7 +351,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           <span className="text-[11px] text-slate-500 font-medium">Completed rescues</span>
         </div>
 
-        {/* Card 5: Rejected */}
+        {/* Card 4: Rejected */}
         <div
           onClick={() => setActiveTab('orders')}
           className="p-4 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-slate-300 transition shadow-xs"
@@ -418,18 +397,6 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           <Layers className="w-4 h-4 text-sky-600" />
           <span>All Orders &amp; Dispatch Progression</span>
           <span className="text-[11px] text-slate-500">({requests.length})</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('fleet')}
-          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition whitespace-nowrap ${
-            activeTab === 'fleet'
-              ? 'bg-emerald-100 text-emerald-900 font-semibold shadow-xs'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-          }`}
-        >
-          <Truck className="w-4 h-4 text-emerald-600" />
-          <span>Fleet Live Status</span>
         </button>
 
         <button
@@ -483,12 +450,6 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           requests={requests}
           trucks={trucks}
           onSelectRequestForTracking={onSelectRequestForTracking}
-        />
-      )}
-
-      {activeTab === 'fleet' && (
-        <FleetMonitor
-          trucks={trucks}
         />
       )}
 

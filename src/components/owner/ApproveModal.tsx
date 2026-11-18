@@ -16,7 +16,6 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const [agreedPrice, setAgreedPrice] = useState<number>(2500);
   const [selectedTruckId, setSelectedTruckId] = useState<string>(trucks[0]?.id || 'TRUCK-01');
   const [dispatchNotes, setDispatchNotes] = useState<string>(
     `Spoke with customer on call. Safe location. Flatbed dispatch requested.`
@@ -28,7 +27,6 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
     setIsSubmitting(true);
 
     store.approveAndAssign(request.id, {
-      agreedPrice,
       truckId: selectedTruckId,
       notes: dispatchNotes
     });
@@ -74,29 +72,6 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
         </div>
 
         <form onSubmit={handleApprove} className="space-y-4">
-          
-          {/* Agreed Price Input */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Agreed Quote (₹ INR) <span className="text-red-500">*</span>
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-2 text-sm text-slate-500 font-bold">₹</span>
-              <input
-                type="number"
-                required
-                min={500}
-                max={50000}
-                step={100}
-                value={agreedPrice}
-                onChange={(e) => setAgreedPrice(Number(e.target.value))}
-                className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg pl-8 pr-3 py-2 text-sm font-mono font-bold text-slate-900 focus:outline-none"
-              />
-            </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Confirmed verbally with the driver on call.
-            </p>
-          </div>
 
           {/* Select Tow Truck */}
           <div>

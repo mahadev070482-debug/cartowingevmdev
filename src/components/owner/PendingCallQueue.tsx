@@ -202,7 +202,7 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                 <div className="text-xs text-slate-500">
                   {req.callMade ? (
                     <span className="text-emerald-700 font-medium flex items-center gap-1">
-                      ✓ Call recorded. Ready for quote approval & truck dispatch.
+                      ✓ Call recorded. Ready for approval &amp; truck dispatch.
                     </span>
                   ) : (
                     <span className="text-amber-700 flex items-center gap-1">
