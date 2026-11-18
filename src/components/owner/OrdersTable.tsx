@@ -113,31 +113,35 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       result = result.filter((r) => 
-        r.id.toLowerCase().includes(q) ||
-        r.customerName.toLowerCase().includes(q) ||
-        r.customerPhone.replace(/\s+/g, '').includes(q.replace(/\s+/g, '')) ||
-        r.vehicle.makeModel.toLowerCase().includes(q) ||
-        r.pickupLocation.address.toLowerCase().includes(q)
+        (r.id || '').toLowerCase().includes(q) ||
+        (r.customerName || '').toLowerCase().includes(q) ||
+        (r.customerPhone || '').replace(/\s+/g, '').includes(q.replace(/\s+/g, '')) ||
+        (r.vehicle?.makeModel || '').toLowerCase().includes(q) ||
+        (r.pickupLocation?.address || '').toLowerCase().includes(q)
       );
     }
 
     result.sort((a, b) => {
       if (sortOption === 'newest') {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
       }
       if (sortOption === 'oldest') {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        return new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime();
       }
       if (sortOption === 'priority') {
         return issuePriorityWeight(b.issueType) - issuePriorityWeight(a.issueType);
       }
       if (sortOption === 'distance') {
-        const distA = calculateDistanceKm(BASE_GARAGE.lat, BASE_GARAGE.lng, a.pickupLocation.lat, a.pickupLocation.lng);
-        const distB = calculateDistanceKm(BASE_GARAGE.lat, BASE_GARAGE.lng, b.pickupLocation.lat, b.pickupLocation.lng);
+        const latA = a.pickupLocation?.lat ?? BASE_GARAGE.lat;
+        const lngA = a.pickupLocation?.lng ?? BASE_GARAGE.lng;
+        const latB = b.pickupLocation?.lat ?? BASE_GARAGE.lat;
+        const lngB = b.pickupLocation?.lng ?? BASE_GARAGE.lng;
+        const distA = calculateDistanceKm(BASE_GARAGE.lat, BASE_GARAGE.lng, latA, lngA);
+        const distB = calculateDistanceKm(BASE_GARAGE.lat, BASE_GARAGE.lng, latB, lngB);
         return distA - distB;
       }
       if (sortOption === 'status') {
-        return a.status.localeCompare(b.status);
+        return (a.status || '').localeCompare(b.status || '');
       }
       return 0;
     });
@@ -369,14 +373,16 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
             </thead>
             <tbody className="divide-y divide-slate-100">
               {filteredAndSortedRequests.map((req) => {
+                const lat = req.pickupLocation?.lat ?? BASE_GARAGE.lat;
+                const lng = req.pickupLocation?.lng ?? BASE_GARAGE.lng;
                 const dist = calculateDistanceKm(
                   BASE_GARAGE.lat,
                   BASE_GARAGE.lng,
-                  req.pickupLocation.lat,
-                  req.pickupLocation.lng
+                  lat,
+                  lng
                 );
 
-                const cleanPhone = req.customerPhone.replace(/[^0-9]/g, '').slice(-10);
+                const cleanPhone = (req.customerPhone || '').replace(/[^0-9]/g, '').slice(-10);
 
                 return (
                   <tr key={req.id} className="hover:bg-slate-50/80 transition">
@@ -386,39 +392,45 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
                         {req.id}
                       </div>
                       <span className="text-[10px] text-slate-400 block">
-                        {new Date(req.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {new Date(req.createdAt || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </td>
 
                     {/* Customer */}
                     <td className="py-3 px-3">
-                      <div className="font-semibold text-slate-900">{req.customerName}</div>
+                      <div className="font-semibold text-slate-900">{req.customerName || 'Customer'}</div>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <a
-                          href={`tel:${cleanPhone}`}
-                          className="text-[11px] text-sky-700 hover:underline font-mono flex items-center gap-1"
-                        >
-                          <Phone className="w-3 h-3 text-slate-400" />
-                          <span>{req.customerPhone}</span>
-                        </a>
-                        <a
-                          href={`https://wa.me/91${cleanPhone}?text=Hello%20${encodeURIComponent(req.customerName)},%20Mahadev%20Car%20Towing%20update%20for%20ticket%20${req.id}.`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-emerald-600 hover:text-emerald-700"
-                          title="Message on WhatsApp"
-                        >
-                          <MessageCircle className="w-3.5 h-3.5" />
-                        </a>
+                        {cleanPhone ? (
+                          <>
+                            <a
+                              href={`tel:${cleanPhone}`}
+                              className="text-[11px] text-sky-700 hover:underline font-mono flex items-center gap-1"
+                            >
+                              <Phone className="w-3 h-3 text-slate-400" />
+                              <span>{req.customerPhone}</span>
+                            </a>
+                            <a
+                              href={`https://wa.me/91${cleanPhone}?text=Hello%20${encodeURIComponent(req.customerName || 'Customer')},%20Mahadev%20Car%20Towing%20update%20for%20ticket%20${req.id}.`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-emerald-600 hover:text-emerald-700"
+                              title="Message on WhatsApp"
+                            >
+                              <MessageCircle className="w-3.5 h-3.5" />
+                            </a>
+                          </>
+                        ) : (
+                          <span className="text-slate-400 italic text-[11px]">No phone</span>
+                        )}
                       </div>
                     </td>
 
                     {/* Vehicle */}
                     <td className="py-3 px-3">
-                      <div className="text-slate-800 font-semibold">{req.vehicle.makeModel}</div>
+                      <div className="text-slate-800 font-semibold">{req.vehicle?.makeModel || 'Vehicle Not Specified'}</div>
                       <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono">
-                        {req.vehicle.regNumber && <span>{req.vehicle.regNumber}</span>}
-                        {req.vehicle.hasWheelLock && (
+                        {req.vehicle?.regNumber && <span>{req.vehicle.regNumber}</span>}
+                        {req.vehicle?.hasWheelLock && (
                           <span className="text-red-700 bg-red-50 border border-red-200 px-1 py-0.2 rounded font-sans">
                             Locked
                           </span>
@@ -428,14 +440,14 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({
 
                     {/* Issue */}
                     <td className="py-3 px-3">
-                      <div className="text-slate-900 font-medium">{req.issueType}</div>
-                      <span className="text-[10px] text-slate-500 block">{req.urgency}</span>
+                      <div className="text-slate-900 font-medium">{req.issueType || 'General Towing'}</div>
+                      <span className="text-[10px] text-slate-500 block">{req.urgency || 'Standard'}</span>
                     </td>
 
                     {/* Pickup & Distance */}
                     <td className="py-3 px-3 max-w-[180px]">
-                      <div className="truncate text-slate-700" title={req.pickupLocation.address}>
-                        {req.pickupLocation.address}
+                      <div className="truncate text-slate-700" title={req.pickupLocation?.address || 'Pickup location not specified'}>
+                        {req.pickupLocation?.address || 'Pickup location not specified'}
                       </div>
                       <span className="text-[10px] text-slate-500 font-mono">
                         {dist} km from Gachibowli HQ

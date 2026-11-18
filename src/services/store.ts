@@ -93,6 +93,35 @@ class StoreService {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed.requests && parsed.trucks && parsed.reviews) {
+          // Normalize requests defensively so missing fields in old test records never crash
+          parsed.requests = parsed.requests.map((r: any) => ({
+            id: r.id,
+            customerName: r.customerName || 'Customer',
+            customerPhone: r.customerPhone || '',
+            status: r.status || 'pending_verification',
+            issueType: r.issueType || 'Accident Car Towing',
+            urgency: r.urgency || 'Standard Tow',
+            callMade: r.callMade ?? false,
+            callVerified: r.callVerified ?? false,
+            createdAt: r.createdAt || new Date().toISOString(),
+            pickupLocation: r.pickupLocation || {
+              address: 'Pickup location not specified',
+              lat: BASE_GARAGE.lat,
+              lng: BASE_GARAGE.lng
+            },
+            dropoffLocation: r.dropoffLocation || {
+              address: 'Customer destination / Nearest Service Station',
+              name: 'Confirmed on verification call',
+              type: 'custom'
+            },
+            vehicle: r.vehicle || {
+              category: 'Luxury Vehicle',
+              makeModel: 'Vehicle Not Specified',
+              hasWheelLock: false
+            },
+            ...r
+          }));
+
           if (!parsed.serviceableLocations || parsed.serviceableLocations.length === 0) {
             parsed.serviceableLocations = INITIAL_SERVICEABLE_LOCATIONS;
           }
@@ -180,8 +209,36 @@ class StoreService {
       const cloudRequests = await cloudDb.fetchTowRequests();
       if (cloudRequests && Array.isArray(cloudRequests) && cloudRequests.length > 0) {
         const existingMap = new Map(this.state.requests.map((r) => [r.id, r]));
-        for (const req of cloudRequests) {
-          if (req && req.id) {
+        for (const rawReq of cloudRequests) {
+          if (rawReq && rawReq.id) {
+            // Defensive normalization: guarantee all required nested objects exist
+            const req: TowRequest = {
+              ...rawReq,
+              customerName: rawReq.customerName || 'Customer',
+              customerPhone: rawReq.customerPhone || '',
+              status: rawReq.status || 'pending_verification',
+              issueType: rawReq.issueType || 'Accident Car Towing',
+              urgency: rawReq.urgency || 'Standard Tow',
+              callMade: rawReq.callMade ?? false,
+              callVerified: rawReq.callVerified ?? false,
+              createdAt: rawReq.createdAt || new Date().toISOString(),
+              pickupLocation: rawReq.pickupLocation || {
+                address: 'Pickup location not specified',
+                lat: BASE_GARAGE.lat,
+                lng: BASE_GARAGE.lng
+              },
+              dropoffLocation: rawReq.dropoffLocation || {
+                address: 'Customer destination / Nearest Service Station',
+                name: 'Confirmed on verification call',
+                type: 'custom'
+              },
+              vehicle: rawReq.vehicle || {
+                category: 'Luxury Vehicle',
+                makeModel: 'Vehicle Not Specified',
+                hasWheelLock: false
+              }
+            };
+
             const existing = existingMap.get(req.id);
             if (existing) {
               const localTime = new Date(existing.updatedAt || existing.createdAt || 0).getTime();
@@ -222,8 +279,35 @@ class StoreService {
   /**
    * Safely merges a single request update received from cloud polling
    */
-  public updateRequestFromCloud(cloudReq: TowRequest): void {
-    if (!cloudReq || !cloudReq.id) return;
+  public updateRequestFromCloud(rawReq: TowRequest): void {
+    if (!rawReq || !rawReq.id) return;
+    const cloudReq: TowRequest = {
+      ...rawReq,
+      customerName: rawReq.customerName || 'Customer',
+      customerPhone: rawReq.customerPhone || '',
+      status: rawReq.status || 'pending_verification',
+      issueType: rawReq.issueType || 'Accident Car Towing',
+      urgency: rawReq.urgency || 'Standard Tow',
+      callMade: rawReq.callMade ?? false,
+      callVerified: rawReq.callVerified ?? false,
+      createdAt: rawReq.createdAt || new Date().toISOString(),
+      pickupLocation: rawReq.pickupLocation || {
+        address: 'Pickup location not specified',
+        lat: BASE_GARAGE.lat,
+        lng: BASE_GARAGE.lng
+      },
+      dropoffLocation: rawReq.dropoffLocation || {
+        address: 'Customer destination / Nearest Service Station',
+        name: 'Confirmed on verification call',
+        type: 'custom'
+      },
+      vehicle: rawReq.vehicle || {
+        category: 'Luxury Vehicle',
+        makeModel: 'Vehicle Not Specified',
+        hasWheelLock: false
+      }
+    };
+
     let hasChanged = false;
     let found = false;
 

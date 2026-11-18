@@ -68,11 +68,13 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
 
       <div className="grid grid-cols-1 gap-4">
         {pendingRequests.map((req) => {
+          const lat = req.pickupLocation?.lat ?? BASE_GARAGE.lat;
+          const lng = req.pickupLocation?.lng ?? BASE_GARAGE.lng;
           const distFromBase = calculateDistanceKm(
             BASE_GARAGE.lat,
             BASE_GARAGE.lng,
-            req.pickupLocation.lat,
-            req.pickupLocation.lng
+            lat,
+            lng
           );
 
           return (
@@ -158,12 +160,12 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                   <span className="text-slate-400 font-medium block">EV Vehicle:</span>
                   <div className="font-semibold text-slate-900 flex items-center gap-1.5">
                     <Car className="w-4 h-4 text-sky-600" />
-                    <span>{req.vehicle.makeModel}</span>
+                    <span>{req.vehicle?.makeModel || 'Vehicle Not Specified'}</span>
                   </div>
-                  {req.vehicle.regNumber && (
+                  {req.vehicle?.regNumber && (
                     <span className="text-slate-500 font-mono block">{req.vehicle.regNumber}</span>
                   )}
-                  {req.vehicle.hasWheelLock && (
+                  {req.vehicle?.hasWheelLock && (
                     <span className="inline-flex items-center gap-1 text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 font-medium">
                       <ShieldAlert className="w-3 h-3 text-amber-600" />
                       Drive Wheels Locked (Needs Wheel Skates)
@@ -176,7 +178,7 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                   <span className="text-slate-400 font-medium block">Reported Breakdown:</span>
                   <div className="font-semibold text-amber-800 flex items-center gap-1.5">
                     <AlertTriangle className="w-4 h-4 text-amber-600" />
-                    <span>{req.issueType}</span>
+                    <span>{req.issueType || 'General Towing'}</span>
                   </div>
                   {req.issueDescription && (
                     <p className="text-slate-600 line-clamp-2">{req.issueDescription}</p>
@@ -188,11 +190,11 @@ export const PendingCallQueue: React.FC<PendingCallQueueProps> = ({
                   <span className="text-slate-400 font-medium block">Locations:</span>
                   <p className="text-slate-800 flex items-start gap-1">
                     <MapPin className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
-                    <span>Pickup: {req.pickupLocation.address}</span>
+                    <span>Pickup: {req.pickupLocation?.address || 'Pickup location not specified'}</span>
                   </p>
                   <p className="text-slate-600 flex items-start gap-1">
                     <Navigation className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>Drop-off: {req.dropoffLocation.name}</span>
+                    <span>Drop-off: {req.dropoffLocation?.name || 'Confirmed on call'}</span>
                   </p>
                 </div>
               </div>
