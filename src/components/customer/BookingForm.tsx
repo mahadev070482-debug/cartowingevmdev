@@ -54,6 +54,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [honeypot, setHoneypot] = useState('');
 
   // Dual-tier location detector: High-Accuracy GPS with Instant Network/IP Fallback
   const detectCurrentLocation = (silent: boolean = false) => {
@@ -141,6 +142,13 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
+
+    // Honeypot bot protection: if filled, silently ignore spam bot
+    if (honeypot.trim()) {
+      setIsSubmitting(true);
+      setTimeout(() => setIsSubmitting(false), 500);
+      return;
+    }
 
     const cleanPhone = customerPhone.replace(/[^0-9]/g, '');
     if (cleanPhone.length < 10) {
@@ -245,6 +253,17 @@ export const BookingForm: React.FC<BookingFormProps> = ({ onBookingSuccess, init
           )}
 
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Anti-spam honeypot (invisible to humans, traps automated spam bots) */}
+            <input
+              type="text"
+              name="b_company_field"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
             
             {/* Step 1: Contact Details */}
             <div className="space-y-4">

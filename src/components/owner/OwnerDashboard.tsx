@@ -31,7 +31,7 @@ interface OwnerDashboardProps {
   onExitToCustomerSite?: () => void;
 }
 
-const OWNER_DEMO_PIN = '1234';
+const OWNER_PIN = (import.meta.env.VITE_OWNER_PIN as string) || '1234';
 
 export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
   onSelectRequestForTracking,
@@ -46,6 +46,8 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'reviews' | 'locations' | 'stats'>('queue');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -115,13 +117,26 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput.trim() === OWNER_DEMO_PIN) {
+
+    if (lockoutUntil && Date.now() < lockoutUntil) {
+      return;
+    }
+
+    if (pinInput.trim() === OWNER_PIN) {
       setIsAuthenticated(true);
       sessionStorage.setItem('voltrescue_owner_authed', 'true');
       setPinError(false);
       setPinInput('');
+      setFailedAttempts(0);
+      setLockoutUntil(null);
     } else {
+      const nextAttempts = failedAttempts + 1;
+      setFailedAttempts(nextAttempts);
       setPinError(true);
+
+      if (nextAttempts >= 5) {
+        setLockoutUntil(Date.now() + 2 * 60 * 1000); // 2 minute cooldown
+      }
     }
   };
 
@@ -137,6 +152,8 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
       window.location.href = '/';
     }
   };
+
+  const isLockedOut = lockoutUntil !== null && Date.now() < lockoutUntil;
 
   // If not authenticated, show PIN entry modal / screen
   if (!isAuthenticated) {
@@ -158,9 +175,10 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
             <div>
               <input
                 type="password"
-                maxLength={4}
+                maxLength={8}
                 required
-                placeholder="PIN: 1234"
+                disabled={isLockedOut}
+                placeholder="Enter Secret PIN"
                 value={pinInput}
                 onChange={(e) => {
                   setPinInput(e.target.value);
@@ -168,29 +186,37 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
                 }}
                 className={`w-full bg-slate-50 border ${
                   pinError ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-300 focus:border-sky-600 focus:bg-white'
-                } rounded-lg px-4 py-2.5 text-center text-xl font-mono tracking-widest text-slate-900 focus:outline-none transition`}
+                } rounded-lg px-4 py-2.5 text-center text-xl font-mono tracking-widest text-slate-900 focus:outline-none transition disabled:opacity-50`}
                 autoFocus
               />
-              {pinError && (
+              {isLockedOut ? (
                 <p className="text-xs text-red-600 mt-1.5 font-medium">
-                  Invalid PIN. Please use authorization PIN: <strong>1234</strong>
+                  Too many failed attempts. Locked for 2 minutes.
                 </p>
-              )}
+              ) : pinError ? (
+                <p className="text-xs text-red-600 mt-1.5 font-medium">
+                  Invalid PIN. Please enter your authorized access code.
+                </p>
+              ) : null}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 rounded-lg text-sm shadow-sm transition"
+              disabled={isLockedOut}
+              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 rounded-lg text-sm shadow-sm transition disabled:opacity-50"
             >
               Unlock Dashboard
             </button>
           </form>
 
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>PIN: <strong className="text-slate-800 font-mono">1234</strong></span>
+            <span className="flex items-center gap-1 text-[11px] text-slate-400">
+              <Lock className="w-3 h-3" />
+              <span>Encrypted Access</span>
+            </span>
             <button
               onClick={handleExit}
-              className="text-sky-700 hover:underline flex items-center gap-1"
+              className="text-sky-700 hover:underline flex items-center gap-1 font-medium"
             >
               <ExternalLink className="w-3 h-3" />
               <span>Back to Customer Site</span>
