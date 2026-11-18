@@ -175,6 +175,68 @@ class CloudDbService {
     }
     return false;
   }
+
+  /**
+   * Fetch all tow requests from cloud (Supabase or Firebase)
+   */
+  public async fetchTowRequests(): Promise<TowRequest[] | null> {
+    if (!this.isCloudConnected() || !this.isOnline) return null;
+
+    try {
+      if (this.config.provider === 'firebase' && this.config.firebaseDbUrl) {
+        const res = await fetch(`${this.config.firebaseDbUrl}/tow_requests.json`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data) return [];
+        return Object.values(data) as TowRequest[];
+      }
+
+      if (this.config.provider === 'supabase' && this.config.supabaseUrl && this.config.supabaseAnonKey) {
+        const res = await fetch(`${this.config.supabaseUrl}/rest/v1/tow_requests?select=*`, {
+          headers: {
+            'apikey': this.config.supabaseAnonKey,
+            'Authorization': `Bearer ${this.config.supabaseAnonKey}`
+          }
+        });
+        if (!res.ok) return null;
+        return (await res.json()) as TowRequest[];
+      }
+    } catch (err) {
+      console.warn('[CloudDB] Fetch requests failed:', err);
+    }
+    return null;
+  }
+
+  /**
+   * Fetch reviews from cloud (Supabase or Firebase)
+   */
+  public async fetchReviews(): Promise<Review[] | null> {
+    if (!this.isCloudConnected() || !this.isOnline) return null;
+
+    try {
+      if (this.config.provider === 'firebase' && this.config.firebaseDbUrl) {
+        const res = await fetch(`${this.config.firebaseDbUrl}/reviews.json`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data) return [];
+        return Object.values(data) as Review[];
+      }
+
+      if (this.config.provider === 'supabase' && this.config.supabaseUrl && this.config.supabaseAnonKey) {
+        const res = await fetch(`${this.config.supabaseUrl}/rest/v1/reviews?select=*`, {
+          headers: {
+            'apikey': this.config.supabaseAnonKey,
+            'Authorization': `Bearer ${this.config.supabaseAnonKey}`
+          }
+        });
+        if (!res.ok) return null;
+        return (await res.json()) as Review[];
+      }
+    } catch (err) {
+      console.warn('[CloudDB] Fetch reviews failed:', err);
+    }
+    return null;
+  }
 }
 
 export const cloudDb = new CloudDbService(dbConfig);

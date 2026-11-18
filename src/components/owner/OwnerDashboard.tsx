@@ -81,10 +81,15 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
     }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
+    await store.pullFromCloud();
     setRequests([...store.getRequests()]);
     setTrucks([...store.getTrucks()]);
   };
+
+  useEffect(() => {
+    store.pullFromCloud();
+  }, []);
 
   useEffect(() => {
     const update = () => {

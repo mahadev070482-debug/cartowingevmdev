@@ -70,6 +70,11 @@ class StoreService {
         }
       });
     }
+
+    // Auto pull from cloud backend (Firebase / Supabase) if configured
+    if (cloudDb.isCloudConnected()) {
+      this.pullFromCloud();
+    }
   }
 
   private loadState(): AppState {
@@ -164,6 +169,45 @@ class StoreService {
     };
     this.saveState(this.state);
     this.notify();
+  }
+
+  /**
+   * Pulls remote data from Firebase / Supabase and merges into local state
+   */
+  public async pullFromCloud(): Promise<void> {
+    if (!cloudDb.isCloudConnected()) return;
+    try {
+      const cloudRequests = await cloudDb.fetchTowRequests();
+      if (cloudRequests && Array.isArray(cloudRequests) && cloudRequests.length > 0) {
+        const existingMap = new Map(this.state.requests.map((r) => [r.id, r]));
+        for (const req of cloudRequests) {
+          if (req && req.id) {
+            existingMap.set(req.id, req);
+          }
+        }
+        const mergedRequests = Array.from(existingMap.values()).sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        this.state = { ...this.state, requests: mergedRequests };
+        this.saveState(this.state);
+        this.notify();
+      }
+
+      const cloudReviews = await cloudDb.fetchReviews();
+      if (cloudReviews && Array.isArray(cloudReviews) && cloudReviews.length > 0) {
+        const reviewMap = new Map(this.state.reviews.map((r) => [r.id, r]));
+        for (const rev of cloudReviews) {
+          if (rev && rev.id) {
+            reviewMap.set(rev.id, rev);
+          }
+        }
+        this.state = { ...this.state, reviews: Array.from(reviewMap.values()) };
+        this.saveState(this.state);
+        this.notify();
+      }
+    } catch (e) {
+      console.warn('[Store] Cloud pull skipped:', e);
+    }
   }
 
   public getRequestById(id: string): TowRequest | undefined {
