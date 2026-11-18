@@ -101,30 +101,76 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </div>
 
+            {/* Live Real Fleet Showcase Strip */}
+            <div className="pt-2">
+              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-xs flex items-center gap-3.5 max-w-lg mx-auto lg:mx-0">
+                <div className="relative w-24 h-16 sm:w-28 sm:h-20 rounded-lg overflow-hidden shrink-0 border border-slate-200 bg-slate-900">
+                  <img
+                    src="/images/mahadev-flatbed-ioniq5.jpg"
+                    alt="Mahadev Car Towing 0 Degree Flatbed Truck in Hyderabad"
+                    className="w-full h-full object-cover"
+                  />
+                  <span className="absolute bottom-1 right-1 bg-black/75 text-white text-[9px] font-bold px-1.5 py-0.2 rounded font-mono">
+                    LIVE FLEET
+                  </span>
+                </div>
+                <div className="text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
+                      Hyderabad Active Fleet
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 mt-0.5">
+                    Mahadev Zero-Degree Hydraulic Flatbed
+                  </h4>
+                  <p className="text-[11px] text-slate-500">
+                    Branded Recovery Trucks • Direct Helpline: <strong className="text-slate-800">9912124247</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* Right Hero Card: Quick Request Booking Priority Card & EV Safety Callout (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
             
             {/* Quick Request Booking Card (Priority UP) */}
-            <div className="bg-white border-2 border-sky-600/30 rounded-2xl p-6 sm:p-7 shadow-lg relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-sky-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-                Fast Dispatch
+            <div className="bg-white border-2 border-sky-600/30 rounded-2xl overflow-hidden shadow-lg relative">
+              
+              {/* Authentic Flatbed Photo Header Banner */}
+              <div className="relative h-32 sm:h-36 overflow-hidden bg-slate-900 border-b border-slate-200">
+                <img
+                  src="/images/mahadev-flatbed-luxury-suv.jpg"
+                  alt="Mahadev Car Towing Flatbed Service Hyderabad"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                <div className="absolute top-0 right-0 bg-sky-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider shadow-xs">
+                  Fast Dispatch
+                </div>
+                <div className="absolute bottom-2.5 left-4 flex items-center gap-2">
+                  <span className="bg-black/75 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-white/20">
+                    📸 Mahadev Flatbed • Call 9912124247
+                  </span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-2.5 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-sky-600" />
+              <div className="p-6 sm:p-7 pt-5">
+                <div className="flex items-center gap-2.5 mb-2">
+                  <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
+                    <Zap className="w-5 h-5 text-sky-600" />
+                  </div>
+                  <div>
+                    <h2 className="font-extrabold text-slate-900 text-base sm:text-lg">Request EV Flatbed Tow</h2>
+                    <p className="text-xs text-slate-500">2-Minute Verification Call • Zero-Degree Guaranteed</p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="font-extrabold text-slate-900 text-base sm:text-lg">Request EV Flatbed Tow</h2>
-                  <p className="text-xs text-slate-500">2-Minute Verification Call • Zero-Degree Guaranteed</p>
-                </div>
-              </div>
 
-              <p className="text-xs text-slate-600 my-3 leading-relaxed">
-                Breakdown on ORR, Gachibowli, Hitec City, or Financial District? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA & quote.
-              </p>
+                <p className="text-xs text-slate-600 my-3 leading-relaxed">
+                  Breakdown on ORR, Gachibowli, Hitec City, or Financial District? Submit your GPS pin or address and vehicle model. Our dispatcher calls you immediately with verified ETA &amp; quote.
+                </p>
 
               {/* Supported Vehicle Categories (Luxury Vehicle, Car, SUV) */}
               <div className="grid grid-cols-3 gap-2 my-2.5 text-center text-[11px] font-bold">
@@ -164,7 +210,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </button>
                 </div>
               </div>
+
             </div>
+          </div>
 
             {/* EV Safety Callout Box */}
             <div className="bg-amber-50/80 border border-amber-200 rounded-xl p-4 flex items-start gap-3 text-xs text-amber-900">

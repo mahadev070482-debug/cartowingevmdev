@@ -308,22 +308,46 @@ export interface FleetEquipmentImage {
 export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
   {
     id: "FLEET-01",
-    title: "Heavy-Duty Hydraulic Full-Tilt Flatbed Bed",
+    title: "Mahadev Hydraulic 0° Full-Tilt Bed (Ioniq 5 EV Recovery)",
     category: "flatbeds",
     tag: "Zero-Degree Flatbed",
-    specs: "Full deck tilt to zero degrees for zero-scrape loading",
-    imageUrl: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80"
+    specs: "Full ground-level zero-degree hydraulic tilt bed (Call: 9912124247)",
+    imageUrl: "/images/mahadev-flatbed-ioniq5.jpg"
   },
   {
     id: "FLEET-02",
-    title: "Low-Angle Slide Deck Platform for Ground Clearance Protection",
+    title: "White & Red Striped Zero-Scrape Flatbed (Range Rover Evoque)",
     category: "flatbeds",
-    tag: "Low Ground Clearance",
-    specs: "Designed specifically for low-slung EV battery casings",
-    imageUrl: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1000&q=80"
+    tag: "Luxury Car Towing",
+    specs: "Zero bumper or underbody scrape for luxury SUVs & sports cars",
+    imageUrl: "/images/mahadev-flatbed-luxury-suv.jpg"
   },
   {
     id: "FLEET-03",
+    title: "Mahadev Traffic Clearance Heavy Tata Flatbed (Innova Crysta)",
+    category: "flatbeds",
+    tag: "Highway & SUV Recovery",
+    specs: "Commercial heavy-duty traffic clearance flatbed unit for ORR & highways",
+    imageUrl: "/images/mahadev-flatbed-innova.jpg"
+  },
+  {
+    id: "FLEET-04",
+    title: "Hydraulic Under-Lift Accident Recovery Crane (Balanagar, Hyderabad)",
+    category: "safety",
+    tag: "Accident Recovery",
+    specs: "Specialized under-lift cradle for front-impact & total loss vehicles",
+    imageUrl: "/images/mahadev-accident-recovery-balanagar.jpg"
+  },
+  {
+    id: "FLEET-05",
+    title: "Heavy-Duty Highway Breakdown & Wheel-Lift Unit (Telangana)",
+    category: "flatbeds",
+    tag: "Breakdown Recovery",
+    specs: "Fast deployment wheel-lift cradle for mechanical & transmission failures",
+    imageUrl: "/images/mahadev-underlift-towing-telangana.jpg"
+  },
+  {
+    id: "FLEET-06",
     title: "Go-Jack Hydraulic Wheel Skates for Locked EV Parking Brakes",
     category: "skates",
     tag: "Wheel Skates (Locked Wheels)",
@@ -331,7 +355,7 @@ export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
     imageUrl: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80"
   },
   {
-    id: "FLEET-04",
+    id: "FLEET-07",
     title: "Synthetic Rim-Safe Wheel Basket Harness & Strapping System",
     category: "safety",
     tag: "Alloy Wheel Care",
@@ -339,36 +363,12 @@ export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
     imageUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"
   },
   {
-    id: "FLEET-05",
+    id: "FLEET-08",
     title: "24/7 Mobile Rapid Emergency EV Boost Charger & Battery Unit",
     category: "chargers",
     tag: "Mobile Battery Boost",
     specs: "Emergency charge to reach the nearest DC fast charger",
     imageUrl: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=80"
-  },
-  {
-    id: "FLEET-06",
-    title: "1000V Insulated Safety Isolation Kit & High-Voltage PPE",
-    category: "safety",
-    tag: "High-Voltage Safety Kit",
-    specs: "Certified pyro-fuse and contactor disconnect safeguards",
-    imageUrl: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=80"
-  },
-  {
-    id: "FLEET-07",
-    title: "Heavy-Duty Commercial Emergency Jump Start & Booster Pack System",
-    category: "chargers",
-    tag: "Emergency Jump Start",
-    specs: "High-amperage surge-protected 12V/24V booster unit for luxury and stalled vehicles",
-    imageUrl: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1000&q=80"
-  },
-  {
-    id: "FLEET-08",
-    title: "Rapid Hydraulic Winch with Synthetic Snatch Block Assembly",
-    category: "skates",
-    tag: "Gentle Loading Winch",
-    specs: "Continuous smooth tension winching without chassis strain",
-    imageUrl: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1000&q=80"
   }
 ];
 

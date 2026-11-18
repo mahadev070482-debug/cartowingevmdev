@@ -132,9 +132,12 @@ export const FleetGallery: React.FC = () => {
             >
               {/* Image */}
               <img
-                src={createStockDummySvg(item)}
+                src={item.imageUrl}
                 alt={item.title}
                 loading="lazy"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = createStockDummySvg(item);
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
 
@@ -203,8 +206,11 @@ export const FleetGallery: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={createStockDummySvg(filteredImages[selectedImageIdx])}
+                src={filteredImages[selectedImageIdx].imageUrl}
                 alt={filteredImages[selectedImageIdx].title}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = createStockDummySvg(filteredImages[selectedImageIdx]);
+                }}
                 className="max-h-[72vh] w-auto max-w-full rounded-xl object-contain shadow-2xl border border-white/10"
               />
               <div className="text-center mt-4 text-white">

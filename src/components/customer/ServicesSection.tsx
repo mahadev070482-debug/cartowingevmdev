@@ -37,6 +37,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Zero-Degree Hydraulic Slide Bed Near Me",
       icon: Truck,
       badge: "Flat Bed 0 Degree",
+      image: "/images/mahadev-flatbed-ioniq5.jpg",
       description: "Our certified flatbed tilts to true zero degrees at ground level. Eliminates drive wheel friction, preserves warranty, and prevents inverter or motor generator burnout across all car brands.",
       highlights: ["No wheel contact with asphalt", "100% zero-degree hydraulic ramp", "Full chassis nylon security webbing"]
     },
@@ -46,6 +47,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Ultra-Low Ground Clearance & Premium Protection",
       icon: Gauge,
       badge: "Luxury Car Towing",
+      image: "/images/mahadev-flatbed-luxury-suv.jpg",
       description: "Specialized ultra-low ground clearance recovery for premium sedans and performance sports cars. Soft synthetic wheel basket straps ensure your alloy rims and low front splitters remain flawless.",
       highlights: ["Ultra-low angle ground transition", "Alloy rim safe tire-only webbing", "Zero bumper or underbody scrape"]
     },
@@ -55,6 +57,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Severe Collision, Structural Impact & Total Loss",
       icon: ShieldAlert,
       badge: "Accident & Total Damage",
+      image: "/images/mahadev-accident-recovery-balanagar.jpg",
       description: "Fast recovery for accident-impacted, immobilized, or total damage vehicles. Equipped with heavy-duty hydraulic winches, synthetic snatch blocks, and 4-point dollies to extract total loss vehicles safely without chassis twisting.",
       highlights: ["Expressway & highway collision retrieval", "Safe recovery of total loss & wheel-locked vehicles", "Direct transport to insurance yards & body shops"]
     },
@@ -64,6 +67,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Dead Battery, Mechanical & Motor Lock",
       icon: BatteryCharging,
       badge: "Emergency Breakdown",
+      image: "/images/mahadev-underlift-towing-telangana.jpg",
       description: "Instant response for dead battery (0% SOC), 12V system failures, and sudden mechanical breakdown. Mobile recharge boost and hydraulic skates deployed on-site within 15–20 minutes.",
       highlights: ["15-minute average response time", "Mobile emergency battery boost", "Go-Jack skates for locked parking brakes"]
     },
@@ -73,6 +77,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Nexon, Creta, XUV700, Fortuner, Ioniq 5, ZS EV",
       icon: Disc,
       badge: "SUV & AWD Towing",
+      image: "/images/mahadev-flatbed-innova.jpg",
       description: "Heavy SUVs and All-Wheel Drive (AWD) vehicles require full deck isolation. We lift both front and rear axles onto our reinforced platform to prevent differential and gearbox overheating.",
       highlights: ["Dual-motor AWD safe transport", "Reinforced high-payload deck", "Basement & parking garage extraction"]
     },
@@ -82,6 +87,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Dead 12V Battery, Luxury Cars & EV Boost",
       icon: Zap,
       badge: "Jump Start Service",
+      image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80",
       description: "Car battery dead at home, office basement, or highway? Our rapid recovery units carry high-amperage, voltage-protected commercial booster packs to safely jump start your car without blowing sensitive computer ECUs or hybrid modules.",
       highlights: ["Safe for luxury cars & delicate computer electronics", "High-amperage commercial jump pack", "On-site arrival within 15–20 minutes"]
     }
@@ -182,37 +188,53 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
             return (
               <div
                 key={srv.id}
-                className="bg-slate-950/70 border border-slate-800 hover:border-sky-500/60 rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/5 group"
+                className="bg-slate-950/70 border border-slate-800 hover:border-sky-500/60 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/5 group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-slate-950 transition-colors duration-300">
-                      <IconComp className="w-6 h-6" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-sky-300 px-2.5 py-1 rounded-md border border-slate-700">
+                  {/* Real Fleet Photo Header */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-900 border-b border-slate-800">
+                    <img
+                      src={srv.image}
+                      alt={srv.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+                    
+                    {/* Badge */}
+                    <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-sky-300 px-2.5 py-1 rounded-md border border-slate-700 backdrop-blur-xs">
                       {srv.badge}
                     </span>
+
+                    {/* Icon Overlaid */}
+                    <div className="absolute bottom-3 left-4 w-10 h-10 rounded-xl bg-sky-500 text-slate-950 flex items-center justify-center shadow-lg font-bold">
+                      <IconComp className="w-5 h-5" />
+                    </div>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 group-hover:text-sky-300 transition-colors">
-                    {srv.title}
-                  </h3>
-                  <p className="text-xs font-medium text-sky-400/90 mb-3">
-                    {srv.subtitle}
-                  </p>
+                  <div className="p-6 sm:p-7 pt-4">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1 group-hover:text-sky-300 transition-colors">
+                      {srv.title}
+                    </h3>
+                    <p className="text-xs font-medium text-sky-400/90 mb-3">
+                      {srv.subtitle}
+                    </p>
 
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-5">
-                    {srv.description}
-                  </p>
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-5">
+                      {srv.description}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800/80 space-y-2">
-                  {srv.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-slate-300">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                      <span>{h}</span>
-                    </div>
-                  ))}
+                <div className="px-6 sm:px-7 pb-6 pt-0">
+                  <div className="pt-4 border-t border-slate-800/80 space-y-2">
+                    {srv.highlights.map((h, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs text-slate-300">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>{h}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             );

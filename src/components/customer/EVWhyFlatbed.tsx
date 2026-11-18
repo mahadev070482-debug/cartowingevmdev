@@ -72,6 +72,20 @@ export const EVWhyFlatbed: React.FC = () => {
               </span>
             </div>
 
+            {/* Real Mahadev Flatbed Loading Proof Photo */}
+            <div className="relative aspect-[16/9] rounded-lg overflow-hidden border border-sky-200 shadow-xs">
+              <img
+                src="/images/mahadev-flatbed-ioniq5.jpg"
+                alt="Mahadev 0 Degree Flatbed Towing EV with Zero Wheel Spin"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
+              <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white text-[11px] font-medium">
+                <span>📸 Actual Mahadev Zero-Degree Bed (9912124247)</span>
+                <span className="bg-sky-600 px-2 py-0.5 rounded text-[10px] font-bold">100% Zero-Drag</span>
+              </div>
+            </div>
+
             <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
               <li className="flex items-start gap-2.5">
                 <span className="text-sky-600 font-bold mt-0.5">✓</span>
