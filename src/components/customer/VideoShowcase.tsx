@@ -116,9 +116,6 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
             >
               <Smartphone className="w-4 h-4 text-sky-400" />
               <span>Video 1: 0° Night Recovery</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded ${activeTab === 'video1' ? 'bg-sky-800 text-white' : 'bg-slate-800 text-slate-400'}`}>
-                13s
-              </span>
             </button>
 
             <button
@@ -131,9 +128,6 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
             >
               <Film className="w-4 h-4 text-amber-400" />
               <span>Video 2: Full Flatbed Operation</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded ${activeTab === 'video2' ? 'bg-sky-800 text-white' : 'bg-slate-800 text-slate-400'}`}>
-                66s • HD
-              </span>
             </button>
           </div>
         </div>
@@ -211,20 +205,16 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                     </div>
                   )}
 
-                  {/* Bottom Video Controls Overlay */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/75 backdrop-blur-md p-2 rounded-xl border border-white/10">
+                  {/* Bottom Video Controls Overlay - Minimalist Play / Pause */}
+                  <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md p-1.5 rounded-xl border border-white/10">
                     <button
                       onClick={togglePlayActive}
-                      className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer flex items-center gap-1.5"
                       title={isCurrentPlaying ? "Pause Video" : "Play Video"}
                     >
                       {isCurrentPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
                       <span className="text-[10px]">{isCurrentPlaying ? 'Pause' : 'Play'}</span>
                     </button>
-                    
-                    <span className="text-[10px] text-slate-300 font-medium">
-                      {activeTab === 'video1' ? 'Mahadev 0° Bed • 13s' : 'Full Winching Operation • 66s HD'}
-                    </span>
                   </div>
 
                 </div>
@@ -253,7 +243,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                 </div>
                 <div className="min-w-0">
                   <div className="text-[11px] font-bold text-white truncate">Video 1: Night Rescue</div>
-                  <div className="text-[10px] text-slate-400">13s • Mobile Reel</div>
+                  <div className="text-[10px] text-slate-400">Zero-Degree Recovery</div>
                 </div>
               </button>
 
@@ -270,7 +260,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                 </div>
                 <div className="min-w-0">
                   <div className="text-[11px] font-bold text-white truncate">Video 2: Full Operation</div>
-                  <div className="text-[10px] text-slate-400">66s • 720p HD</div>
+                  <div className="text-[10px] text-slate-400">Hydraulic Winch Loading</div>
                 </div>
               </button>
 
