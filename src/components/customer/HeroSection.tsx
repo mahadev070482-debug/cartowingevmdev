@@ -127,6 +127,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <p className="text-[11px] text-slate-500">
                     Branded Recovery Trucks • Direct Helpline: <strong className="text-slate-800">9912124247</strong>
                   </p>
+                  <button
+                    onClick={() => {
+                      const el = document.getElementById('video-showcase');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-600 hover:text-sky-700 hover:underline mt-1 cursor-pointer"
+                  >
+                    <span>▶ Watch Live Recovery Video (13s)</span>
+                  </button>
                 </div>
               </div>
             </div>

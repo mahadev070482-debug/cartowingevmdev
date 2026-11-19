@@ -217,6 +217,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>
             <button
+              onClick={() => scrollToSection('video-showcase')}
+              className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between text-sky-700 font-medium"
+            >
+              <span>Watch Live Recovery Video</span>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
+            </button>
+            <button
               onClick={() => scrollToSection('why-flatbed')}
               className="text-left py-2 px-3 rounded-lg hover:bg-slate-50 flex items-center justify-between"
             >
