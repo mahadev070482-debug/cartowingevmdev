@@ -24,10 +24,10 @@ export const RescueGallery: React.FC<RescueGalleryProps> = ({ onSelectBookNow })
 
   const filterTabs = [
     { id: 'all', label: 'All Rescues', count: RESCUE_GALLERY.length },
-    { id: 'battery', label: 'Dead Battery (0% SOC)', count: RESCUE_GALLERY.filter(i => i.category === 'battery').length },
-    { id: 'tire', label: 'Tire & Rim Care', count: RESCUE_GALLERY.filter(i => i.category === 'tire').length },
-    { id: 'highway', label: 'AWD & Highway', count: RESCUE_GALLERY.filter(i => i.category === 'highway').length },
-    { id: 'basement', label: 'Low-Clearance Parking', count: RESCUE_GALLERY.filter(i => i.category === 'basement').length },
+    { id: 'highway', label: 'Luxury & SUVs', count: RESCUE_GALLERY.filter(i => i.category === 'highway').length },
+    { id: 'accident', label: 'Accident & Total Loss', count: RESCUE_GALLERY.filter(i => i.category === 'accident').length },
+    { id: 'battery', label: 'EV & Battery Safe', count: RESCUE_GALLERY.filter(i => i.category === 'battery').length },
+    { id: 'tire', label: 'Breakdown & Roadside', count: RESCUE_GALLERY.filter(i => i.category === 'tire').length },
   ];
 
   const filteredItems = activeFilter === 'all'

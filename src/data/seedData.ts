@@ -242,59 +242,59 @@ export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
   },
   {
     id: "FLEET-02",
-    title: "White & Red Striped Zero-Scrape Flatbed (Range Rover Evoque)",
+    title: "Mercedes-Benz SLK Luxury Convertible Flatbed Towing",
     category: "flatbeds",
     tag: "Luxury Car Towing",
-    specs: "Zero bumper or underbody scrape for luxury SUVs & sports cars",
-    imageUrl: "/images/mahadev-flatbed-luxury-suv.jpg"
+    specs: "Zero bumper or underbody scrape for low sports cars & luxury convertibles",
+    imageUrl: "/images/mahadev-flatbed-mercedes-luxury.jpg"
   },
   {
     id: "FLEET-03",
-    title: "Mahadev Traffic Clearance Heavy Tata Flatbed (Innova Crysta)",
+    title: "Mahadev Commercial Heavy Flatbed (Innova Crysta)",
     category: "flatbeds",
-    tag: "Highway & SUV Recovery",
-    specs: "Commercial heavy-duty traffic clearance flatbed unit for ORR & highways",
-    imageUrl: "/images/mahadev-flatbed-innova.jpg"
+    tag: "SUV & MUV Recovery",
+    specs: "Dedicated heavy flatbed unit for Innova Crysta, Fortuner & MPVs",
+    imageUrl: "/images/mahadev-flatbed-innova-crysta.jpg"
   },
   {
     id: "FLEET-04",
-    title: "Hydraulic Under-Lift Accident Recovery Crane (Balanagar, Hyderabad)",
+    title: "Total Loss & Severe Crash Recovery Flatbed Unit",
     category: "safety",
-    tag: "Accident Recovery",
-    specs: "Specialized under-lift cradle for front-impact & total loss vehicles",
-    imageUrl: "/images/mahadev-accident-recovery-balanagar.jpg"
+    tag: "Total Damage Towing",
+    specs: "Reinforced slide deck for totally crushed, wheel-sheared & total loss cars",
+    imageUrl: "/images/mahadev-total-loss-damage-towing.jpg"
   },
   {
     id: "FLEET-05",
-    title: "Heavy-Duty Highway Breakdown & Wheel-Lift Unit (Telangana)",
+    title: "Ford Endeavour Heavy SUV 24/7 Night Flatbed Dispatch",
     category: "flatbeds",
-    tag: "Breakdown Recovery",
-    specs: "Fast deployment wheel-lift cradle for mechanical & transmission failures",
-    imageUrl: "/images/mahadev-underlift-towing-telangana.jpg"
+    tag: "Night Heavy SUV",
+    specs: "Heavy-duty hydraulic platform for 3-ton full-size SUVs with rim chocks",
+    imageUrl: "/images/mahadev-flatbed-endeavour-suv.jpg"
   },
   {
     id: "FLEET-06",
-    title: "Go-Jack Hydraulic Wheel Skates for Locked EV Parking Brakes",
-    category: "skates",
-    tag: "Wheel Skates (Locked Wheels)",
-    specs: "Rolls dead EVs with electronic parking brakes locked in Park",
-    imageUrl: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80"
+    title: "Accident Impact Recovery Unit (Red Baleno Side Collision)",
+    category: "safety",
+    tag: "Accident Recovery",
+    specs: "Specialized winch loading without secondary chassis stress or structural twist",
+    imageUrl: "/images/mahadev-accident-baleno-side-impact.jpg"
   },
   {
     id: "FLEET-07",
-    title: "Synthetic Rim-Safe Wheel Basket Harness & Strapping System",
-    category: "safety",
-    tag: "Alloy Wheel Care",
-    specs: "Tire-only contact webbing preserving high-end alloy rims",
-    imageUrl: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80"
+    title: "Roadside Breakdown & Mechanical Recovery (White Sedan)",
+    category: "flatbeds",
+    tag: "Breakdown Recovery",
+    specs: "Full deck platform preventing drive axle overheating and tire drag",
+    imageUrl: "/images/mahadev-breakdown-sedan-towing.jpg"
   },
   {
     id: "FLEET-08",
-    title: "24/7 Mobile Rapid Emergency EV Boost Charger & Battery Unit",
-    category: "chargers",
-    tag: "Mobile Battery Boost",
-    specs: "Emergency charge to reach the nearest DC fast charger",
-    imageUrl: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=80"
+    title: "Tata Rapid Response Highway Rescue Unit (TG 12 E 6459)",
+    category: "safety",
+    tag: "Highway Emergency",
+    specs: "On-duty traffic safety marshal & rapid highway accident clearance",
+    imageUrl: "/images/mahadev-highway-accident-towing.jpg"
   }
 ];
 

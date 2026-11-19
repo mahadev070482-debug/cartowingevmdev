@@ -151,7 +151,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {/* Authentic Flatbed Photo Header Banner */}
               <div className="relative h-32 sm:h-36 overflow-hidden bg-slate-900 border-b border-slate-200">
                 <img
-                  src="/images/mahadev-flatbed-luxury-suv.jpg"
+                  src="/images/mahadev-flatbed-mercedes-luxury.jpg"
                   alt="Mahadev Car Towing Flatbed Service Hyderabad"
                   className="w-full h-full object-cover"
                 />

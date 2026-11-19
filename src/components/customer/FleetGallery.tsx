@@ -59,10 +59,8 @@ export const FleetGallery: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'All Fleet & Equipment' },
-    { id: 'flatbeds', label: 'Hydraulic Flatbeds' },
-    { id: 'skates', label: 'Wheel Skates & Winches' },
-    { id: 'chargers', label: 'Mobile EV Chargers' },
-    { id: 'safety', label: 'Safety & Wheel Harness' }
+    { id: 'flatbeds', label: 'Hydraulic Flatbeds (0° Tilt)' },
+    { id: 'safety', label: 'Accident Recovery & Safety Units' }
   ];
 
   const filteredImages = activeCategory === 'all'

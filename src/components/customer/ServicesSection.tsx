@@ -47,7 +47,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Ultra-Low Ground Clearance & Premium Protection",
       icon: Gauge,
       badge: "Luxury Car Towing",
-      image: "/images/mahadev-flatbed-luxury-suv.jpg",
+      image: "/images/mahadev-flatbed-mercedes-luxury.jpg",
       description: "Specialized ultra-low ground clearance recovery for premium sedans and performance sports cars. Soft synthetic wheel basket straps ensure your alloy rims and low front splitters remain flawless.",
       highlights: ["Ultra-low angle ground transition", "Alloy rim safe tire-only webbing", "Zero bumper or underbody scrape"]
     },
@@ -57,7 +57,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Severe Collision, Structural Impact & Total Loss",
       icon: ShieldAlert,
       badge: "Accident & Total Damage",
-      image: "/images/mahadev-accident-recovery-balanagar.jpg",
+      image: "/images/mahadev-total-loss-damage-towing.jpg",
       description: "Fast recovery for accident-impacted, immobilized, or total damage vehicles. Equipped with heavy-duty hydraulic winches, synthetic snatch blocks, and 4-point dollies to extract total loss vehicles safely without chassis twisting.",
       highlights: ["Expressway & highway collision retrieval", "Safe recovery of total loss & wheel-locked vehicles", "Direct transport to insurance yards & body shops"]
     },
@@ -67,7 +67,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Dead Battery, Mechanical & Motor Lock",
       icon: BatteryCharging,
       badge: "Emergency Breakdown",
-      image: "/images/mahadev-underlift-towing-telangana.jpg",
+      image: "/images/mahadev-breakdown-sedan-towing.jpg",
       description: "Instant response for dead battery (0% SOC), 12V system failures, and sudden mechanical breakdown. Mobile recharge boost and hydraulic skates deployed on-site within 15–20 minutes.",
       highlights: ["15-minute average response time", "Mobile emergency battery boost", "Go-Jack skates for locked parking brakes"]
     },
@@ -77,19 +77,19 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onScrollToBook
       subtitle: "Nexon, Creta, XUV700, Fortuner, Ioniq 5, ZS EV",
       icon: Disc,
       badge: "SUV & AWD Towing",
-      image: "/images/mahadev-flatbed-innova.jpg",
+      image: "/images/mahadev-flatbed-endeavour-suv.jpg",
       description: "Heavy SUVs and All-Wheel Drive (AWD) vehicles require full deck isolation. We lift both front and rear axles onto our reinforced platform to prevent differential and gearbox overheating.",
       highlights: ["Dual-motor AWD safe transport", "Reinforced high-payload deck", "Basement & parking garage extraction"]
     },
     {
       id: "srv-6",
-      title: "24/7 Emergency Jump Start Service",
-      subtitle: "Dead 12V Battery, Luxury Cars & EV Boost",
+      title: "24/7 Emergency Highway Towing & Jump Start",
+      subtitle: "Expressway Clearance, Rapid Jump Start & Marshaling",
       icon: Zap,
-      badge: "Jump Start Service",
-      image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80",
-      description: "Car battery dead at home, office basement, or highway? Our rapid recovery units carry high-amperage, voltage-protected commercial booster packs to safely jump start your car without blowing sensitive computer ECUs or hybrid modules.",
-      highlights: ["Safe for luxury cars & delicate computer electronics", "High-amperage commercial jump pack", "On-site arrival within 15–20 minutes"]
+      badge: "Highway Emergency",
+      image: "/images/mahadev-highway-accident-towing.jpg",
+      description: "Fast highway breakdown and roadside clearance across ORR, Gachibowli, and Airport corridors. On-duty marshals with high-lumen floodlights and commercial booster packs ensure rapid roadside resolution.",
+      highlights: ["Expressway traffic safety marshaling", "High-amperage commercial jump pack", "On-site arrival within 15–20 minutes"]
     }
   ];
 
