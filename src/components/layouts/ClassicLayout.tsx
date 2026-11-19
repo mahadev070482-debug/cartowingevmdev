@@ -36,6 +36,9 @@ export const ClassicLayout: React.FC<ClassicLayoutProps> = ({
         onOpenWhyFlatbed={onOpenWhyFlatbed}
       />
 
+      {/* Live Video Recovery Showcase - High Priority Up Directly Below Hero */}
+      <VideoShowcase onScrollToBooking={onScrollToBooking} />
+
       {/* Services Section with 25 in Large Recognisable Format & 100+ Rescues text */}
       <ServicesSection onScrollToBooking={onScrollToBooking} />
 
@@ -47,9 +50,6 @@ export const ClassicLayout: React.FC<ClassicLayoutProps> = ({
 
       {/* Tracking Ticket BELOW Request Booking */}
       <TrackingTicketLookup onTrackSearch={onTrackSearch} />
-
-      {/* Live Video Recovery Showcase */}
-      <VideoShowcase onScrollToBooking={onScrollToBooking} />
 
       <EVWhyFlatbed />
 
