@@ -3,8 +3,6 @@ import { BASE_GARAGE } from '../../data/seedData';
 import { 
   Play, 
   Pause, 
-  Volume2, 
-  VolumeX, 
   ShieldCheck, 
   CheckCircle2, 
   PhoneCall, 
@@ -27,7 +25,6 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
 
   const [isPlaying1, setIsPlaying1] = useState(true);
   const [isPlaying2, setIsPlaying2] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
 
   const handleSelectTab = (tab: 'video1' | 'video2') => {
     setActiveTab(tab);
@@ -72,13 +69,6 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
         setIsPlaying2(true);
       }
     }
-  };
-
-  const toggleMute = () => {
-    const nextMuted = !isMuted;
-    if (video1Ref.current) video1Ref.current.muted = nextMuted;
-    if (video2Ref.current) video2Ref.current.muted = nextMuted;
-    setIsMuted(nextMuted);
   };
 
   const handleBookClick = () => {
@@ -180,7 +170,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                     playsInline
                     autoPlay
                     loop
-                    muted={isMuted}
+                    muted
                     controls={false}
                     className={`w-full h-full object-cover cursor-pointer ${activeTab === 'video1' ? 'block' : 'hidden'}`}
                     onClick={togglePlayActive}
@@ -192,7 +182,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                     src="/videos/mahadev-flatbed-loading-operation.mp4"
                     playsInline
                     loop
-                    muted={isMuted}
+                    muted
                     controls={false}
                     className={`w-full h-full object-cover cursor-pointer ${activeTab === 'video2' ? 'block' : 'hidden'}`}
                     onClick={togglePlayActive}
@@ -223,22 +213,15 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
 
                   {/* Bottom Video Controls Overlay */}
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/75 backdrop-blur-md p-2 rounded-xl border border-white/10">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={togglePlayActive}
-                        className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
-                        title={isCurrentPlaying ? "Pause Video" : "Play Video"}
-                      >
-                        {isCurrentPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-                      </button>
-                      <button
-                        onClick={toggleMute}
-                        className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
-                        title={isMuted ? "Unmute Audio" : "Mute Audio"}
-                      >
-                        {isMuted ? <VolumeX className="w-4 h-4 text-slate-400" /> : <Volume2 className="w-4 h-4 text-sky-400" />}
-                      </button>
-                    </div>
+                    <button
+                      onClick={togglePlayActive}
+                      className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer flex items-center gap-1.5"
+                      title={isCurrentPlaying ? "Pause Video" : "Play Video"}
+                    >
+                      {isCurrentPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
+                      <span className="text-[10px]">{isCurrentPlaying ? 'Pause' : 'Play'}</span>
+                    </button>
+                    
                     <span className="text-[10px] text-slate-300 font-medium">
                       {activeTab === 'video1' ? 'Mahadev 0° Bed • 13s' : 'Full Winching Operation • 66s HD'}
                     </span>
