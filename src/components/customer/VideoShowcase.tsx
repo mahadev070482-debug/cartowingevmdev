@@ -11,7 +11,9 @@ import {
   MessageSquare, 
   ArrowRight,
   Sparkles,
-  Zap
+  Zap,
+  Film,
+  Smartphone
 } from 'lucide-react';
 
 interface VideoShowcaseProps {
@@ -19,25 +21,64 @@ interface VideoShowcaseProps {
 }
 
 export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking }) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [activeTab, setActiveTab] = useState<'video1' | 'video2'>('video1');
+  const video1Ref = useRef<HTMLVideoElement | null>(null);
+  const video2Ref = useRef<HTMLVideoElement | null>(null);
+
+  const [isPlaying1, setIsPlaying1] = useState(true);
+  const [isPlaying2, setIsPlaying2] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
+  const handleSelectTab = (tab: 'video1' | 'video2') => {
+    setActiveTab(tab);
+    if (tab === 'video1') {
+      if (video2Ref.current) {
+        video2Ref.current.pause();
+        setIsPlaying2(false);
+      }
+      if (video1Ref.current) {
+        video1Ref.current.play().catch(() => {});
+        setIsPlaying1(true);
+      }
     } else {
-      videoRef.current.play();
-      setIsPlaying(true);
+      if (video1Ref.current) {
+        video1Ref.current.pause();
+        setIsPlaying1(false);
+      }
+      if (video2Ref.current) {
+        video2Ref.current.play().catch(() => {});
+        setIsPlaying2(true);
+      }
+    }
+  };
+
+  const togglePlayActive = () => {
+    if (activeTab === 'video1') {
+      if (!video1Ref.current) return;
+      if (isPlaying1) {
+        video1Ref.current.pause();
+        setIsPlaying1(false);
+      } else {
+        video1Ref.current.play().catch(() => {});
+        setIsPlaying1(true);
+      }
+    } else {
+      if (!video2Ref.current) return;
+      if (isPlaying2) {
+        video2Ref.current.pause();
+        setIsPlaying2(false);
+      } else {
+        video2Ref.current.play().catch(() => {});
+        setIsPlaying2(true);
+      }
     }
   };
 
   const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+    const nextMuted = !isMuted;
+    if (video1Ref.current) video1Ref.current.muted = nextMuted;
+    if (video2Ref.current) video2Ref.current.muted = nextMuted;
+    setIsMuted(nextMuted);
   };
 
   const handleBookClick = () => {
@@ -49,6 +90,8 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
     }
   };
 
+  const isCurrentPlaying = activeTab === 'video1' ? isPlaying1 : isPlaying2;
+
   return (
     <section id="video-showcase" className="py-16 sm:py-20 bg-slate-950 text-white relative overflow-hidden border-b border-slate-800">
       
@@ -59,101 +102,201 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Real Recovery In Action • Hyderabad</span>
+            <span>Real Recovery In Action • 2 Live Videos</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
             See Zero-Degree Flatbed Recovery Live
           </h2>
           <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Watch real on-site night recovery footage of our hydraulic zero-degree flatbed in action. Zero pavement friction, zero bumper scrape, and 100% drive motor protection.
+            Watch authentic on-site recovery footage of our hydraulic zero-degree flatbeds in action. Zero ground friction, zero bumper scrape, and complete high-voltage motor protection.
           </p>
+
+          {/* Video Selector Tabs (Desktop & Mobile accessible) */}
+          <div className="pt-2 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+            <button
+              onClick={() => handleSelectTab('video1')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer border ${
+                activeTab === 'video1'
+                  ? 'bg-sky-600 text-white border-sky-400 shadow-lg shadow-sky-600/30'
+                  : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Smartphone className="w-4 h-4 text-sky-400" />
+              <span>Video 1: 0° Night Recovery</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded ${activeTab === 'video1' ? 'bg-sky-800 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                13s
+              </span>
+            </button>
+
+            <button
+              onClick={() => handleSelectTab('video2')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer border ${
+                activeTab === 'video2'
+                  ? 'bg-sky-600 text-white border-sky-400 shadow-lg shadow-sky-600/30'
+                  : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Film className="w-4 h-4 text-amber-400" />
+              <span>Video 2: Full Flatbed Operation</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded ${activeTab === 'video2' ? 'bg-sky-800 text-white' : 'bg-slate-800 text-slate-400'}`}>
+                66s • HD
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Video + Details Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left: Smartphone-Styled Video Player Container (5 Cols) */}
-          <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-[340px] rounded-3xl p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-2xl shadow-sky-950/50">
+          {/* Left: Dynamic Video Player Container (5-6 Cols) */}
+          <div className="lg:col-span-6 flex flex-col items-center">
+            
+            {/* Active Video Player Box */}
+            <div className={`w-full transition-all duration-300 ${activeTab === 'video1' ? 'max-w-[340px]' : 'max-w-[540px]'}`}>
               
-              {/* Speaker / Camera Notch Mockup */}
-              <div className="w-24 h-4 bg-slate-950 rounded-full mx-auto mb-2.5 flex items-center justify-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-slate-800" />
-                <span className="w-8 h-1.5 rounded-full bg-slate-800" />
-              </div>
-
-              {/* Video Player Box */}
-              <div className="relative rounded-2xl overflow-hidden bg-slate-900 aspect-[9/16] shadow-inner group">
-                <video
-                  ref={videoRef}
-                  src="/videos/mahadev-flatbed-recovery.mp4"
-                  playsInline
-                  autoPlay
-                  loop
-                  muted={isMuted}
-                  controls={false}
-                  className="w-full h-full object-cover cursor-pointer"
-                  onClick={togglePlay}
-                />
-
-                {/* Top Live Badges Overlay */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                  <div className="flex items-center gap-1.5 bg-black/70 backdrop-blur-md text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/30">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>ON-DUTY RESCUE</span>
-                  </div>
-                  <span className="bg-black/70 backdrop-blur-md text-amber-300 text-[10px] font-mono font-bold px-2 py-1 rounded-md border border-amber-500/30">
-                    HYDERABAD
-                  </span>
-                </div>
-
-                {/* Center Big Play Button (when paused) */}
-                {!isPlaying && (
-                  <div 
-                    onClick={togglePlay}
-                    className="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center cursor-pointer"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center shadow-lg transition transform hover:scale-105">
-                      <Play className="w-8 h-8 fill-current ml-1" />
-                    </div>
+              {/* Outer Phone / Cinema Frame */}
+              <div className="relative rounded-3xl p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-2xl shadow-sky-950/50">
+                
+                {/* Top Notch Bar for vertical reel view */}
+                {activeTab === 'video1' && (
+                  <div className="w-24 h-4 bg-slate-950 rounded-full mx-auto mb-2.5 flex items-center justify-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-slate-800" />
+                    <span className="w-8 h-1.5 rounded-full bg-slate-800" />
                   </div>
                 )}
 
-                {/* Bottom Video Controls Overlay */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/70 backdrop-blur-md p-2 rounded-xl border border-white/10">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={togglePlay}
-                      className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition"
-                      title={isPlaying ? "Pause Video" : "Play Video"}
-                    >
-                      {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-                    </button>
-                    <button
-                      onClick={toggleMute}
-                      className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition"
-                      title={isMuted ? "Unmute Audio" : "Mute Audio"}
-                    >
-                      {isMuted ? <VolumeX className="w-4 h-4 text-slate-400" /> : <Volume2 className="w-4 h-4 text-sky-400" />}
-                    </button>
+                {/* Video Container */}
+                <div className={`relative rounded-2xl overflow-hidden bg-slate-900 shadow-inner group ${
+                  activeTab === 'video1' ? 'aspect-[9/16]' : 'aspect-[16/9]'
+                }`}>
+                  
+                  {/* Video 1 (Vertical 9:16) */}
+                  <video
+                    ref={video1Ref}
+                    src="/videos/mahadev-flatbed-recovery.mp4"
+                    playsInline
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    controls={false}
+                    className={`w-full h-full object-cover cursor-pointer ${activeTab === 'video1' ? 'block' : 'hidden'}`}
+                    onClick={togglePlayActive}
+                  />
+
+                  {/* Video 2 (Widescreen 16:9) */}
+                  <video
+                    ref={video2Ref}
+                    src="/videos/mahadev-flatbed-loading-operation.mp4"
+                    playsInline
+                    loop
+                    muted={isMuted}
+                    controls={false}
+                    className={`w-full h-full object-cover cursor-pointer ${activeTab === 'video2' ? 'block' : 'hidden'}`}
+                    onClick={togglePlayActive}
+                  />
+
+                  {/* Top Live Badges Overlay */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                    <div className="flex items-center gap-1.5 bg-black/75 backdrop-blur-md text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/30">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>{activeTab === 'video1' ? 'NIGHT RESCUE' : 'FULL RECOVERY OPERATION'}</span>
+                    </div>
+                    <span className="bg-black/75 backdrop-blur-md text-amber-300 text-[10px] font-mono font-bold px-2 py-1 rounded-md border border-amber-500/30">
+                      HYDERABAD
+                    </span>
                   </div>
-                  <span className="text-[10px] text-slate-300 font-medium">
-                    Mahadev Flatbed Fleet
-                  </span>
+
+                  {/* Center Big Play Button (when paused) */}
+                  {!isCurrentPlaying && (
+                    <div 
+                      onClick={togglePlayActive}
+                      className="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center cursor-pointer"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center shadow-lg transition transform hover:scale-105">
+                        <Play className="w-8 h-8 fill-current ml-1" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Bottom Video Controls Overlay */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-black/75 backdrop-blur-md p-2 rounded-xl border border-white/10">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={togglePlayActive}
+                        className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+                        title={isCurrentPlaying ? "Pause Video" : "Play Video"}
+                      >
+                        {isCurrentPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                      </button>
+                      <button
+                        onClick={toggleMute}
+                        className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+                        title={isMuted ? "Unmute Audio" : "Mute Audio"}
+                      >
+                        {isMuted ? <VolumeX className="w-4 h-4 text-slate-400" /> : <Volume2 className="w-4 h-4 text-sky-400" />}
+                      </button>
+                    </div>
+                    <span className="text-[10px] text-slate-300 font-medium">
+                      {activeTab === 'video1' ? 'Mahadev 0° Bed • 13s' : 'Full Winching Operation • 66s HD'}
+                    </span>
+                  </div>
+
                 </div>
 
+                {/* Bottom Notch Bar for vertical reel view */}
+                {activeTab === 'video1' && (
+                  <div className="w-28 h-1 bg-slate-700 rounded-full mx-auto mt-2.5" />
+                )}
               </div>
 
-              {/* Bottom Phone Bar Pill */}
-              <div className="w-28 h-1 bg-slate-700 rounded-full mx-auto mt-2.5" />
             </div>
+
+            {/* Sub-Switch / Thumbnail Cards (Visible on Both Desktop & Mobile) */}
+            <div className="w-full max-w-[540px] grid grid-cols-2 gap-2.5 mt-4">
+              
+              <button
+                onClick={() => handleSelectTab('video1')}
+                className={`p-2.5 rounded-xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
+                  activeTab === 'video1'
+                    ? 'bg-sky-950/60 border-sky-500 shadow-xs'
+                    : 'bg-slate-900/60 border-slate-800 hover:bg-slate-900 text-slate-400'
+                }`}
+              >
+                <div className="w-9 h-9 rounded-lg bg-sky-900/50 border border-sky-500/40 flex items-center justify-center shrink-0">
+                  <Smartphone className="w-4 h-4 text-sky-400" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold text-white truncate">Video 1: Night Rescue</div>
+                  <div className="text-[10px] text-slate-400">13s • Mobile Reel</div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleSelectTab('video2')}
+                className={`p-2.5 rounded-xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
+                  activeTab === 'video2'
+                    ? 'bg-sky-950/60 border-sky-500 shadow-xs'
+                    : 'bg-slate-900/60 border-slate-800 hover:bg-slate-900 text-slate-400'
+                }`}
+              >
+                <div className="w-9 h-9 rounded-lg bg-amber-900/50 border border-amber-500/40 flex items-center justify-center shrink-0">
+                  <Film className="w-4 h-4 text-amber-400" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-bold text-white truncate">Video 2: Full Operation</div>
+                  <div className="text-[10px] text-slate-400">66s • 720p HD</div>
+                </div>
+              </button>
+
+            </div>
+
           </div>
 
-          {/* Right: Technical Features & Instant Booking (7 Cols) */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          {/* Right: Technical Features & Instant Booking (6 Cols) */}
+          <div className="lg:col-span-6 space-y-6 text-left">
             
             <div className="space-y-2">
               <span className="text-xs font-bold uppercase tracking-widest text-sky-400">
@@ -216,7 +359,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
             <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
               <button
                 onClick={handleBookClick}
-                className="w-full sm:w-auto bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg shadow-sky-600/20 transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg shadow-sky-600/20 transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Request EV Flatbed</span>
                 <ArrowRight className="w-4 h-4" />
@@ -224,7 +367,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
 
               <a
                 href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`}
-                className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 <PhoneCall className="w-4 h-4 text-emerald-400" />
                 <span>Call: {BASE_GARAGE.phone}</span>
@@ -234,7 +377,7 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                 href={`https://wa.me/${BASE_GARAGE.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Dispatch%2C%20I%20saw%20your%20flatbed%20recovery%20video%20and%20need%20assistance%20in%20Hyderabad`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>WhatsApp</span>

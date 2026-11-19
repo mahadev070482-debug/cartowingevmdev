@@ -134,7 +134,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     }}
                     className="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-600 hover:text-sky-700 hover:underline mt-1 cursor-pointer"
                   >
-                    <span>▶ Watch Live Recovery Video (13s)</span>
+                    <span>▶ Watch Live Recovery Videos (2 Videos • 13s &amp; 66s)</span>
                   </button>
                 </div>
               </div>
