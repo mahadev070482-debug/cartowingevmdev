@@ -9,6 +9,7 @@ import { EVWhyFlatbed } from '../customer/EVWhyFlatbed';
 import { FleetGallery } from '../customer/FleetGallery';
 import { HyderabadCoverage } from '../customer/HyderabadCoverage';
 import { RescueGallery } from '../customer/RescueGallery';
+import { FAQSection } from '../customer/FAQSection';
 import { ReviewsSection } from '../customer/ReviewsSection';
 
 interface ClassicLayoutProps {
@@ -58,6 +59,8 @@ export const ClassicLayout: React.FC<ClassicLayoutProps> = ({
       <HyderabadCoverage onSelectArea={onSelectCoverageArea} />
 
       <RescueGallery onSelectBookNow={onScrollToBooking} />
+
+      <FAQSection />
 
       <ReviewsSection isOwnerMode={false} />
     </div>

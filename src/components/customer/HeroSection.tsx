@@ -33,20 +33,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Pill Tag with 25+ Yrs & Gachibowli */}
             <div className="inline-flex flex-wrap items-center gap-2 bg-sky-100 text-sky-800 border border-sky-200 px-3.5 py-1.5 rounded-full text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Mahadev Car Towing</span>
+              <span>Mahadev Towing</span>
               <span className="text-sky-400">•</span>
               <span className="flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-sky-600" />
                 <span>Gachibowli HQ, Hyderabad</span>
               </span>
               <span className="text-sky-400">•</span>
-              <span className="text-sky-700 font-semibold">24/7 Flatbed Near Me</span>
+              <span className="text-sky-700 font-semibold">24/7 EV &amp; Flatbed Towing Near Me</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight lg:leading-[1.18]">
-              Mahadev Car Towing Services <br className="hidden sm:inline" />
-              <span className="text-sky-600">24/7 Zero-Degree Flatbed Hyderabad.</span>
+              24/7 EV &amp; Car Towing Services in Hyderabad <br className="hidden sm:inline" />
+              <span className="text-sky-600">Certified Zero-Degree Hydraulic Flatbed.</span>
             </h1>
 
             {/* Subtitle */}
