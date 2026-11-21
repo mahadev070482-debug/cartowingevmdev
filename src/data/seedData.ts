@@ -7,7 +7,6 @@ export const BASE_GARAGE: BaseGarageLocation = {
   lng: 78.3475,
   phone: "+91 99121 24247",
   emergencyPhone: "+91 99121 24247",
-  email: "dispatch@voltrescue.com",
   whatsapp: "+919912124247",
 };
 

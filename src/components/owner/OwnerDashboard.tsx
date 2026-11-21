@@ -6,6 +6,7 @@ import { OrdersTable } from './OrdersTable';
 import { ReviewModeration } from './ReviewModeration';
 import { LocationManager } from './LocationManager';
 import { StatsManager } from './StatsManager';
+import { ResourceManager } from './ResourceManager';
 import { 
   Lock, 
   PhoneCall, 
@@ -23,7 +24,8 @@ import {
   Volume2,
   VolumeX,
   BellRing,
-  Clock
+  Clock,
+  HardDrive
 } from 'lucide-react';
 
 interface OwnerDashboardProps {
@@ -48,7 +50,7 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
   const [pinError, setPinError] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockoutUntil, setLockoutUntil] = useState<number | null>(null);
-  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'reviews' | 'locations' | 'stats'>('queue');
+  const [activeTab, setActiveTab] = useState<'queue' | 'orders' | 'reviews' | 'locations' | 'stats' | 'resources'>('queue');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('owner_sound_alert') !== 'false';
@@ -465,6 +467,18 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
           <Sparkles className="w-4 h-4 text-sky-600" />
           <span>Edit Stats</span>
         </button>
+
+        <button
+          onClick={() => setActiveTab('resources')}
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition whitespace-nowrap ${
+            activeTab === 'resources'
+              ? 'bg-cyan-100 text-cyan-900 font-semibold shadow-xs'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          }`}
+        >
+          <HardDrive className="w-4 h-4 text-cyan-600" />
+          <span>Cloud &amp; Resources</span>
+        </button>
       </div>
 
       {/* Active Tab View */}
@@ -494,6 +508,10 @@ export const OwnerDashboard: React.FC<OwnerDashboardProps> = ({
 
       {activeTab === 'stats' && (
         <StatsManager />
+      )}
+
+      {activeTab === 'resources' && (
+        <ResourceManager onRefreshStore={handleRefresh} />
       )}
 
     </div>

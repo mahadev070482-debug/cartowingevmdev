@@ -130,7 +130,7 @@ export interface BaseGarageLocation {
   lng: number;
   phone: string;
   emergencyPhone?: string;
-  email: string;
+  email?: string;
   whatsapp: string;
 }
 

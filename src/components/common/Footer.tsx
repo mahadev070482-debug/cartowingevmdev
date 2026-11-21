@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BASE_GARAGE } from '../../data/seedData';
-import { Phone, Mail, MapPin, Zap, CheckCircle2, Send, Clock, ShieldAlert, Award, Truck } from 'lucide-react';
+import { Phone, MapPin, Zap, CheckCircle2, Send, Clock, ShieldAlert, Award, Truck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [callbackName, setCallbackName] = useState('');
@@ -112,14 +112,6 @@ export const Footer: React.FC = () => {
                 <span>
                   <strong className="text-white font-medium">Primary Hotline (24/7): </strong>
                   <a href={`tel:${BASE_GARAGE.phone.replace(/\s+/g, '')}`} className="text-cyan-400 font-bold hover:underline">{BASE_GARAGE.phone}</a>
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>
-                  <strong className="text-white font-medium">Support: </strong>
-                  <a href={`mailto:${BASE_GARAGE.email}`} className="text-slate-300 hover:underline">{BASE_GARAGE.email}</a>
                 </span>
               </div>
             </div>
