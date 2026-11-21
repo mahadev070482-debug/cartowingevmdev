@@ -353,31 +353,6 @@ export const ResourceManager: React.FC<ResourceManagerProps> = ({ onRefreshStore
             </p>
           </div>
 
-          {/* Record Count Breakdown */}
-          <div className="space-y-3 pt-2">
-            <h4 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
-              Entity Record Inventory
-            </h4>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 block">Tow Requests Stored</span>
-                <span className="text-lg font-bold text-slate-900 font-mono">{requests.length} records</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 block">Fleet GPS Transponders</span>
-                <span className="text-lg font-bold text-slate-900 font-mono">{trucks.length} trucks</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 block">Customer Reviews</span>
-                <span className="text-lg font-bold text-slate-900 font-mono">{reviews.length} reviews</span>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 block">Active Service Hubs</span>
-                <span className="text-lg font-bold text-slate-900 font-mono">{locations.length} hubs</span>
-              </div>
-            </div>
-          </div>
-
           {/* Spark Free Limits Table */}
           <div className="space-y-2 pt-2 border-t border-slate-200">
             <h4 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
