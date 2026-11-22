@@ -10,8 +10,7 @@ import {
   ArrowRight,
   Sparkles,
   Zap,
-  Film,
-  Smartphone
+  Film
 } from 'lucide-react';
 
 interface VideoShowcaseProps {
@@ -19,55 +18,17 @@ interface VideoShowcaseProps {
 }
 
 export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking }) => {
-  const [activeTab, setActiveTab] = useState<'video1' | 'video2'>('video1');
-  const video1Ref = useRef<HTMLVideoElement | null>(null);
-  const video2Ref = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
-  const [isPlaying1, setIsPlaying1] = useState(true);
-  const [isPlaying2, setIsPlaying2] = useState(false);
-
-  const handleSelectTab = (tab: 'video1' | 'video2') => {
-    setActiveTab(tab);
-    if (tab === 'video1') {
-      if (video2Ref.current) {
-        video2Ref.current.pause();
-        setIsPlaying2(false);
-      }
-      if (video1Ref.current) {
-        video1Ref.current.play().catch(() => {});
-        setIsPlaying1(true);
-      }
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
     } else {
-      if (video1Ref.current) {
-        video1Ref.current.pause();
-        setIsPlaying1(false);
-      }
-      if (video2Ref.current) {
-        video2Ref.current.play().catch(() => {});
-        setIsPlaying2(true);
-      }
-    }
-  };
-
-  const togglePlayActive = () => {
-    if (activeTab === 'video1') {
-      if (!video1Ref.current) return;
-      if (isPlaying1) {
-        video1Ref.current.pause();
-        setIsPlaying1(false);
-      } else {
-        video1Ref.current.play().catch(() => {});
-        setIsPlaying1(true);
-      }
-    } else {
-      if (!video2Ref.current) return;
-      if (isPlaying2) {
-        video2Ref.current.pause();
-        setIsPlaying2(false);
-      } else {
-        video2Ref.current.play().catch(() => {});
-        setIsPlaying2(true);
-      }
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
     }
   };
 
@@ -79,8 +40,6 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const isCurrentPlaying = activeTab === 'video1' ? isPlaying1 : isPlaying2;
 
   return (
     <section id="video-showcase" className="py-16 sm:py-20 bg-slate-950 text-white relative overflow-hidden border-b border-slate-800">
@@ -95,98 +54,49 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Real Recovery In Action • 2 Live Videos</span>
+            <span>Real Recovery In Action • Live Flatbed Video</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
             See Zero-Degree Flatbed Recovery Live
           </h2>
           <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Watch authentic on-site recovery footage of our hydraulic zero-degree flatbeds in action. Zero ground friction, zero bumper scrape, and complete high-voltage motor protection.
+            Watch authentic on-site recovery footage of our hydraulic zero-degree flatbed in action. Complete vehicle winching, zero ground friction, zero bumper scrape, and total high-voltage EV motor protection.
           </p>
-
-          {/* Video Selector Tabs (Desktop & Mobile accessible) */}
-          <div className="pt-2 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
-            <button
-              onClick={() => handleSelectTab('video1')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer border ${
-                activeTab === 'video1'
-                  ? 'bg-sky-600 text-white border-sky-400 shadow-lg shadow-sky-600/30'
-                  : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <Smartphone className="w-4 h-4 text-sky-400" />
-              <span>Video 1: 0° Night Recovery</span>
-            </button>
-
-            <button
-              onClick={() => handleSelectTab('video2')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer border ${
-                activeTab === 'video2'
-                  ? 'bg-sky-600 text-white border-sky-400 shadow-lg shadow-sky-600/30'
-                  : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <Film className="w-4 h-4 text-amber-400" />
-              <span>Video 2: Full Flatbed Operation</span>
-            </button>
-          </div>
         </div>
 
         {/* Video + Details Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left: Dynamic Video Player Container (5-6 Cols) */}
+          {/* Left: Dynamic Video Player Container (6 Cols) */}
           <div className="lg:col-span-6 flex flex-col items-center">
             
-            {/* Active Video Player Box */}
-            <div className={`w-full transition-all duration-300 ${activeTab === 'video1' ? 'max-w-[340px]' : 'max-w-[540px]'}`}>
+            {/* Widescreen Video Player Box */}
+            <div className="w-full max-w-[560px]">
               
-              {/* Outer Phone / Cinema Frame */}
+              {/* Outer Cinema Frame */}
               <div className="relative rounded-3xl p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border-2 border-slate-700/80 shadow-2xl shadow-sky-950/50">
                 
-                {/* Top Notch Bar for vertical reel view */}
-                {activeTab === 'video1' && (
-                  <div className="w-24 h-4 bg-slate-950 rounded-full mx-auto mb-2.5 flex items-center justify-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-slate-800" />
-                    <span className="w-8 h-1.5 rounded-full bg-slate-800" />
-                  </div>
-                )}
-
-                {/* Video Container */}
-                <div className={`relative rounded-2xl overflow-hidden bg-slate-900 shadow-inner group ${
-                  activeTab === 'video1' ? 'aspect-[9/16]' : 'aspect-[16/9]'
-                }`}>
+                {/* Video Container (16:9 Widescreen) */}
+                <div className="relative rounded-2xl overflow-hidden bg-slate-900 shadow-inner group aspect-[16/9]">
                   
-                  {/* Video 1 (Vertical 9:16) */}
+                  {/* Flatbed Loading & Winching Operation Video */}
                   <video
-                    ref={video1Ref}
-                    src="/videos/mahadev-flatbed-recovery.mp4"
+                    ref={videoRef}
+                    src="/videos/mahadev-flatbed-loading-operation.mp4"
                     playsInline
                     autoPlay
                     loop
                     muted
                     controls={false}
-                    className={`w-full h-full object-cover cursor-pointer ${activeTab === 'video1' ? 'block' : 'hidden'}`}
-                    onClick={togglePlayActive}
-                  />
-
-                  {/* Video 2 (Widescreen 16:9) */}
-                  <video
-                    ref={video2Ref}
-                    src="/videos/mahadev-flatbed-loading-operation.mp4"
-                    playsInline
-                    loop
-                    muted
-                    controls={false}
-                    className={`w-full h-full object-cover cursor-pointer ${activeTab === 'video2' ? 'block' : 'hidden'}`}
-                    onClick={togglePlayActive}
+                    className="w-full h-full object-cover cursor-pointer"
+                    onClick={togglePlay}
                   />
 
                   {/* Top Live Badges Overlay */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                     <div className="flex items-center gap-1.5 bg-black/75 backdrop-blur-md text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/30">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span>{activeTab === 'video1' ? 'NIGHT RESCUE' : 'FULL RECOVERY OPERATION'}</span>
+                      <span>LIVE RECOVERY OPERATION</span>
                     </div>
                     <span className="bg-black/75 backdrop-blur-md text-amber-300 text-[10px] font-mono font-bold px-2 py-1 rounded-md border border-amber-500/30">
                       HYDERABAD
@@ -194,9 +104,9 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                   </div>
 
                   {/* Center Big Play Button (when paused) */}
-                  {!isCurrentPlaying && (
+                  {!isPlaying && (
                     <div 
-                      onClick={togglePlayActive}
+                      onClick={togglePlay}
                       className="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center cursor-pointer"
                     >
                       <div className="w-16 h-16 rounded-full bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center shadow-lg transition transform hover:scale-105">
@@ -208,62 +118,30 @@ export const VideoShowcase: React.FC<VideoShowcaseProps> = ({ onScrollToBooking 
                   {/* Bottom Video Controls Overlay - Minimalist Play / Pause */}
                   <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md p-1.5 rounded-xl border border-white/10">
                     <button
-                      onClick={togglePlayActive}
+                      onClick={togglePlay}
                       className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer flex items-center gap-1.5"
-                      title={isCurrentPlaying ? "Pause Video" : "Play Video"}
+                      title={isPlaying ? "Pause Video" : "Play Video"}
                     >
-                      {isCurrentPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
-                      <span className="text-[10px]">{isCurrentPlaying ? 'Pause' : 'Play'}</span>
+                      {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
+                      <span className="text-[10px]">{isPlaying ? 'Pause' : 'Play'}</span>
                     </button>
                   </div>
 
                 </div>
 
-                {/* Bottom Notch Bar for vertical reel view */}
-                {activeTab === 'video1' && (
-                  <div className="w-28 h-1 bg-slate-700 rounded-full mx-auto mt-2.5" />
-                )}
               </div>
 
             </div>
 
-            {/* Sub-Switch / Thumbnail Cards (Visible on Both Desktop & Mobile) */}
-            <div className="w-full max-w-[540px] grid grid-cols-2 gap-2.5 mt-4">
-              
-              <button
-                onClick={() => handleSelectTab('video1')}
-                className={`p-2.5 rounded-xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
-                  activeTab === 'video1'
-                    ? 'bg-sky-950/60 border-sky-500 shadow-xs'
-                    : 'bg-slate-900/60 border-slate-800 hover:bg-slate-900 text-slate-400'
-                }`}
-              >
-                <div className="w-9 h-9 rounded-lg bg-sky-900/50 border border-sky-500/40 flex items-center justify-center shrink-0">
-                  <Smartphone className="w-4 h-4 text-sky-400" />
-                </div>
-                <div className="min-w-0">
-                  <div className="text-[11px] font-bold text-white truncate">Video 1: Night Rescue</div>
-                  <div className="text-[10px] text-slate-400">Zero-Degree Recovery</div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => handleSelectTab('video2')}
-                className={`p-2.5 rounded-xl border text-left transition flex items-center gap-2.5 cursor-pointer ${
-                  activeTab === 'video2'
-                    ? 'bg-sky-950/60 border-sky-500 shadow-xs'
-                    : 'bg-slate-900/60 border-slate-800 hover:bg-slate-900 text-slate-400'
-                }`}
-              >
-                <div className="w-9 h-9 rounded-lg bg-amber-900/50 border border-amber-500/40 flex items-center justify-center shrink-0">
-                  <Film className="w-4 h-4 text-amber-400" />
-                </div>
-                <div className="min-w-0">
-                  <div className="text-[11px] font-bold text-white truncate">Video 2: Full Operation</div>
-                  <div className="text-[10px] text-slate-400">Hydraulic Winch Loading</div>
-                </div>
-              </button>
-
+            {/* Video Caption & Status Pill */}
+            <div className="w-full max-w-[560px] mt-3.5 p-3 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between text-xs text-slate-300">
+              <div className="flex items-center gap-2">
+                <Film className="w-4 h-4 text-sky-400 shrink-0" />
+                <span className="font-medium text-slate-200">Hydraulic Winching &amp; Slide Bed Operation</span>
+              </div>
+              <span className="text-[11px] text-emerald-400 font-semibold font-mono bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded">
+                Mahadev Active Fleet
+              </span>
             </div>
 
           </div>

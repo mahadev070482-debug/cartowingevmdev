@@ -66,7 +66,7 @@ export const ResourceManager: React.FC<ResourceManagerProps> = ({ onRefreshStore
 
   // Vercel Hobby Free tier limits
   const VERCEL_FREE_BANDWIDTH_GB = 100; // 100 GB/month
-  const VERCEL_STATIC_ASSETS_MB = 13.91; // 7.94MB + 2.15MB videos + 3.52MB photos + 0.3MB bundle
+  const VERCEL_STATIC_ASSETS_MB = 11.76; // 7.94MB video + 3.52MB photos + 0.3MB bundle
 
   // Calculate percentages
   const firebaseStoragePercent = ((Number(totalDbMB) / FIREBASE_FREE_STORAGE_MB) * 100).toFixed(4);
@@ -265,7 +265,7 @@ export const ResourceManager: React.FC<ResourceManagerProps> = ({ onRefreshStore
               {VERCEL_STATIC_ASSETS_MB} <span className="text-sm font-semibold text-slate-500">MB</span>
             </div>
             <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 pt-2 border-t border-slate-200">
-              <span>2 Videos + 7 Photos:</span>
+              <span>1 Video + 7 Photos:</span>
               <span className="font-semibold text-purple-700 font-mono">100% Hosted</span>
             </div>
           </div>
@@ -437,13 +437,6 @@ export const ResourceManager: React.FC<ResourceManagerProps> = ({ onRefreshStore
                   mahadev-flatbed-loading-operation.mp4 (66s)
                 </span>
                 <span className="col-span-4 text-right font-mono font-semibold text-slate-900">7.94 MB</span>
-              </div>
-
-              <div className="p-2.5 grid grid-cols-12 items-center hover:bg-slate-50 transition">
-                <span className="col-span-8 text-slate-800 font-medium truncate">
-                  mahadev-flatbed-recovery.mp4 (14s)
-                </span>
-                <span className="col-span-4 text-right font-mono font-semibold text-slate-900">2.15 MB</span>
               </div>
 
               <div className="p-2.5 grid grid-cols-12 items-center hover:bg-slate-50 transition">
