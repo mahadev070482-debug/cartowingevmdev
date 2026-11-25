@@ -5,9 +5,9 @@ export const BASE_GARAGE: BaseGarageLocation = {
   address: "Ground floor, Sevanti Nivas, Plot No 712, Tngos colony phase 2, Gachibowli, Hyderabad, Telangana 500032",
   lat: 17.4334,
   lng: 78.3475,
-  phone: "+91 99121 24247",
-  emergencyPhone: "+91 99121 24247",
-  whatsapp: "+919912124247",
+  phone: "+91 99123 24247",
+  emergencyPhone: "+91 99123 24247",
+  whatsapp: "+919912324247",
 };
 
 export const INITIAL_SERVICEABLE_LOCATIONS: ServiceableLocation[] = [
@@ -103,7 +103,7 @@ export const INITIAL_TRUCKS: TowTruck[] = [
     callSign: "Truck #01",
     name: "Heavy Duty EV Hydraulic Tilt-Bed",
     driverName: "Rajesh Kumar",
-    driverPhone: "+91 99121 24247",
+    driverPhone: "+91 99123 24247",
     plateNumber: "TS-09-UB-4247",
     currentLocation: { lat: 17.4334, lng: 78.3475 },
     isOnline: true,
@@ -121,7 +121,7 @@ export const INITIAL_TRUCKS: TowTruck[] = [
     callSign: "Truck #02",
     name: "Rapid EV Flatbed & Rescue Winch",
     driverName: "Vikram Rathore",
-    driverPhone: "+91 99121 24247",
+    driverPhone: "+91 99123 24247",
     plateNumber: "TS-09-UB-9912",
     currentLocation: { lat: 17.4474, lng: 78.3762 },
     isOnline: true,
@@ -236,7 +236,7 @@ export const FLEET_EQUIPMENT_IMAGES: FleetEquipmentImage[] = [
     title: "Mahadev Hydraulic 0° Full-Tilt Bed (Ioniq 5 EV Recovery)",
     category: "flatbeds",
     tag: "Zero-Degree Flatbed",
-    specs: "Full ground-level zero-degree hydraulic tilt bed (Call: 9912124247)",
+    specs: "Full ground-level zero-degree hydraulic tilt bed (Call: 9912324247)",
     imageUrl: "/images/mahadev-flatbed-ioniq5.jpg"
   },
   {

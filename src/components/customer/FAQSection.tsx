@@ -37,7 +37,7 @@ const FAQS: FAQItem[] = [
   {
     category: "Pricing & Booking",
     question: "How do I request emergency EV or car towing in Hyderabad?",
-    answer: "You can call our 24/7 direct helpline at +91 99121 24247, click our instant WhatsApp button to send your live GPS location, or book online using the quick request form on this page. We provide upfront, transparent pricing before dispatch with zero hidden fees."
+    answer: "You can call our 24/7 direct helpline at +91 99123 24247, click our instant WhatsApp button to send your live GPS location, or book online using the quick request form on this page. We provide upfront, transparent pricing before dispatch with zero hidden fees."
   }
 ];
 

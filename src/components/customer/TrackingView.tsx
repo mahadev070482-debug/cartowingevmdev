@@ -494,7 +494,7 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
                   className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 transition border border-slate-200"
                 >
                   <PhoneCall className="w-3.5 h-3.5 text-slate-600" />
-                  <span>HQ: 9912124247</span>
+                  <span>HQ: 9912324247</span>
                 </a>
               </div>
             </div>
@@ -503,7 +503,7 @@ export const TrackingView: React.FC<TrackingViewProps> = ({
               <Truck className="w-7 h-7 text-slate-400 mx-auto" />
               <h4 className="text-sm font-bold text-slate-900">Driver Assignment in Progress</h4>
               <p className="text-xs text-slate-500">
-                Our central dispatch is assigning a recovery driver. For immediate updates, contact dispatch at <strong className="text-slate-800">9912124247</strong>.
+                Our central dispatch is assigning a recovery driver. For immediate updates, contact dispatch at <strong className="text-slate-800">9912324247</strong>.
               </p>
             </div>
           )}

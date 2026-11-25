@@ -125,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     Mahadev Zero-Degree Hydraulic Flatbed
                   </h4>
                   <p className="text-[11px] text-slate-500">
-                    Branded Recovery Trucks • Direct Helpline: <strong className="text-slate-800">9912124247</strong>
+                    Branded Recovery Trucks • Direct Helpline: <strong className="text-slate-800">9912324247</strong>
                   </p>
                   <button
                     onClick={() => {
@@ -161,7 +161,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
                 <div className="absolute bottom-2.5 left-4 flex items-center gap-2">
                   <span className="bg-black/75 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border border-white/20">
-                    📸 Mahadev Flatbed • Call 9912124247
+                    📸 Mahadev Flatbed • Call 9912324247
                   </span>
                 </div>
               </div>

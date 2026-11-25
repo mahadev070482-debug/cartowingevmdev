@@ -27,7 +27,7 @@ export const RESCUE_GALLERY: RescueGalleryItem[] = [
     equipmentUsed: ["Mahadev 0° Hydraulic Slide Bed", "Soft Rim Webbing Straps", "Alloy Wheel Wedges"],
     duration: "Loaded in 5 mins",
     imageUrl: "/images/mahadev-flatbed-mercedes-luxury.jpg",
-    story: "Low sports cars with custom splitters cannot endure standard tilt ramps. Our branded Mahadev flatbed (9912124247) tilted flush to the asphalt for a seamless, scratch-free roll onto the deck.",
+    story: "Low sports cars with custom splitters cannot endure standard tilt ramps. Our branded Mahadev flatbed (9912324247) tilted flush to the asphalt for a seamless, scratch-free roll onto the deck.",
     verifiedOutcome: "Delivered to dealership in flawless condition with zero underbody or splitter marks."
   },
   {
@@ -87,7 +87,7 @@ export const RESCUE_GALLERY: RescueGalleryItem[] = [
     equipmentUsed: ["Tata Heavy Traffic Clearance Flatbed", "Hydraulic Winch", "Tire Chocks"],
     duration: "Loaded in 5 mins",
     imageUrl: "/images/mahadev-flatbed-innova-crysta.jpg",
-    story: "Our dedicated Mahadev flatbed (9912124247) responded to the ORR emergency immediately, smoothly winching the loaded Innova Crysta onto the heavy-duty flatbed deck to restore smooth traffic flow.",
+    story: "Our dedicated Mahadev flatbed (9912324247) responded to the ORR emergency immediately, smoothly winching the loaded Innova Crysta onto the heavy-duty flatbed deck to restore smooth traffic flow.",
     verifiedOutcome: "Rapid clearance prevented expressway traffic jam; vehicle delivered to service station."
   },
   {

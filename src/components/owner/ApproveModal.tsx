@@ -122,7 +122,7 @@ export const ApproveModal: React.FC<ApproveModalProps> = ({
                     type="tel"
                     value={driverPhone}
                     onChange={(e) => setDriverPhone(e.target.value)}
-                    placeholder="e.g. 9912124247"
+                    placeholder="e.g. 9912324247"
                     className="w-full bg-white border border-slate-300 focus:border-sky-600 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none font-mono"
                   />
                 </div>

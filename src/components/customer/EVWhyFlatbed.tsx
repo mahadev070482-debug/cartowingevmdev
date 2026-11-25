@@ -81,7 +81,7 @@ export const EVWhyFlatbed: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
               <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-white text-[11px] font-medium">
-                <span>📸 Actual Mahadev Zero-Degree Bed (9912124247)</span>
+                <span>📸 Actual Mahadev Zero-Degree Bed (9912324247)</span>
                 <span className="bg-sky-600 px-2 py-0.5 rounded text-[10px] font-bold">100% Zero-Drag</span>
               </div>
             </div>
